@@ -1,17 +1,16 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject,signal } from '@angular/core';
 import { IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonInput, IonItem, IonSelect, IonSelectOption, IonTitle, IonToolbar, ModalController } from '@ionic/angular';
 import { RegisterPayload, UserService } from '../../services/user.service';
 import { addIcons } from 'ionicons';
 import { alertCircleOutline, closeOutline, personAddOutline } from 'ionicons/icons';
-import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-user-modal.component',
+  selector: 'app-user-modal',
   standalone: true,
-  templateUrl: './user-modal.component.component.html',
-  styleUrls: ['./user-modal.component.component.css'],
+  templateUrl: './user-modal.component.html',
+  styleUrls: ['./user-modal.component.css'],
   imports: [CommonModule, FormsModule, IonHeader, IonInput, IonTitle, IonToolbar, IonButtons, IonContent, IonSelectOption, IonSelect, IonItem,IonButtons,IonButton,IonIcon],
 })
 export class UserModalComponent {

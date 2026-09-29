@@ -1,7 +1,6 @@
 const FeedModel = require("../models/feedModel");
 
 exports.createFeedback = async (req, res) => {
-    console.log("-> ROTTA POST /api/feedback RAGGIUNTA CON CORPO:", req.body);
     try {
         const { appuntamento_id, paziente_id, medico_id, voto, commento } = req.body;
 

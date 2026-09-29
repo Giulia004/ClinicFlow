@@ -5,14 +5,14 @@ import { User, UserService } from '../../services/user.service';
 import { AuthService } from '../../services/auth.service';
 import { IonButton, IonContent, IonHeader, IonIcon, IonSpinner, IonTitle, IonToolbar, ModalController } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
-import { UserModalComponent } from '../../components/user-modal/user-modal.component.component';
+import { UserModalComponent } from '../../components/user-modal/user-modal.component';
 import { FilterWidgetComponent } from '../../components/filter-widget/filter-widget.component';
 
 @Component({
   selector: 'app-users.page',
   templateUrl: './users.page.html',
   styleUrls: ['./users.page.css'],
-  imports: [CommonModule,IonHeader,IonToolbar,IonTitle,IonContent,IonIcon,IonButton,IonSpinner,FilterWidgetComponent],
+  imports: [CommonModule, IonHeader, IonToolbar, IonTitle, IonContent, IonIcon, IonButton, IonSpinner, FilterWidgetComponent],
 })
 export class UsersPage implements OnInit {
   private userService = inject(UserService);
@@ -25,7 +25,7 @@ export class UsersPage implements OnInit {
   public errorMessage = signal<string | null>(null);
   public successMessage = signal<string | null>(null);
 
-  constructor() { 
+  constructor() {
     addIcons({
       addCircleOutline, trashOutline, personOutline, alertCircleOutline
     });
@@ -37,7 +37,7 @@ export class UsersPage implements OnInit {
 
   loadUsers() {
     this.isLoading.set(true);
-    
+
     this.userService.getAllUsers().subscribe({
       next: (res) => {
         this.usersList.set(res);
@@ -66,7 +66,7 @@ export class UsersPage implements OnInit {
 
   public async openAddUserModal() {
     const modal = await this.modalCtrl.create({
-      component:UserModalComponent
+      component: UserModalComponent
     });
 
     modal.onDidDismiss().then((result) => {

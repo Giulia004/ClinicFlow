@@ -1,0 +1,10 @@
+#Variabili d'ambiente
+.env
+.env.local
+.env.development.local
+
+#File di sistema
+.DS_Store
+.vscode/
+.idea/
+node_modules/

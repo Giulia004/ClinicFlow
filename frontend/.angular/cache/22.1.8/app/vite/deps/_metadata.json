@@ -1,89 +1,95 @@
 {
-  "hash": "0173e941",
-  "configHash": "11537e8a",
+  "hash": "f3b9e2db",
+  "configHash": "adbc6120",
   "lockfileHash": "a24a0400",
-  "browserHash": "9a342ce7",
+  "browserHash": "739ea0fd",
   "optimized": {
     "@angular/common": {
       "src": "../../../../../../node_modules/@angular/common/fesm2022/common.mjs",
       "file": "@angular_common.js",
-      "fileHash": "2a5f5d78",
+      "fileHash": "78e4c3fd",
       "needsInterop": false
     },
     "@angular/common/http": {
       "src": "../../../../../../node_modules/@angular/common/fesm2022/http.mjs",
       "file": "@angular_common_http.js",
-      "fileHash": "e6c234cf",
+      "fileHash": "d00084c7",
       "needsInterop": false
     },
     "@angular/core": {
       "src": "../../../../../../node_modules/@angular/core/fesm2022/core.mjs",
       "file": "@angular_core.js",
-      "fileHash": "d3bc7bc1",
+      "fileHash": "1d3c4026",
       "needsInterop": false
     },
     "@angular/forms": {
       "src": "../../../../../../node_modules/@angular/forms/fesm2022/forms.mjs",
       "file": "@angular_forms.js",
-      "fileHash": "821b5d34",
+      "fileHash": "4ed75fa9",
       "needsInterop": false
     },
     "@angular/platform-browser": {
       "src": "../../../../../../node_modules/@angular/platform-browser/fesm2022/platform-browser.mjs",
       "file": "@angular_platform-browser.js",
-      "fileHash": "5db57f80",
+      "fileHash": "6f0af4e8",
       "needsInterop": false
     },
     "@angular/router": {
       "src": "../../../../../../node_modules/@angular/router/fesm2022/router.mjs",
       "file": "@angular_router.js",
-      "fileHash": "4dd80668",
+      "fileHash": "3c29363f",
       "needsInterop": false
     },
     "@ionic/angular": {
       "src": "../../../../../../node_modules/@ionic/angular/dist/standalone/index.js",
       "file": "@ionic_angular.js",
-      "fileHash": "0994997d",
+      "fileHash": "ab1e43a0",
       "needsInterop": false
     },
     "ionicons": {
       "src": "../../../../../../node_modules/ionicons/dist/index.js",
       "file": "ionicons.js",
-      "fileHash": "293172af",
+      "fileHash": "d946bf67",
       "needsInterop": false
     },
     "ionicons/icons": {
       "src": "../../../../../../node_modules/ionicons/icons/index.mjs",
       "file": "ionicons_icons.js",
-      "fileHash": "5d84f063",
+      "fileHash": "37cf3f6e",
       "needsInterop": false
     },
     "rxjs": {
       "src": "../../../../../../node_modules/rxjs/dist/esm5/index.js",
       "file": "rxjs.js",
-      "fileHash": "78a24c9b",
+      "fileHash": "2bdf8542",
+      "needsInterop": false
+    },
+    "tslib": {
+      "src": "../../../../../../node_modules/tslib/tslib.es6.mjs",
+      "file": "tslib.js",
+      "fileHash": "a991d4c8",
       "needsInterop": false
     }
   },
   "chunks": {
-    "_xhr-chunk-BlQL4sOD": {
-      "file": "_xhr-chunk-BlQL4sOD.js",
+    "_xhr-chunk-DVS1X9YS": {
+      "file": "_xhr-chunk-DVS1X9YS.js",
       "isDynamicEntry": false
     },
-    "common-D5RT8dtH": {
-      "file": "common-D5RT8dtH.js",
+    "common-BODklxBm": {
+      "file": "common-BODklxBm.js",
       "isDynamicEntry": false
     },
-    "core-DdWYGfAL": {
-      "file": "core-DdWYGfAL.js",
+    "core-QmvEt0xu": {
+      "file": "core-QmvEt0xu.js",
       "isDynamicEntry": false
     },
-    "esm5-CHDWW1NC": {
-      "file": "esm5-CHDWW1NC.js",
+    "esm5-Bm3q67qs": {
+      "file": "esm5-Bm3q67qs.js",
       "isDynamicEntry": false
     },
-    "http-Boe7Foer": {
-      "file": "http-Boe7Foer.js",
+    "http-u5JJ3twG": {
+      "file": "http-u5JJ3twG.js",
       "isDynamicEntry": false
     },
     "p-BMPN55of-Bt4HbXz4": {
@@ -130,12 +136,12 @@
       "file": "p-ZjP4CjeZ-BnW-oeAv.js",
       "isDynamicEntry": false
     },
-    "platform-browser-C5VerH6I": {
-      "file": "platform-browser-C5VerH6I.js",
+    "platform-browser-B39Wu_Ex": {
+      "file": "platform-browser-B39Wu_Ex.js",
       "isDynamicEntry": false
     },
-    "router-CoKZ8TAk": {
-      "file": "router-CoKZ8TAk.js",
+    "router-C2zEAyTS": {
+      "file": "router-C2zEAyTS.js",
       "isDynamicEntry": false
     }
   }

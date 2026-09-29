@@ -24,7 +24,7 @@
                 <!--Badge dinamico in base al ruolo dell'utente -->
                 <span class="badge bg-primary-subtle text-primary px-3 py-1 rounded-pill fw-bold small">
                     <ion-icon name="shield-checkmark-outline" class="me-1"></ion-icon>
-                    {{ user.role || 'Paziente' }}
+                    {{ user.role.toUpperCase() || 'Paziente' }}
                 </span>
             </div>
             }
@@ -62,7 +62,6 @@
         </ion-list>
 
         @if(authService.isLoggedIn()){
-        <!-- Pulsante di Logout in basso nel menu -->
         <div class="logout-container">
             <ion-button expand="block" color="danger" fill="outline" (click)="logout()">
                 <ion-icon name="log-out-outline" slot="start"></ion-icon>

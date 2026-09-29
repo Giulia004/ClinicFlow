@@ -3,7 +3,7 @@ import { Component } from "@angular/core";
 import { Router, RouterLink } from "@angular/router";
 import { IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonMenu, IonMenuButton, IonMenuToggle, IonRouterOutlet, IonTitle, IonToolbar,IonRouterLink } from "@ionic/angular";
 import { addIcons } from "ionicons";
-import { calendarOutline, chatbubbleOutline, documentTextOutline, homeOutline, logOutOutline, medkitOutline, menuOutline, peopleCircleOutline } from "ionicons/icons";
+import { calendarOutline, chatbubbleOutline, documentTextOutline, homeOutline, logOutOutline, medkitOutline, menuOutline, peopleCircleOutline, shieldCheckmarkOutline } from "ionicons/icons";
 import { AuthService } from "../../app/services/auth.service";
 
 @Component({
@@ -17,7 +17,7 @@ import { AuthService } from "../../app/services/auth.service";
 export class MainLayout {
     constructor(public authService: AuthService, private router: Router) {
         addIcons({
-            menuOutline, homeOutline, calendarOutline, documentTextOutline, chatbubbleOutline, logOutOutline, medkitOutline,peopleCircleOutline
+            menuOutline, homeOutline, calendarOutline, documentTextOutline, chatbubbleOutline, logOutOutline, medkitOutline,peopleCircleOutline, shieldCheckmarkOutline
         });
     }
 

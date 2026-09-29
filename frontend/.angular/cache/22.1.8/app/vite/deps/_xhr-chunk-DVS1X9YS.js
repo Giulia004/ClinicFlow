@@ -1,4 +1,4 @@
-import { Al as ɵɵinject, Ec as InjectionToken, El as ɵɵdefineInjectable, Fn as Injectable, Wi as setClassMetadata, ao as ɵɵdefineService, dr as Service, mc as DOCUMENT, sl as inject } from "./core-DdWYGfAL.js";
+import { Al as ɵɵinject, Ec as InjectionToken, El as ɵɵdefineInjectable, Fn as Injectable, Wi as setClassMetadata, ao as ɵɵdefineService, dr as Service, mc as DOCUMENT, sl as inject } from "./core-QmvEt0xu.js";
 //#region node_modules/@angular/common/fesm2022/_platform_location-chunk.mjs
 /**
 * @license Angular v22.1.7

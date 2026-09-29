@@ -5,6 +5,7 @@ const user = require("../models/userModel");
 
 const SECRET = process.env.JWT_SECRET || "GA6aXzEKdt0mRjsIr7r9MeMlq2a8rSqnjJoRSV2X5Dz";
 
+//Registrazione nuovo utente
 exports.register = async (req, res) => {
     try {
         const { cf, name, surname, email, password, role, specializzazione, numeroAlbo, postazione } = req.body;
@@ -44,6 +45,7 @@ exports.register = async (req, res) => {
     }
 };
 
+//Login
 exports.login = async (req, res) => {
     try {
         const { email, password } = req.body;
