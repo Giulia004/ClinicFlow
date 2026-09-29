@@ -1,0 +1,106 @@
+<ion-content class="ion-padding bg-light">
+  <div class="container py-4 max-w-1100">
+
+    <!-- Header pagina -->
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
+      <div>
+        <div
+          class="badge bg-primary-subtle text-primary mb-2 px-3 py-2 rounded-pill fw-bold d-inline-flex align-items-center gap-2">
+          <ion-icon name="document-outline"></ion-icon>
+          <span>Archivio Clinico • ClinicFlow</span>
+        </div>
+        <h2 class="fw-bold text-dark mb-1">Gestione Referti</h2>
+        <p class="text-muted mb-0">Visualizza, scarica o gestisci i referti medici associati alle visite.</p>
+      </div>
+    </div>
+
+    <!-- Alert di feedback -->
+    @if (successMessage()) {
+    <div class="alert alert-success d-flex align-items-center mb-4 py-2 small shadow-sm rounded-3" role="alert">
+      <ion-icon name="checkmark-circle-outline" class="me-2 fs-5 flex-shrink-0"></ion-icon>
+      <div>{{ successMessage() }}</div>
+    </div>
+    }
+    @if (errorMessage()) {
+    <div class="alert alert-danger d-flex align-items-center mb-4 py-2 small shadow-sm rounded-3" role="alert">
+      <ion-icon name="alert-circle-outline" class="me-2 fs-5 flex-shrink-0"></ion-icon>
+      <div>{{ errorMessage() }}</div>
+    </div>
+    }
+
+    <!-- Widget di Filtro -->
+    <h4 class="fw-bold text-dark mb-3 fs-5 d-flex align-items-center gap-2">
+      <ion-icon name="search-outline" class="text-primary"></ion-icon>
+      Elenco Referti
+    </h4>
+
+    <app-filter-widget [data]="reports()" [searchKeys]="['file_referto', 'paziente_id', 'medico_id', 'appuntamento_id']"
+      (filterData)="filteredReports.set($event)">
+    </app-filter-widget>
+
+    <!-- Lista Referti -->
+    @if (filteredReports().length === 0) {
+    <div class="text-center py-5 bg-white rounded-4 shadow-sm border border-light p-5 mt-3">
+      <div
+        class="empty-icon-box mx-auto mb-3 bg-light text-muted rounded-circle d-flex align-items-center justify-content-center"
+        style="width: 70px; height: 70px;">
+        <ion-icon name="document-outline" style="font-size: 36px;"></ion-icon>
+      </div>
+      <h5 class="fw-bold text-dark">Nessun referto trovato</h5>
+      <p class="text-muted small mb-0">Non ci sono documenti clinici disponibili al momento.</p>
+    </div>
+    } @else {
+    <div class="row g-4 mt-2">
+      @for (report of filteredReports(); track report.id) {
+      <div class="col-md-6 col-lg-4">
+        <div class="card border-0 shadow-sm rounded-4 p-4 h-100 bg-white d-flex flex-column justify-content-between">
+
+          <div>
+            <!-- Top Card: ID e Badge -->
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <span class="badge bg-light text-dark border fw-bold px-3 py-2 rounded-pill">
+                Referto numero: {{ report.id }}
+              </span>
+              <span class="badge bg-success-subtle text-success px-3 py-2 rounded-pill fw-bold text-uppercase"
+                style="font-size: 0.75rem;">
+                Referto Medico
+              </span>
+            </div>
+
+            <!-- Box Centrale Minimal ed Elegante -->
+            <div class="text-center py-3 px-2 my-2 bg-light rounded-4 border border-light-subtle">
+              <div class="text-primary mb-2">
+                <ion-icon name="document-text-outline" style="font-size: 36px;"></ion-icon>
+              </div>
+              <span class="text-dark small fw-bold d-block text-truncate px-2 mb-1" title="{{ report.file_referto }}">
+                {{ report.file_referto }}
+              </span>
+              <span class="text-muted" style="font-size: 0.75rem;">Visita associata: <strong>#{{ report.appuntamento_id
+                  }}</strong></span>
+            </div>
+          </div>
+
+          <!-- Azioni Card -->
+          <div class="pt-3 border-top d-flex justify-content-between align-items-center">
+            <ion-button fill="solid" color="primary" size="small" shape="round" class="fw-bold px-3 shadow-sm"
+              (click)="downloadReport(report.id, report.file_referto)">
+              <ion-icon name="download-outline" slot="start"></ion-icon>
+              Scarica
+            </ion-button>
+
+            @if (authService.currentUser()?.role === 'admin') {
+            <ion-button fill="clear" color="danger" size="small" class="fw-bold" (click)="deleteReport(report.id!)">
+              <ion-icon name="trash-outline" slot="start"></ion-icon>
+              Elimina
+            </ion-button>
+            }
+          </div>
+
+        </div>
+      </div>
+      }
+    </div>
+    }
+
+  </div>
+</ion-content>

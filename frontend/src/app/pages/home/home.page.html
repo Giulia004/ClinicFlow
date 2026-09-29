@@ -1,0 +1,112 @@
+<ion-content class="ion-padding">
+  <div class="container my-5 home-container">
+
+    <!-- Sezione Principale / Hero -->
+    <div class="row align-items-center justify-content-center text-center py-4">
+      <div class="col-lg-8">
+
+        <!-- Badge con il nome della clinica e icona migliorata -->
+        <div
+          class="badge bg-primary-subtle text-primary mb-4 px-4 py-2 rounded-pill fw-bold d-inline-flex align-items-center gap-2"
+          style="font-size: 0.95rem;">
+          <ion-icon name="pulse-outline" style="font-size: 1.2rem;"></ion-icon>
+          <span>ClinicFlow • Semplice • Veloce • Sicuro</span>
+        </div>
+
+        <h1 class="display-5 hero-title mb-3">Il portale della tua salute</h1>
+        <p class="lead text-muted mb-5 col-lg-10 mx-auto">
+          Accedi o registrati per prenotare visite mediche, consultare i tuoi referti e gestire il tuo profilo sanitario
+          in totale sicurezza.
+        </p>
+      </div>
+    </div>
+
+    <!-- Box Area Riservata / Autenticazione -->
+    <div class="row justify-content-center mb-5">
+      <div class="col-md-8 col-lg-5">
+        @if(!authService.isLoggedIn()){
+        <div class="p-4 p-md-5 auth-card text-center animate-fade-in">
+
+          <!-- Icona centrale cerchiata -->
+          <div class="icon-shape">
+            <ion-icon name="shield-checkmark-outline"></ion-icon>
+          </div>
+
+          <h3 class="fw-bold mb-2">Area riservata</h3>
+          <p class="text-muted mb-4 small">Accedi per gestire i tuoi appuntamenti</p>
+
+          <div class="d-grid gap-3">
+            <ion-button expand="block" shape="round" color="primary" (click)="goToLogin()" class="fw-bold">
+              <ion-icon name="log-in-outline" slot="start"></ion-icon>
+              Accedi
+            </ion-button>
+            <ion-button expand="block" shape="round" fill="outline" color="dark" (click)="goToRegister()"
+              class="fw-bold">
+              <ion-icon name="person-add-outline" slot="start"></ion-icon>
+              Crea account
+            </ion-button>
+          </div>
+        </div>
+        } @else {
+        @if(authService.currentUser(); as user) {
+        <div class="p-4 p-md-5 border-0 rounded-4 bg-primary text-white shadow-sm text-center animate-fade-in">
+          <div class="avatar-placeholder mb-3 text-center">
+            <ion-icon name="person-circle-outline" style="font-size: 64px;" class="mb-2 text-white-50"></ion-icon>
+            <h3 class="fw-bold mb-0">Bentornato!</h3>
+            <p class="opacity-75 mb-0">{{user.name}} {{user.surname}}</p>
+          </div>
+
+          <hr class="border-white opacity-25">
+
+          <ion-button expand="block" shape="round" color="light" (click)="goToDashboard()"
+            class="fw-bold text-primary mt-3 shadow-sm">
+            <ion-icon name="stats-chart-outline" slot="start"></ion-icon>
+            <span>Vai alla Dashboard</span>
+          </ion-button>
+        </div>
+        }
+        }
+      </div>
+    </div>
+
+    <!--Sezione features-->
+    <div class="row g-4 py-4">
+      <div class="col-md-4">
+        <ion-card class="h-100 border-0 shadow-sm ion-no-margin feature-card">
+          <ion-card-content class="text-center p-4">
+            <div class="mb-3 text-primary">
+              <ion-icon name="calendar-outline" style="font-size: 36px;"></ion-icon>
+            </div>
+            <h4 class="fw-bold fs-5">Prenotazioni</h4>
+            <p class="text-muted mb-0 small">Gestisci i tuoi appuntamenti online senza attese telefoniche</p>
+          </ion-card-content>
+        </ion-card>
+      </div>
+
+      <div class="col-md-4">
+        <ion-card class="h-100 border-0 shadow-sm ion-no-margin feature-card">
+          <ion-card-content class="text-center p-4">
+            <div class="mb-3 text-primary">
+              <ion-icon name="document-text-outline" style="font-size: 36px;"></ion-icon>
+            </div>
+            <h4 class="fw-bold fs-5">Referti Online</h4>
+            <p class="text-muted mb-0 small">Consulta e scarica i tuoi esiti clinici ovunque</p>
+          </ion-card-content>
+        </ion-card>
+      </div>
+
+      <div class="col-md-4">
+        <ion-card class="h-100 border-0 shadow-sm ion-no-margin feature-card">
+          <ion-card-content class="text-center p-4">
+            <div class="mb-3 text-primary">
+              <ion-icon name="shield-outline" style="font-size: 36px;"></ion-icon>
+            </div>
+            <h4 class="fw-bold fs-5">Privacy Protetta</h4>
+            <p class="text-muted mb-0 small">I tuoi dati sanitari sono criptati e accessibili solo a te</p>
+          </ion-card-content>
+        </ion-card>
+      </div>
+    </div>
+
+  </div>
+</ion-content>

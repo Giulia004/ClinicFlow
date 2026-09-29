@@ -1,0 +1,42 @@
+/* Sfondo generale della pagina slot */
+.slots-content {
+    --background: #f8f9fa;
+}
+
+/* Header della pagina */
+.page-header {
+    background: #ffffff;
+    transition: all 0.3s ease;
+}
+
+/* Card degli slot */
+.slot-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    background-color: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.04) !important;
+}
+
+.slot-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.06) !important;
+}
+
+/*Cerchietti delle icone orario*/
+.icon-circle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/*Pulsanti d'azione*/
+.slot-card ion-button {
+    --padding-start: 10px;
+    --padding-end: 10px;
+    font-size: 0.85rem;
+}
+
+/*Box per lo stato vuoto (niente slot)*/
+.empty-icon-box {
+    background-color: #f1f3f5;
+    color: #6c757d;
+}

@@ -1,0 +1,46 @@
+<ion-content class="ion-padding bg-light">
+  <div class="container py-3 max-w-600">
+
+    <!-- Intestazione Modale -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <div>
+        <h4 class="fw-bold text-dark mb-1">Carica Referto Medico</h4>
+        <p class="text-muted small mb-0">Seleziona il file PDF o documento della visita da allegare.</p>
+      </div>
+      <ion-button fill="clear" color="dark" (click)="dismiss()">
+        <ion-icon name="close-outline" style="font-size: 24px;"></ion-icon>
+      </ion-button>
+    </div>
+
+    <!-- Alert di errore -->
+    @if (errorMessage()) {
+    <div class="alert alert-danger py-2 small rounded-3 mb-3 shadow-sm">
+      {{ errorMessage() }}
+    </div>
+    }
+
+    <!-- Form di upload file -->
+    <div class="bg-white p-4 rounded-4 shadow-sm border border-light">
+
+      <div class="mb-4">
+        <label class="form-label fw-bold small text-muted">SELEZIONA DOCUMENTO (PDF)</label>
+        <div class="p-3 rounded-3 bg-light border border-light-subtle text-center">
+          <input type="file" (change)="onFileSelected($event)" accept=".pdf" class="form-control" />
+        </div>
+        <div class="form-text text-muted small mt-1">Carica il file firmato del referto medico.</div>
+      </div>
+
+      <!-- Pulsanti Azione -->
+      <div class="d-flex justify-content-end gap-2 pt-2">
+        <ion-button fill="clear" color="medium" (click)="dismiss()" class="fw-bold">
+          Annulla
+        </ion-button>
+        <ion-button fill="solid" color="primary" shape="round" class="fw-bold px-4 shadow-sm" (click)="save()">
+          Carica Referto
+        </ion-button>
+      </div>
+
+    </div>
+
+  </div>
+</ion-content>

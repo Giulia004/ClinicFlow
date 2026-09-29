@@ -1,0 +1,103 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Valutazioni e Recensioni</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding bg-light">
+  <div class="container py-4 max-w-1100">
+
+    <!-- Intestazione pagina -->
+    <div
+      class="mb-4 bg-white p-4 rounded-4 shadow-sm border border-light d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+      <div>
+        <div
+          class="badge bg-primary-subtle text-primary px-3 py-2 rounded-pill fw-bold mb-2 d-inline-flex align-items-center gap-2">
+          <ion-icon name="star"></ion-icon>
+          <span>Gestione Feedback</span>
+        </div>
+        @if (this.role() !== 'paziente') {
+        <h2 class="fw-bold text-dark mb-1">Feedback Ricevuti</h2>
+        <p class="text-muted mb-0">Consulta le valutazioni espresse dai pazienti sulle visite effettuate.</p>
+        } @else {
+        <h2 class="fw-bold text-dark mb-1">Feedback Inviati</h2>
+        <p class="text-muted mb-0">Le recensioni che hai rilasciato per le visite concluse.</p>
+        }
+      </div>
+      <div class="text-muted small bg-light px-3 py-2 rounded-pill border">
+        Totale recensioni: <strong class="text-dark">{{ feedbackList().length }}</strong>
+      </div>
+    </div>
+
+    @if (errorMessage()) {
+    <div class="alert alert-danger d-flex align-items-center mb-4 py-2 small shadow-sm rounded-3" role="alert">
+      <ion-icon name="alert-circle-outline" class="me-2 fs-5 flex-shrink-0"></ion-icon>
+      <div>{{ errorMessage() }}</div>
+    </div>
+    }
+
+    @if (isLoading()) {
+    <div class="text-center py-5">
+      <ion-spinner name="crescent" color="primary" style="width: 40px; height: 40px;"></ion-spinner>
+      <p class="text-muted mt-3 fw-medium">Caricamento recensioni in corso...</p>
+    </div>
+    } @else {
+    <div class="row g-4">
+      @for (item of feedbackList(); track item.id) {
+      <div class="col-md-6 col-lg-4">
+        <div
+          class="card feedback-card border-0 shadow-sm p-4 h-100 bg-white d-flex flex-column justify-content-between">
+          <div>
+            <!-- Top Card: Badge Voto e Stelle -->
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <div class="d-flex gap-1 text-warning fs-5">
+                @for (s of [1, 2, 3, 4, 5]; track s) {
+                <ion-icon [name]="s <= item.voto ? 'star' : 'star-outline'"></ion-icon>
+                }
+              </div>
+              <span class="badge bg-primary-subtle text-primary fw-bold px-3 py-2 rounded-pill"
+                style="font-size: 0.8rem;">
+                {{ item.voto }}.0 / 5
+              </span>
+            </div>
+
+            <!-- Box Commento -->
+            <div class="feedback-comment mb-3">
+              <p class="mb-0 fst-italic text-dark">
+                "{{ item.commento || 'Nessun commento scritto dal paziente.' }}"
+              </p>
+            </div>
+          </div>
+
+          <!-- Footer Card: Data e Azioni Admin -->
+          <div class="pt-3 border-top d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center gap-2 text-muted small">
+              <ion-icon name="calendar-outline"></ion-icon>
+              <span>{{ item.data_creazione | date:'dd/MM/yyyy' }}</span>
+            </div>
+
+            @if (authService.currentUser()?.role === 'admin') {
+            <ion-button fill="clear" color="danger" size="small" class="fw-bold m-0" (click)="deleteFeedback(item.id!)">
+              <ion-icon name="trash-outline" slot="start"></ion-icon>
+              Elimina
+            </ion-button>
+            }
+          </div>
+        </div>
+      </div>
+      } @empty {
+      <!-- Stato vuoto -->
+      <div class="col-12">
+        <div class="text-center py-5 bg-white rounded-4 shadow-sm border border-light p-5">
+          <div class="empty-icon-box">
+            <ion-icon name="chatbubble-outline" style="font-size: 36px;"></ion-icon>
+          </div>
+          <h5 class="fw-bold text-dark">Nessuna recensione presente</h5>
+          <p class="text-muted small mb-0">Non ci sono ancora valutazioni registrate nel sistema al momento.</p>
+        </div>
+      </div>
+      }
+    </div>
+    }
+  </div>
+</ion-content>

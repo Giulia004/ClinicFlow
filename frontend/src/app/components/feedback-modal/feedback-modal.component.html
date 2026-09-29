@@ -1,0 +1,47 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Valuta la Visita</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">
+        <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding bg-light">
+  @if (errorMessage()) {
+  <div class="alert alert-danger d-flex align-items-center mb-3 py-2 small shadow-sm rounded-3" role="alert">
+    <ion-icon name="alert-circle-outline" class="me-2 fs-5 flex-shrink-0"></ion-icon>
+    <div>{{ errorMessage() }}</div>
+  </div>
+  }
+
+  <div class="text-center my-3 bg-white p-4 rounded-4 shadow-sm border border-light">
+    <h6 class="fw-bold text-dark mb-1">Com'è stata la tua esperienza?</h6>
+    <p class="text-muted small mb-3">Lascia una valutazione da 1 a 5 stelle per lo specialista.</p>
+
+    <!-- Selettore a stelle interattivo -->
+    <div class="d-flex justify-content-center gap-2 fs-1 text-warning">
+      @for (star of [1, 2, 3, 4, 5]; track star) {
+      <ion-icon [name]="star <= voto() ? 'star' : 'star-outline'" (click)="setRating(star)"
+        style="cursor: pointer; transition: transform 0.2s;">
+      </ion-icon>
+      }
+    </div>
+    <div class="mt-2 fw-bold text-primary">{{ voto() }} / 5 Stelle</div>
+  </div>
+
+  <div class="bg-white p-4 rounded-4 shadow-sm border border-light mb-4">
+    <ion-item class="rounded-3 border-0 p-0">
+      <ion-label position="stacked" class="fw-bold text-dark mb-2">Commento (opzionale)</ion-label>
+      <ion-textarea [(ngModel)]="commento" rows="4" placeholder="Scrivi una breve recensione sulla visita ricevuta..."
+        class="form-control"></ion-textarea>
+    </ion-item>
+  </div>
+
+  <ion-button expand="block" shape="round" color="primary" class="fw-bold shadow-sm py-2" (click)="submitFeedback()">
+    <ion-icon name="send-outline" slot="start"></ion-icon>
+    Invia Valutazione
+  </ion-button>
+</ion-content>

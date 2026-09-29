@@ -1,0 +1,111 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Aggiungi Nuovo Membro</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">
+        <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding bg-light">
+  <div class="container py-2 max-w-600">
+
+    @if (errorMessage()) {
+    <div class="alert alert-danger d-flex align-items-center mb-3 py-2 small shadow-sm rounded-3" role="alert">
+      <ion-icon name="alert-circle-outline" class="me-2 fs-5 flex-shrink-0"></ion-icon>
+      <div>{{ errorMessage() }}</div>
+    </div>
+    }
+
+    <div class="bg-white p-4 rounded-4 shadow-sm border border-light">
+
+      <!-- Ruolo -->
+      <div class="mb-3">
+        <label class="form-label fw-bold small text-muted">RUOLO</label>
+        <ion-item class="rounded-3 border border-light-subtle bg-light" lines="none">
+          <ion-select [(ngModel)]="userData.role" interface="popover" class="w-100">
+            <ion-select-option value="medico">Medico</ion-select-option>
+            <ion-select-option value="sportellista">Sportellista</ion-select-option>
+            <ion-select-option value="admin">Amministratore</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </div>
+
+      <!-- Dati Anagrafici -->
+      <div class="row g-3 mb-3">
+        <div class="col-md-6">
+          <label class="form-label fw-bold small text-muted">NOME</label>
+          <ion-input [(ngModel)]="userData.name" placeholder="Inserisci nome..."
+            class="form-control bg-light"></ion-input>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label fw-bold small text-muted">COGNOME</label>
+          <ion-input [(ngModel)]="userData.surname" placeholder="Inserisci cognome..."
+            class="form-control bg-light"></ion-input>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label fw-bold small text-muted">CODICE FISCALE</label>
+        <ion-input [(ngModel)]="userData.cf" placeholder="Inserisci codice fiscale..."
+          class="form-control bg-light"></ion-input>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label fw-bold small text-muted">EMAIL</label>
+        <ion-input [(ngModel)]="userData.email" type="email" placeholder="indirizzo@email.it"
+          class="form-control bg-light"></ion-input>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label fw-bold small text-muted">PASSWORD</label>
+        <ion-input [(ngModel)]="userData.password" type="password" placeholder="••••••••"
+          class="form-control bg-light"></ion-input>
+      </div>
+
+      <!-- Campi specifici per Medico -->
+      @if (userData.role === 'medico') {
+      <div class="p-3 rounded-3 bg-light border border-light-subtle mb-4">
+        <h6 class="fw-bold text-dark mb-3 small text-uppercase">Dettagli Specializzazione</h6>
+        <div class="mb-3">
+          <label class="form-label fw-bold small text-muted">SPECIALIZZAZIONE</label>
+          <ion-input [(ngModel)]="userData.specializzazione" placeholder="Es. Cardiologia"
+            class="form-control bg-white"></ion-input>
+        </div>
+        <div>
+          <label class="form-label fw-bold small text-muted">NUMERO ALBO</label>
+          <ion-input [(ngModel)]="userData.numeroAlbo" placeholder="Es. PA12345"
+            class="form-control bg-white"></ion-input>
+        </div>
+      </div>
+      }
+
+      <!-- Campi specifici per Sportellista -->
+      @if (userData.role === 'sportellista') {
+      <div class="p-3 rounded-3 bg-light border border-light-subtle mb-4">
+        <h6 class="fw-bold text-dark mb-3 small text-uppercase">Dettagli Postazione</h6>
+        <div>
+          <label class="form-label fw-bold small text-muted">POSTAZIONE</label>
+          <ion-input [(ngModel)]="userData.postazione" placeholder="Es. Sportello A"
+            class="form-control bg-white"></ion-input>
+        </div>
+      </div>
+      }
+
+      <!-- Pulsanti Azione -->
+      <div class="d-flex justify-content-end gap-2 pt-2">
+        <ion-button fill="clear" color="medium" (click)="dismiss()" class="fw-bold">
+          Annulla
+        </ion-button>
+        <ion-button fill="solid" color="primary" shape="round" class="fw-bold px-4 shadow-sm" (click)="save()">
+          <ion-icon name="person-add-outline" slot="start"></ion-icon>
+          Registra Utente
+        </ion-button>
+      </div>
+
+    </div>
+
+  </div>
+</ion-content>

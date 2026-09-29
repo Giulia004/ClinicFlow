@@ -1,0 +1,17 @@
+<div class="search-filter-container mb-3">
+  <ion-searchbar (ionInput)="onSearch($event)" placeholder="Cerca..." [debounce]="300" showClearButton="always">
+  </ion-searchbar>
+
+  <!--Pulsanti di filtraggio rapido-->
+  @if(filterOptions().length>0){
+  <div class="filter-buttons d-flex gap-2 px-2 overflow-x-auto">
+    <ion-button size="small" [fill]="activeFilter()==='all'? 'solid':'outline'"
+      (click)="setFilter('all')">Tutti</ion-button>
+
+    @for(option of filterOptions();track option.value){
+    <ion-button size="small" [fill]="activeFilter()==='option.value'? 'solid':'outline'"
+      (click)="setFilter(option.value)">{{option.label}}</ion-button>
+    }
+  </div>
+  }
+</div>

@@ -1,0 +1,156 @@
+<ion-content class="ion-padding bg-light">
+  <div class="container py-4 dashboard-container">
+
+    @if (authService.currentUser(); as user) {
+
+    <!-- HEADER DI BENVENUTO DINAMICO PER RUOLO -->
+    <div class="row align-items-center mb-5 p-4 bg-white rounded-4 shadow-sm border border-light g-3">
+      <div class="col-lg-8">
+        <div class="d-flex align-items-center gap-2 mb-2">
+          <div
+            class="badge bg-primary-subtle text-primary px-3 py-2 rounded-pill fw-bold d-inline-flex align-items-center gap-2">
+            <ion-icon name="pulse-outline"></ion-icon>
+            <span>ClinicFlow • Portale Sanitario</span>
+          </div>
+
+          <!-- Badge personalizzato per colore in base al ruolo -->
+          @switch (user.role) {
+          @case ('admin') {
+          <span
+            class="badge bg-danger-subtle text-danger px-3 py-2 rounded-pill fw-bold text-uppercase">Amministratore</span>
+          }
+          @case ('medico') {
+          <span class="badge bg-success-subtle text-success px-3 py-2 rounded-pill fw-bold text-uppercase">Medico</span>
+          }
+          @case ('sportellista') {
+          <span
+            class="badge bg-warning-subtle text-warning px-3 py-2 rounded-pill fw-bold text-uppercase">Sportellista</span>
+          }
+          @default {
+          <span
+            class="badge bg-secondary-subtle text-secondary px-3 py-2 rounded-pill fw-bold text-uppercase">Paziente</span>
+          }
+          }
+        </div>
+
+        <h2 class="fw-bold text-dark mb-1">Bentornato, {{ user.name }} {{ user.surname }}! 👋</h2>
+
+        <p class="text-muted mb-0">
+          @switch (user.role) {
+          @case ('admin') { Pannello di controllo globale, gestione utenti e configurazione del sistema. }
+          @case ('medico') { Gestisci la tua agenda visite, inserisci referti clinici e monitora i pazienti. }
+          @case ('sportellista') { Gestione accettazione, prenotazioni al banco e supporto allo sportello. }
+          @default { Gestisci i tuoi appuntamenti, consulta gli esiti clinici e monitora la tua salute. }
+          }
+        </p>
+      </div>
+
+      <!-- Pulsante di azione rapida differenziato per ruolo -->
+      <div class="col-lg-4 text-lg-end">
+        @if (user.role === 'paziente' || !user.role) {
+        <ion-button shape="round" color="primary" routerLink="/dashboard/appointments" class="fw-bold shadow-sm">
+          <ion-icon name="add-circle-outline" slot="start"></ion-icon>
+          Nuova Visita
+        </ion-button>
+        } @else if (user.role === 'medico' || user.role === 'sportellista') {
+        <ion-button shape="round" color="success" routerLink="/dashboard/appointments" class="fw-bold shadow-sm">
+          <ion-icon name="calendar-outline" slot="start"></ion-icon>
+          Gestisci Agenda
+        </ion-button>
+        } @else if (user.role === 'admin') {
+        <ion-button shape="round" color="danger" routerLink="/dashboard/users" class="fw-bold shadow-sm">
+          <ion-icon name="people-outline" slot="start"></ion-icon>
+          Gestisci Utenti
+        </ion-button>
+        }
+      </div>
+    </div>
+    }
+
+    <h4 class="fw-bold text-dark mb-3">Servizi Disponibili</h4>
+    <div class="row g-4">
+
+      <!-- Servizio Prenotazioni-->
+      <div class="col-md-6 col-lg-4">
+        <ion-card class="h-100 border-0 shadow-sm rounded-4 service-card ion-no-margin">
+          <ion-card-content class="p-4 d-flex flex-column justify-content-between h-100">
+            <div>
+              <div class="mb-3 text-primary bg-primary-subtle d-inline-block p-3 rounded-4">
+                <ion-icon name="calendar-outline" style="font-size: 32px;"></ion-icon>
+              </div>
+              <h4 class="fw-bold fs-5 text-dark">Gestione Prenotazioni</h4>
+              <p class="text-muted small">Prenota nuove visite mediche specialistiche, visualizza l'agenda o gestisci
+                gli appuntamenti.</p>
+            </div>
+            <ion-button routerLink="/dashboard/appointments" fill="clear" color="primary"
+              class="fw-bold p-0 mt-3 align-self-start">
+              Apri modulo <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
+            </ion-button>
+          </ion-card-content>
+        </ion-card>
+      </div>
+
+      <!-- Servizio Referti -->
+      <div class="col-md-6 col-lg-4">
+        <ion-card class="h-100 border-0 shadow-sm rounded-4 service-card ion-no-margin">
+          <ion-card-content class="p-4 d-flex flex-column justify-content-between h-100">
+            <div>
+              <div class="mb-3 text-success bg-success-subtle d-inline-block p-3 rounded-4">
+                <ion-icon name="document-text-outline" style="font-size: 32px;"></ion-icon>
+              </div>
+              <h4 class="fw-bold fs-5 text-dark">Referti ed Esami</h4>
+              <p class="text-muted small">Consulta, scarica o compila referti digitali di laboratorio e diagnostica
+                clinica.</p>
+            </div>
+            <ion-button fill="clear" color="success" class="fw-bold p-0 mt-3 align-self-start"
+              routerLink="/dashboard/reports">
+              Accedi ai referti <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
+            </ion-button>
+          </ion-card-content>
+        </ion-card>
+      </div>
+
+      <!-- Servizio Feedback / Assistenza -->
+      <div class="col-md-6 col-lg-4">
+        <ion-card class="h-100 border-0 shadow-sm rounded-4 service-card ion-no-margin"
+          routerLink="/dashboard/feedbacks">
+          <ion-card-content class="p-4 d-flex flex-column justify-content-between h-100">
+            <div>
+              <div class="mb-3 text-warning bg-warning-subtle d-inline-block p-3 rounded-4">
+                <ion-icon name="chatbubble-outline" style="font-size: 32px;"></ion-icon>
+              </div>
+              <h4 class="fw-bold fs-5 text-dark">Feedback</h4>
+              <p class="text-muted small">Invia le tue opinioni.</p>
+            </div>
+            <ion-button fill="clear" color="warning" class="fw-bold p-0 mt-3 align-self-start text-dark">
+              Supporto <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
+            </ion-button>
+          </ion-card-content>
+        </ion-card>
+      </div>
+
+      <!-- Servizio Pianificazione Slot -->
+      @if (authService.currentUser()?.role === 'admin') {
+      <div class="col-md-6 col-lg-4">
+        <ion-card class="h-100 border-0 shadow-sm rounded-4 service-card ion-no-margin">
+          <ion-card-content class="p-4 d-flex flex-column justify-content-between h-100">
+            <div>
+              <div class="mb-3 text-danger bg-danger-subtle d-inline-block p-3 rounded-4">
+                <ion-icon name="time-outline" style="font-size: 32px;"></ion-icon>
+              </div>
+              <h4 class="fw-bold fs-5 text-dark">Pianificazione Slot</h4>
+              <p class="text-muted small">Genera e gestisci la disponibilità oraria dei medici per le prenotazioni.</p>
+            </div>
+            <ion-button fill="clear" color="danger" class="fw-bold p-0 mt-3 align-self-start"
+              routerLink="/dashboard/slots">
+              Gestisci slot <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
+            </ion-button>
+          </ion-card-content>
+        </ion-card>
+      </div>
+      }
+
+    </div>
+
+  </div> <!-- Chiusura container aggiunta qui -->
+</ion-content>

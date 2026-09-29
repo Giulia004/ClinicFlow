@@ -1,0 +1,19 @@
+<ion-header translucent="true">
+    <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="/home" text="Indietro">
+                <ion-icon name="arrow-back-outline" slot="icon-only"></ion-icon>
+            </ion-back-button>
+        </ion-buttons>
+        <ion-title>ClinicFlow</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+    <div class="auth-wrapper">
+        <div class="auth-card-container">
+            <!-- Contenitore dinamico per l'accesso o la registrazione -->
+            <ion-router-outlet></ion-router-outlet>
+        </div>
+    </div>
+</ion-content>

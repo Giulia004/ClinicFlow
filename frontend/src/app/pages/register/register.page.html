@@ -1,0 +1,103 @@
+<ion-content class="ion-padding">
+  <div class="register-container d-flex align-items-center justify-content-center">
+    <div class="card auth-card shadow-sm border-0 p-4 p-md-5 w-100 animate-fade-in" style="max-width: 480px;">
+
+      <!-- Intestazione -->
+      <div class="text-center mb-4">
+        <div
+          class="icon-shape bg-primary text-white rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center"
+          style="width: 64px; height: 64px;">
+          <ion-icon name="person-add-outline" style="font-size: 30px;"></ion-icon>
+        </div>
+        <h2 class="fw-bold mb-1">Crea account</h2>
+        <p class="text-muted small">Entra a far parte di ClinicFlow</p>
+      </div>
+
+      <!-- Alert di errore dinamico -->
+      @if (errorMessage()) {
+      <div class="alert alert-danger d-flex align-items-center mb-4 py-2 small" role="alert">
+        <ion-icon name="alert-circle-outline" class="me-2 fs-5 flex-shrink-0"></ion-icon>
+        <div>{{ errorMessage() }}</div>
+      </div>
+      }
+
+      <!-- Form di Registrazione -->
+      <form (ngSubmit)="onRegister()">
+
+        <!-- Nome e Cognome in riga -->
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="name" class="form-label small fw-bold text-secondary">Nome</label>
+            <div class="input-group">
+              <span class="input-group-text bg-light border-end-0">
+                <ion-icon name="person-outline" class="text-muted"></ion-icon>
+              </span>
+              <input type="text" id="name" class="form-control border-start-0 ps-0 shadow-none" placeholder="Mario"
+                [(ngModel)]="userData.name" name="name" required>
+            </div>
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label for="surname" class="form-label small fw-bold text-secondary">Cognome</label>
+            <div class="input-group">
+              <span class="input-group-text bg-light border-end-0">
+                <ion-icon name="person-outline" class="text-muted"></ion-icon>
+              </span>
+              <input type="text" id="surname" class="form-control border-start-0 ps-0 shadow-none" placeholder="Rossi"
+                [(ngModel)]="userData.surname" name="surname" required>
+            </div>
+          </div>
+        </div>
+
+        <!-- Campo Email -->
+        <div class="mb-3">
+          <label for="email" class="form-label small fw-bold text-secondary">Email</label>
+          <div class="input-group">
+            <span class="input-group-text bg-light border-end-0">
+              <ion-icon name="mail-outline" class="text-muted"></ion-icon>
+            </span>
+            <input type="email" id="email" class="form-control border-start-0 ps-0 shadow-none"
+              placeholder="mario.rossi@esempio.it" [(ngModel)]="userData.email" name="email" required
+              autocomplete="email">
+          </div>
+        </div>
+
+        <!-- Campo Password -->
+        <div class="mb-4">
+          <label for="password" class="form-label small fw-bold text-secondary">Password</label>
+          <div class="input-group">
+            <span class="input-group-text bg-light border-end-0">
+              <ion-icon name="lock-closed-outline" class="text-muted"></ion-icon>
+            </span>
+            <input type="password" id="password" class="form-control border-start-0 ps-0 shadow-none"
+              placeholder="••••••••" [(ngModel)]="userData.password" name="password" required
+              autocomplete="new-password">
+          </div>
+        </div>
+
+        <!-- Pulsante di Invio -->
+        <div class="d-grid mb-3">
+          <ion-button expand="block" shape="round" color="primary" type="submit" [disabled]="isLoading()"
+            class="fw-bold py-2" routerDirection="forward">
+            @if (isLoading()) {
+            <ion-spinner name="crescent" class="me-2"></ion-spinner>
+            <span>Registrazione in corso...</span>
+            } @else {
+            <span>Registrati</span>
+            }
+          </ion-button>
+        </div>
+
+      </form>
+
+      <!-- Link per tornare al Login -->
+      <div class="text-center mt-3">
+        <p class="text-muted small mb-0">
+          Hai già un account?
+          <a routerLink="/login" routerDirection="forward" class="text-primary fw-bold text-decoration-none">Accedi</a>
+        </p>
+      </div>
+
+    </div>
+  </div>
+</ion-content>

@@ -1,0 +1,212 @@
+<ion-content class="ion-padding bg-light">
+  <div class="container py-4 max-w-1100">
+
+    <!-- Intestazione pagina -->
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
+      <div>
+        <div
+          class="badge bg-primary-subtle text-primary mb-2 px-3 py-2 rounded-pill fw-bold d-inline-flex align-items-center gap-2">
+          <ion-icon name="calendar-outline"></ion-icon>
+          <span>Agenda Medica • ClinicFlow</span>
+        </div>
+        <h2 class="fw-bold text-dark mb-1">Gestione Prenotazioni</h2>
+        <p class="text-muted mb-0">Visualizza e gestisci gli appuntamenti associati agli slot di disponibilità.</p>
+      </div>
+
+      <!-- Pulsante visibile solo per Paziente e Sportellista -->
+      @if (authService.currentUser(); as user) {
+      @if (user.role === 'paziente' || user.role === 'sportellista') {
+      <ion-button color="primary" shape="round" (click)="openAddModal()" class="fw-bold shadow-sm">
+        <ion-icon name="add-circle-outline" slot="start"></ion-icon>
+        Nuova Prenotazione
+      </ion-button>
+      }
+      }
+    </div>
+
+    <!-- Alert di feedback -->
+    @if (successMessage()) {
+    <div class="alert alert-success d-flex align-items-center mb-4 py-2 small shadow-sm rounded-3" role="alert">
+      <ion-icon name="checkmark-circle-outline" class="me-2 fs-5 flex-shrink-0"></ion-icon>
+      <div>{{ successMessage() }}</div>
+    </div>
+    }
+    @if (errorMessage()) {
+    <div class="alert alert-danger d-flex align-items-center mb-4 py-2 small shadow-sm rounded-3" role="alert">
+      <ion-icon name="alert-circle-outline" class="me-2 fs-5 flex-shrink-0"></ion-icon>
+      <div>{{ errorMessage() }}</div>
+    </div>
+    }
+
+    <!-- Sezione Filtri -->
+    <h4 class="fw-bold text-dark mb-3 fs-5 d-flex align-items-center gap-2">
+      <ion-icon name="time-outline" class="text-primary"></ion-icon>
+      Elenco Appuntamenti
+    </h4>
+    <app-filter-widget [data]="appointments()"
+      [searchKeys]="['patient_name', 'patient_surname', 'medico_name', 'medico_surname', 'medico_specializzazione']"
+      [filterProperty]="'stato'" [filterOptions]="[
+        { label: 'Attivi', value: 'attivo' },
+        { label: 'Confermati', value: 'confermato' },
+        { label: 'Completati', value: 'completato' },
+        { label: 'Annullati', value: 'annullato' }
+      ]" (filterData)="filteredAppointments.set($event)">
+    </app-filter-widget>
+
+    @if (filteredAppointments().length === 0) {
+    <div class="text-center py-5 bg-white rounded-4 shadow-sm border border-light p-5">
+      <div
+        class="empty-icon-box mx-auto mb-3 bg-light text-muted rounded-circle d-flex align-items-center justify-content-center"
+        style="width: 70px; height: 70px;">
+        <ion-icon name="calendar-outline" style="font-size: 36px;"></ion-icon>
+      </div>
+      <h5 class="fw-bold text-dark">Nessun appuntamento registrato</h5>
+      <p class="text-muted small mb-0">Non ci sono prenotazioni attive nel sistema al momento.</p>
+    </div>
+    } @else {
+    <!-- Griglia delle Card degli Appuntamenti -->
+    <div class="row g-4">
+      @for (item of filteredAppointments(); track item.id) {
+      <div class="col-md-6 col-lg-4">
+        <div class="card border-0 shadow-sm rounded-4 p-4 h-100 bg-white d-flex flex-column justify-content-between">
+
+          <div>
+            <!-- Top Card: ID Appuntamento e Badge Stato -->
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <span class="badge bg-light text-dark border fw-bold px-3 py-2 rounded-pill">
+                #{{ item.id }}
+              </span>
+              <span
+                class="badge {{ item.stato === 'completato' ? 'bg-success-subtle text-success' : 'bg-primary-subtle text-primary' }} px-3 py-2 rounded-pill fw-bold text-uppercase"
+                style="font-size: 0.75rem;">
+                {{ item.stato }}
+              </span>
+            </div>
+
+            <!-- Box Info Medico -->
+            <div class="d-flex align-items-center gap-3 mb-3 p-3 rounded-3 bg-light border border-light-subtle">
+              <div
+                class="d-flex align-items-center justify-content-center bg-danger-subtle text-danger rounded-circle fw-bold flex-shrink-0"
+                style="width: 42px; height: 42px; min-width: 42px; font-size: 15px;">
+                {{ item.medico_name ? item.medico_name.charAt(0) : 'D' }}{{ item.medico_surname ?
+                item.medico_surname.charAt(0) : '' }}
+              </div>
+              <div class="overflow-hidden">
+                <h6 class="fw-bold text-dark mb-0 text-truncate">Dr. {{ item.medico_name }} {{ item.medico_surname }}
+                </h6>
+                <small class="text-muted text-truncate d-block">{{ item.medico_specializzazione || 'Specialista'
+                  }}</small>
+              </div>
+            </div>
+
+            <!-- Box Info Paziente -->
+            <div class="p-3 rounded-3 bg-white border border-light-subtle mb-3">
+              <div class="d-flex align-items-center gap-2 mb-1 text-dark">
+                <ion-icon name="person-outline" color="primary" style="font-size: 16px;"></ion-icon>
+                <span class="small fw-bold">Paziente: {{ item.patient_name }} {{ item.patient_surname }}</span>
+              </div>
+              <div class="text-muted small ms-4 text-truncate">Email: {{ item.patient_email }}</div>
+            </div>
+
+            <!-- Dettagli Data e Orari -->
+            <div
+              class="d-flex align-items-center justify-content-between p-3 rounded-3 bg-light border border-light-subtle mb-3">
+              <div class="d-flex align-items-center gap-2">
+                <div
+                  class="icon-circle bg-primary-subtle text-primary rounded-circle d-flex align-items-center justify-content-center"
+                  style="width: 30px; height: 30px;">
+                  <ion-icon name="calendar-outline" style="font-size: 14px;"></ion-icon>
+                </div>
+                <div>
+                  <span class="text-muted d-block" style="font-size: 0.65rem;">Data</span>
+                  <strong class="text-dark small">{{ item.data | date:'dd/MM/yyyy' }}</strong>
+                </div>
+              </div>
+              <div class="d-flex align-items-center gap-2">
+                <div
+                  class="icon-circle bg-success-subtle text-success rounded-circle d-flex align-items-center justify-content-center"
+                  style="width: 30px; height: 30px;">
+                  <ion-icon name="time-outline" style="font-size: 14px;"></ion-icon>
+                </div>
+                <div>
+                  <span class="text-muted d-block" style="font-size: 0.65rem;">Orario</span>
+                  <strong class="text-dark small">{{ item.orario_inizio }} - {{ item.orario_fine }}</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Azioni Card -->
+          @if (authService.currentUser()?.role === 'paziente' || authService.currentUser()?.role === 'sportellista' ||
+          authService.currentUser()?.role === 'admin' || authService.currentUser()?.role === 'medico') {
+          <div class="pt-3 border-top d-flex justify-content-between align-items-center">
+            <span class="text-muted small" style="font-size: 0.75rem;">Creato da: <strong class="text-capitalize">{{
+                item.creato_da }}</strong></span>
+
+            <div class="d-flex gap-1 align-items-center">
+              <!-- Pulsante Valuta Visita -->
+              @if (item.stato === 'completato' && authService.currentUser()?.role === 'paziente') {
+              <ion-button fill="clear" color="warning" size="small" class="fw-bold" (click)="openFeedbackModal(item)">
+                <ion-icon name="star-outline" slot="start"></ion-icon>
+                Valuta Visita
+              </ion-button>
+              }
+
+              <!-- Pulsante Scrivi Referto -->
+              @if (item.stato === 'completato' && authService.currentUser()?.role === 'medico') {
+              <ion-button fill="clear" color="primary" size="small" class="fw-bold" (click)="openReportModal(item)">
+                <ion-icon name="document-text-outline" slot="start"></ion-icon>
+                Scrivi Referto
+              </ion-button>
+              }
+
+              <!-- Azioni specifiche per il Medico -->
+              @if (authService.currentUser()?.role === 'medico') {
+              @if (item.stato !== 'completato') {
+              <ion-button fill="clear" color="success" size="small" class="fw-bold" (click)="completeBooking(item.id!)">
+                <ion-icon name="checkmark-done-outline" slot="start"></ion-icon>
+                Completa
+              </ion-button>
+              }
+              } @else if (authService.currentUser()?.role === 'admin') {
+              <ion-button fill="clear" color="danger" size="small" class="fw-bold" (click)="cancelBooking(item.id!)">
+                <ion-icon name="trash-outline" slot="start"></ion-icon>
+                Elimina
+              </ion-button>
+              } @else if (authService.currentUser()?.role !== 'paziente') {
+              <!-- Azioni sportellista -->
+              @if (item.stato === 'attivo') {
+              <ion-button fill="clear" color="success" size="small" class="fw-bold" (click)="confirmBooking(item.id!)">
+                <ion-icon name="checkmark-circle-outline" slot="start"></ion-icon>
+                Conferma
+              </ion-button>
+              }
+              <ion-button fill="clear" color="danger" size="small" class="fw-bold" (click)="cancelBooking(item.id!)">
+                <ion-icon name="close-circle-outline" slot="start"></ion-icon>
+                Disdici
+              </ion-button>
+              }
+            </div>
+          </div>
+          }
+
+        </div>
+      </div>
+      } @empty {
+      <div class="col-12">
+        <div class="text-center py-5 bg-white rounded-4 shadow-sm border border-light p-5">
+          <div
+            class="empty-icon-box mx-auto mb-3 bg-light text-muted rounded-circle d-flex align-items-center justify-content-center"
+            style="width: 70px; height: 70px;">
+            <ion-icon name="calendar-outline" style="font-size: 36px;"></ion-icon>
+          </div>
+          <h5 class="fw-bold text-dark">Nessun appuntamento registrato</h5>
+          <p class="text-muted small mb-0">Non ci sono prenotazioni attive nel sistema al momento.</p>
+        </div>
+      </div>
+      }
+    </div>
+    }
+
+  </div>
+</ion-content>

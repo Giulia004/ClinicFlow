@@ -1,0 +1,96 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Il mio Profilo</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  @if (errorMessage()) {
+  <div class="alert alert-danger" role="alert">
+    {{ errorMessage() }}
+  </div>
+  }
+
+  @if (isLoading()) {
+  <div class="text-center mt-5">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>Caricamento profilo...</p>
+  </div>
+  } @else if (userProfile()) {
+  <ion-card>
+    <ion-card-header>
+      <div class="d-flex justify-content-between align-items-center">
+        <ion-card-title>
+          <ion-icon name="person-outline" class="me-2"></ion-icon>
+          {{ userProfile()!.name }} {{ userProfile()!.surname }}
+        </ion-card-title>
+
+        <!-- Pulsante per aprire la modale -->
+        <ion-button fill="clear" (click)="openEditModal()">
+          <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+        </ion-button>
+      </div>
+      <p class="text-muted text-uppercase mb-0">{{ userProfile()!.role }}</p>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-item>
+        <ion-label>
+          <h2>Codice Fiscale</h2>
+          <p>{{ userProfile()!.cf }}</p>
+        </ion-label>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>
+          <h2>Email</h2>
+          <p>{{ userProfile()!.email }}</p>
+        </ion-label>
+      </ion-item>
+
+      <!-- Dettagli Paziente -->
+      @if (userProfile()!.role === 'paziente') {
+      <ion-item>
+        <ion-label>
+          <h2>Gruppo Sanguigno</h2>
+          <p>{{ ($any(userProfile())).gruppo_sanguigno || 'Non specificato' }}</p>
+        </ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>
+          <h2>Telefono Emergenza</h2>
+          <p>{{ ($any(userProfile())).telefono_emergenza || 'Non specificato' }}</p>
+        </ion-label>
+      </ion-item>
+      }
+
+      <!-- Dettagli Medico -->
+      @if (userProfile()!.role === 'medico') {
+      <ion-item>
+        <ion-label>
+          <h2>Specializzazione</h2>
+          <p>{{ ($any(userProfile())).specializzazione }}</p>
+        </ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>
+          <h2>Numero Albo</h2>
+          <p>{{ ($any(userProfile())).numero_albo }}</p>
+        </ion-label>
+      </ion-item>
+      }
+
+      <!-- Dettagli Sportellista -->
+      @if (userProfile()!.role === 'sportellista') {
+      <ion-item>
+        <ion-label>
+          <h2>Postazione</h2>
+          <p>{{ ($any(userProfile())).postazione || 'Non assegnata' }}</p>
+        </ion-label>
+      </ion-item>
+      }
+    </ion-card-content>
+  </ion-card>
+  }
+</ion-content>

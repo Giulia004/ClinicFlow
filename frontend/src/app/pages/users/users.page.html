@@ -1,0 +1,78 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Gestione Personale e Utenti</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding bg-light">
+  <div class="container py-4 max-w-1100">
+
+    <!-- Intestazione -->
+    <div
+      class="mb-4 bg-white p-4 rounded-4 shadow-sm border border-light d-flex justify-content-between align-items-center">
+      <div>
+        <h2 class="fw-bold text-dark mb-1">Staff e Pazienti della Struttura</h2>
+        <p class="text-muted mb-0">Gestisci i medici e gli sportellisti registrati nel sistema.</p>
+      </div>
+      <!-- L'admin può usare la pagina di registrazione o una modale dedicata per aggiungere membri -->
+      <ion-button color="primary" shape="round" (click)="openAddUserModal()" class="fw-bold shadow-sm">
+        <ion-icon name="add-circle-outline" slot="start"></ion-icon>
+        Registra Nuovo Membro
+      </ion-button>
+    </div>
+
+    <app-filter-widget [data]="usersList()"
+      [searchKeys]="['name','surname','email','cf']"
+      [filterProperty]="'role'" [filterOptions]="[
+        {label:'Medici',value:'medico'},
+        {label:'Pazienti',value:'paziente'},
+        {label:'Sportellisti',value:'sportellista'},
+        {label:'Amministratori',value:'admin'}
+      ]" (filterData)="filteredUsers.set($event)">
+    </app-filter-widget>
+    @if (errorMessage()) {
+    <div class="alert alert-danger mb-3" role="alert">{{ errorMessage() }}</div>
+    }
+    @if (successMessage()) {
+    <div class="alert alert-success mb-3" role="alert">{{ successMessage() }}</div>
+    }
+
+    @if (isLoading()) {
+    <div class="text-center py-5">
+      <ion-spinner name="crescent" color="primary"></ion-spinner>
+      <p class="text-muted mt-2">Caricamento utenti in corso...</p>
+    </div>
+    } @else {
+    <div class="row g-4">
+      @for (u of filteredUsers(); track u.cf) {
+      <div class="col-md-6 col-lg-4">
+        <div class="card border-0 shadow-sm rounded-4 p-4 h-100 bg-white d-flex flex-column justify-content-between">
+          <div>
+            <div class="d-flex justify-content-between align-items-start mb-3">
+              <span class="badge bg-primary-subtle text-primary text-uppercase fw-bold px-3 py-2 rounded-pill">
+                {{ u.role }}
+              </span>
+              <span class="text-muted small">CF: {{ u.cf }}</span>
+            </div>
+            <h5 class="fw-bold text-dark mb-1">{{ u.name }} {{ u.surname }}</h5>
+            <p class="text-muted small mb-3">{{ u.email }}</p>
+          </div>
+
+          <!-- Azione di rimozione riservata all'admin -->
+          <div class="pt-3 border-top d-flex justify-content-end">
+            <ion-button fill="clear" color="danger" size="small" class="fw-bold" (click)="deleteUser(u.cf)">
+              <ion-icon name="trash-outline" slot="start"></ion-icon>
+              Rimuovi Utente
+            </ion-button>
+          </div>
+        </div>
+      </div>
+      } @empty {
+      <div class="col-12 text-center py-5 bg-white rounded-4 shadow-sm border">
+        <p class="text-muted mb-0">Nessun utente trovato nel sistema.</p>
+      </div>
+      }
+    </div>
+    }
+  </div>
+</ion-content>

@@ -1,0 +1,45 @@
+.bg-light {
+    background-color: #f8f9fa !important;
+}
+
+.max-w-1100 {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border: 1px solid rgba(0, 0, 0, .02) !important;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .07) !important;
+}
+
+.card .bg-light.rounded-4 {
+    background-color: #f1f3f5 !important;
+    transition: background-color 0.2s ease;
+}
+
+.card:hover .bg-light.rounded-4 {
+    background-color: #e9ecef !important;
+}
+
+.empty-icon-box {
+    background-color: #f1f3f5;
+    color: #adb5bd;
+}
+
+.badge {
+    font-weight: 600;
+    letter-spacing: 0.3px;
+}
+
+.rounded-4 {
+    border-radius: 1rem !important;
+}
+
+.shadow-sm {
+    box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .04) !important;
+}

@@ -1,0 +1,145 @@
+<ion-content class="ion-padding slots-content">
+  <div class="container py-4">
+
+    <!-- Header della pagina -->
+    <div
+      class="page-header d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4 bg-white p-4 rounded-4 shadow-sm border border-light">
+      <div>
+        <div
+          class="badge bg-danger-subtle text-danger px-3 py-2 rounded-pill fw-bold mb-2 d-inline-flex align-items-center gap-2">
+          <ion-icon name="time-outline"></ion-icon>
+          <span>Amministrazione • Slot Orari</span>
+        </div>
+        <h2 class="fw-bold text-dark mb-1">Pianificazione Disponibilità</h2>
+        <p class="text-muted mb-0">Gestisci gli orari e le disponibilità dei medici all'interno della struttura.</p>
+      </div>
+      <div>
+        <ion-button shape="round" color="danger" class="fw-bold shadow-sm" (click)="openSlotModal()">
+          <ion-icon name="add-outline" slot="start"></ion-icon>
+          Nuovo Slot
+        </ion-button>
+      </div>
+    </div>
+
+    <!--Widget filtro-->
+    <app-filter-widget [data]="slots()" , [searchKeys]="['stato','medico_name','medico_surname','medico_id']"
+      (filterData)="filteredSlots.set($event)" [filterProperty]="'disponibile'" , [filterOptions]="[
+        {label:'Occupato',value:'0'},
+        {label:'Disponibile',value:'1'},
+      ]"></app-filter-widget>
+    <!-- Spinner di caricamento -->
+    @if (isLoading()) {
+    <div class="text-center py-5">
+      <ion-spinner name="crescent" color="danger" style="width: 40px; height: 40px;"></ion-spinner>
+      <p class="text-muted mt-3 fw-medium">Caricamento disponibilità in corso...</p>
+    </div>
+    } @else {
+    <!-- Griglia degli slot esistenti -->
+    <div class="row g-4">
+      @for (slot of filteredSlots(); track slot.id) {
+      <div class="col-md-6 col-lg-4">
+        <div
+          class="card slot-card border-0 shadow-sm rounded-4 p-4 h-100 bg-white d-flex flex-column justify-content-between">
+
+          <div>
+            <div class="d-flex justify-content-between align-items-start mb-3">
+              <span
+                class="badge {{ slot.disponibile ? 'bg-success-subtle text-success' : 'bg-secondary-subtle text-secondary' }} px-3 py-2 rounded-pill fw-bold">
+                {{ slot.disponibile ? 'Disponibile' : 'Occupato' }}
+              </span>
+            </div>
+
+            <!-- Dettagli medico -->
+            <div class="d-flex align-items-center gap-3 mb-3 p-3 rounded-3 bg-light border border-light-subtle">
+              <div
+                class="d-flex align-items-center justify-content-center bg-danger-subtle text-danger rounded-circle fw-bold flex-shrink-0"
+                style="width: 45px; height: 45px; min-width: 45px; font-size: 16px;">
+                {{ slot.medico_name ? slot.medico_name.charAt(0) : 'D' }}{{ slot.medico_surname ?
+                slot.medico_surname.charAt(0) : '' }}
+              </div>
+
+              <!-- Contenitore testo-->
+              <div class="flex-grow-1 overflow-hidden">
+                <h6 class="fw-bold text-dark mb-0 text-truncate">Dr. {{ slot.medico_name }} {{ slot.medico_surname }}
+                </h6>
+                <small class="text-muted text-truncate d-block">{{ slot.specializzazione || 'Specialista' }}</small>
+              </div>
+            </div>
+
+            <!--Box data-->
+            <div class="d-flex align-items-center gap-2 p-3 rounded bg-white border border-light-subtle mb-3">
+              <div
+                class="icon-circle bg-danger-subtle text-danger rounded-circle d-flex align-items-center justify-content-center"
+                style="width: 32px; height: 32px;min-width: 32px;">
+                <ion-icon name="calendar-outline" style="font-size: 16px;"></ion-icon>
+              </div>
+              <div>
+                <span class="text-muted d-block" style="font-size: 0.7rem;">Data Slot</span>
+                <strong class="text-dark small">{{slot.date| date:'dd/MM/yyyy'}}</strong>
+              </div>
+            </div>
+            <!-- Dettagli Data e Orari -->
+            <div
+              class="d-flex align-items-center justify-content-between p-3 rounded-3 bg-white border border-light-subtle mb-3">
+              <div class="d-flex align-items-center gap-2">
+                <div
+                  class="icon-circle bg-success-subtle text-success rounded-circle d-flex align-items-center justify-content-center"
+                  style="width: 32px; height: 32px;">
+                  <ion-icon name="time-outline" style="font-size: 16px;"></ion-icon>
+                </div>
+                <div>
+                  <span class="text-muted d-block" style="font-size: 0.7rem;">Inizio</span>
+                  <strong class="text-dark">{{ slot.orario_inizio }}</strong>
+                </div>
+              </div>
+              <div class="text-muted opacity-50">➔</div>
+              <div class="d-flex align-items-center gap-2">
+                <div
+                  class="icon-circle bg-danger-subtle text-danger rounded-circle d-flex align-items-center justify-content-center"
+                  style="width: 32px; height: 32px;">
+                  <ion-icon name="time-outline" style="font-size: 16px;"></ion-icon>
+                </div>
+                <div>
+                  <span class="text-muted d-block" style="font-size: 0.7rem;">Fine</span>
+                  <strong class="text-dark">{{ slot.orario_fine }}</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Azioni Card -->
+          <div class="pt-3 border-top d-flex justify-content-end gap-2">
+            <ion-button fill="clear" color="dark" size="small" class="fw-bold" (click)="openSlotModal(slot)">
+              <ion-icon name="create-outline" slot="start"></ion-icon>
+              Modifica
+            </ion-button>
+            <ion-button fill="clear" color="danger" size="small" class="fw-bold" (click)="deleteSlot(slot.id!)">
+              <ion-icon name="trash-outline" slot="start"></ion-icon>
+              Elimina
+            </ion-button>
+          </div>
+
+        </div>
+      </div>
+      } @empty {
+      <!-- Stato vuoto -->
+      <div class="col-12">
+        <div class="text-center py-5 bg-white rounded-4 shadow-sm border border-light p-5">
+          <div
+            class="empty-icon-box mx-auto mb-3 bg-light text-muted rounded-circle d-flex align-items-center justify-content-center"
+            style="width: 70px; height: 70px;">
+            <ion-icon name="time-outline" style="font-size: 36px;"></ion-icon>
+          </div>
+          <h5 class="fw-bold text-dark">Nessuno slot pianificato</h5>
+          <p class="text-muted small mb-4">Non ci sono orari o disponibilità registrate nel sistema al momento.</p>
+          <ion-button shape="round" color="danger" class="fw-bold px-4" (click)="openSlotModal()">
+            Crea il primo slot
+          </ion-button>
+        </div>
+      </div>
+      }
+    </div>
+    }
+
+  </div>
+</ion-content>

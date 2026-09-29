@@ -1,0 +1,62 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Modifica Profilo</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">
+        <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <!-- Gestione dei messaggi di errore -->
+  @if (errorMessage()) {
+  <div class="alert alert-danger" role="alert">
+    {{ errorMessage() }}
+  </div>
+  }
+
+  @if (successMessage()) {
+  <div class="alert alert-success" role="alert">
+    {{ successMessage() }}
+  </div>
+  }
+
+  <ion-item>
+    <ion-label position="stacked">Email</ion-label>
+    <ion-input type="email" [(ngModel)]="editData.email"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked">Nuova Password (lascia vuoto per non modificare)</ion-label>
+    <ion-input type="password" [(ngModel)]="editData.password"></ion-input>
+  </ion-item>
+
+  @if (profile?.role === 'paziente') {
+  <ion-item>
+    <ion-label position="stacked">Gruppo Sanguigno</ion-label>
+    <ion-input type="text" [(ngModel)]="editData.gruppo_sanguigno"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked">Telefono di Emergenza</ion-label>
+    <ion-input type="tel" [(ngModel)]="editData.telefono_emergenza"></ion-input>
+  </ion-item>
+  }
+
+  @if (profile?.role === 'sportellista') {
+  <ion-item>
+    <ion-label position="stacked">Postazione</ion-label>
+    <ion-input type="text" [(ngModel)]="editData.postazione"></ion-input>
+  </ion-item>
+  }
+
+  <div class="mt-4 text-end">
+    <ion-button expand="block" (click)="save()">
+      <ion-icon name="save-outline" slot="start"></ion-icon>
+      Salva Modifiche
+    </ion-button>
+  </div>
+
+</ion-content>

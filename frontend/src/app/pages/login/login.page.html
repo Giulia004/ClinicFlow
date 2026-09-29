@@ -1,0 +1,77 @@
+<ion-content class="ion-padding">
+  <div class="login-container d-flex align-items-center justify-content-center">
+    <div class="card auth-card shadow-sm border-0 p-4 p-md-5 w-100 animate-fade-in" style="max-width: 440px;">
+
+      <!-- Intestazione -->
+      <div class="text-center mb-4">
+        <div
+          class="icon-shape bg-primary text-white rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center"
+          style="width: 64px; height: 64px;">
+          <ion-icon name="log-in-outline" style="font-size: 32px;"></ion-icon>
+        </div>
+        <h2 class="fw-bold mb-1">Bentornato</h2>
+        <p class="text-muted small">Accedi al tuo account ClinicFlow</p>
+      </div>
+
+      <!-- Alert di errore dinamico -->
+      @if (errorMessage()) {
+      <div class="alert alert-danger d-flex align-items-center mb-4 py-2 small" role="alert">
+        <ion-icon name="alert-circle-outline" class="me-2 fs-5 flex-shrink-0"></ion-icon>
+        <div>{{ errorMessage() }}</div>
+      </div>
+      }
+
+      <!-- Form di Accesso -->
+      <form (ngSubmit)="onLogin()">
+
+        <!-- Campo Email -->
+        <div class="mb-3">
+          <label for="email" class="form-label small fw-bold text-secondary">Email</label>
+          <div class="input-group">
+            <span class="input-group-text bg-light border-end-0">
+              <ion-icon name="mail-outline" class="text-muted"></ion-icon>
+            </span>
+            <input type="email" id="email" class="form-control border-start-0 ps-0 shadow-none"
+              placeholder="nome@esempio.it" [(ngModel)]="credentials.email" name="email" required autocomplete="email">
+          </div>
+        </div>
+
+        <!-- Campo Password -->
+        <div class="mb-4">
+          <label for="password" class="form-label small fw-bold text-secondary">Password</label>
+          <div class="input-group">
+            <span class="input-group-text bg-light border-end-0">
+              <ion-icon name="lock-closed-outline" class="text-muted"></ion-icon>
+            </span>
+            <input type="password" id="password" class="form-control border-start-0 ps-0 shadow-none"
+              placeholder="••••••••" [(ngModel)]="credentials.password" name="password" required
+              autocomplete="current-password">
+          </div>
+        </div>
+
+        <!-- Pulsante di Invio -->
+        <div class="d-grid mb-3">
+          <ion-button expand="block" shape="round" color="primary" type="submit" [disabled]="isLoading()"
+            class="fw-bold py-2">
+            @if (isLoading()) {
+            <ion-spinner name="crescent" class="me-2"></ion-spinner>
+            <span>Accesso in corso...</span>
+            } @else {
+            <span>Accedi</span>
+            }
+          </ion-button>
+        </div>
+
+      </form>
+
+      <!-- Link per reindirizzare alla registrazione -->
+      <div class="text-center mt-3">
+        <p class="text-muted small mb-0">
+          Non hai un account?
+          <a routerLink="/register" routerDirection="forward" class="text-primary fw-bold text-decoration-none">Registrati</a>
+        </p>
+      </div>
+
+    </div>
+  </div>
+</ion-content>

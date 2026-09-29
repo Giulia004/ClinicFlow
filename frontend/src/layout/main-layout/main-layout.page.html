@@ -1,0 +1,92 @@
+<!-- Menu Laterale di Navigazione -->
+<ion-menu contentId="main-content" side="start">
+    <ion-header>
+        <ion-toolbar color="primary">
+            <ion-title>
+                <ion-icon name="medkit-outline" class="menu-title-icon"></ion-icon>
+                ClinicFlow
+            </ion-title>
+        </ion-toolbar>
+    </ion-header>
+
+    <ion-content class="ion-padding menu-content d-flex flex-column justify-content-between">
+
+        <div>
+            @if(authService.currentUser(); as user){
+            <div class="user-profile-box p-3 mb-4 rounded-4 bg-light border text-center" routerLink="/dashboard/profile" style="cursor: pointer;" title="Info">
+                <!--Inserimento Avatar-->
+                <div class="d-flex align-items-center justify-content-center bg-primary-subtle text-primary rounded-circle fw-bold mx-auto mb-2"
+                    style="width: 54px; height: 54px; font-size: 18px;">
+                    {{ user.name ? user.name.charAt(0) : 'U' }}{{ user.surname ? user.surname.charAt(0) : '' }}
+                </div>
+                <h6 class="fw-bold mb-1 text-dark">{{ user.name }} {{ user.surname }}</h6>
+                <p class="text-muted small mb-2 text-truncate">{{ user.email }}</p>
+                <!--Badge dinamico in base al ruolo dell'utente -->
+                <span class="badge bg-primary-subtle text-primary px-3 py-1 rounded-pill fw-bold small">
+                    <ion-icon name="shield-checkmark-outline" class="me-1"></ion-icon>
+                    {{ user.role || 'Paziente' }}
+                </span>
+            </div>
+            }
+        </div>
+
+        <!--Lista di navigazione-->
+        <ion-list lines="inset">
+            <ion-menu-toggle auto-hide="false">
+                <ion-item routerLink="/dashboard" routerDirection="root" detail="false">
+                    <ion-icon name="home-outline" slot="start" color="primary"></ion-icon>
+                    <ion-label class="fw-medium">Dashboard</ion-label>
+                </ion-item>
+
+                <ion-item routerLink="dashboard/appointments" routerDirection="root" detail="false">
+                    <ion-icon name="calendar-outline" slot="start" color="primary"></ion-icon>
+                    <ion-label class="fw-medium">Prenotazioni</ion-label>
+                </ion-item>
+
+                <ion-item routerLink="/dashboard/reports" routerDirection="root" detail="false">
+                    <ion-icon name="document-text-outline" slot="start" color="primary"></ion-icon>
+                    <ion-label class="fw-medium">Referti</ion-label>
+                </ion-item>
+
+                <ion-item routerLink="/dashboard/feedbacks" routerDirection="root" detail="false">
+                    <ion-icon name="chatbubble-outline" slot="start" color="primary"></ion-icon>
+                    <ion-label>Feedback</ion-label>
+                </ion-item>
+                @if(this.authService.currentUser()?.role==='admin'){
+                <ion-item routerLink="/dashboard/users" routerDirection="root" detail="false">
+                    <ion-icon name="people-circle-outline" slot="start" color="primary"></ion-icon>
+                    <ion-label>Gestione utenti</ion-label>
+                </ion-item>
+                }
+            </ion-menu-toggle>
+        </ion-list>
+
+        @if(authService.isLoggedIn()){
+        <!-- Pulsante di Logout in basso nel menu -->
+        <div class="logout-container">
+            <ion-button expand="block" color="danger" fill="outline" (click)="logout()">
+                <ion-icon name="log-out-outline" slot="start"></ion-icon>
+                Esci
+            </ion-button>
+        </div>
+        }
+    </ion-content>
+</ion-menu>
+
+<div id="main-content" class="ion-page">
+    <ion-header>
+        <ion-toolbar color="primary">
+            <ion-buttons slot="start">
+                <ion-menu-button>
+                    <ion-icon name="menu-outline" slot="icon-only"></ion-icon>
+                </ion-menu-button>
+            </ion-buttons>
+            <ion-title>Area Riservata</ion-title>
+        </ion-toolbar>
+    </ion-header>
+
+    <ion-content class="ion-padding bg-light">
+        <!-- Qui verranno caricate le pagine protette interne -->
+        <ion-router-outlet></ion-router-outlet>
+    </ion-content>
+</div>
