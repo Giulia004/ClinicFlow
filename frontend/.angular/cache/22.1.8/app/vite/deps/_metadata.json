@@ -1,95 +1,89 @@
 {
-  "hash": "f3b9e2db",
-  "configHash": "adbc6120",
-  "lockfileHash": "a24a0400",
-  "browserHash": "739ea0fd",
+  "hash": "f2751d8f",
+  "configHash": "11537e8a",
+  "lockfileHash": "482d1510",
+  "browserHash": "6bb61a98",
   "optimized": {
     "@angular/common": {
       "src": "../../../../../../node_modules/@angular/common/fesm2022/common.mjs",
       "file": "@angular_common.js",
-      "fileHash": "78e4c3fd",
+      "fileHash": "1795b49e",
       "needsInterop": false
     },
     "@angular/common/http": {
       "src": "../../../../../../node_modules/@angular/common/fesm2022/http.mjs",
       "file": "@angular_common_http.js",
-      "fileHash": "d00084c7",
+      "fileHash": "009f0b79",
       "needsInterop": false
     },
     "@angular/core": {
       "src": "../../../../../../node_modules/@angular/core/fesm2022/core.mjs",
       "file": "@angular_core.js",
-      "fileHash": "1d3c4026",
+      "fileHash": "f7f7c616",
       "needsInterop": false
     },
     "@angular/forms": {
       "src": "../../../../../../node_modules/@angular/forms/fesm2022/forms.mjs",
       "file": "@angular_forms.js",
-      "fileHash": "4ed75fa9",
+      "fileHash": "ad174f2c",
       "needsInterop": false
     },
     "@angular/platform-browser": {
       "src": "../../../../../../node_modules/@angular/platform-browser/fesm2022/platform-browser.mjs",
       "file": "@angular_platform-browser.js",
-      "fileHash": "6f0af4e8",
+      "fileHash": "f71fc903",
       "needsInterop": false
     },
     "@angular/router": {
       "src": "../../../../../../node_modules/@angular/router/fesm2022/router.mjs",
       "file": "@angular_router.js",
-      "fileHash": "3c29363f",
+      "fileHash": "f9434e21",
       "needsInterop": false
     },
     "@ionic/angular": {
       "src": "../../../../../../node_modules/@ionic/angular/dist/standalone/index.js",
       "file": "@ionic_angular.js",
-      "fileHash": "ab1e43a0",
+      "fileHash": "925cffb4",
       "needsInterop": false
     },
     "ionicons": {
       "src": "../../../../../../node_modules/ionicons/dist/index.js",
       "file": "ionicons.js",
-      "fileHash": "d946bf67",
+      "fileHash": "0159466e",
       "needsInterop": false
     },
     "ionicons/icons": {
       "src": "../../../../../../node_modules/ionicons/icons/index.mjs",
       "file": "ionicons_icons.js",
-      "fileHash": "37cf3f6e",
+      "fileHash": "693ece51",
       "needsInterop": false
     },
     "rxjs": {
       "src": "../../../../../../node_modules/rxjs/dist/esm5/index.js",
       "file": "rxjs.js",
-      "fileHash": "2bdf8542",
-      "needsInterop": false
-    },
-    "tslib": {
-      "src": "../../../../../../node_modules/tslib/tslib.es6.mjs",
-      "file": "tslib.js",
-      "fileHash": "a991d4c8",
+      "fileHash": "8db16345",
       "needsInterop": false
     }
   },
   "chunks": {
-    "_xhr-chunk-DVS1X9YS": {
-      "file": "_xhr-chunk-DVS1X9YS.js",
+    "_xhr-chunk-BlQL4sOD": {
+      "file": "_xhr-chunk-BlQL4sOD.js",
       "isDynamicEntry": false
     },
-    "common-BODklxBm": {
-      "file": "common-BODklxBm.js",
+    "common-D5RT8dtH": {
+      "file": "common-D5RT8dtH.js",
       "isDynamicEntry": false
     },
-    "core-QmvEt0xu": {
-      "file": "core-QmvEt0xu.js",
+    "core-DdWYGfAL": {
+      "file": "core-DdWYGfAL.js",
       "isDynamicEntry": false
     },
-    "esm5-Bm3q67qs": {
-      "file": "esm5-Bm3q67qs.js",
+    "esm5-CHDWW1NC": {
+      "file": "esm5-CHDWW1NC.js",
       "isDynamicEntry": false
     },
-    "http-u5JJ3twG": {
-      "file": "http-u5JJ3twG.js",
+    "http-Boe7Foer": {
+      "file": "http-Boe7Foer.js",
       "isDynamicEntry": false
     },
     "p-BMPN55of-Bt4HbXz4": {
@@ -136,12 +130,12 @@
       "file": "p-ZjP4CjeZ-BnW-oeAv.js",
       "isDynamicEntry": false
     },
-    "platform-browser-B39Wu_Ex": {
-      "file": "platform-browser-B39Wu_Ex.js",
+    "platform-browser-C5VerH6I": {
+      "file": "platform-browser-C5VerH6I.js",
       "isDynamicEntry": false
     },
-    "router-C2zEAyTS": {
-      "file": "router-C2zEAyTS.js",
+    "router-CoKZ8TAk": {
+      "file": "router-CoKZ8TAk.js",
       "isDynamicEntry": false
     }
   }
