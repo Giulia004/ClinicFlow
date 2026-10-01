@@ -20,7 +20,6 @@
       </label>
 
       <div class="input-group mb-2">
-        <!-- AGGIUNTO name="searchCf" -->
         <input type="text" [ngModel]="searchCf()" (ngModelChange)="searchCf.set($event)" name="searchCf"
           class="form-control text-uppercase shadow-none" placeholder="Inserisci Codice Fiscale...">
         <ion-button color="primary" class="m-0 shadow-none px-4" type="button" (click)="searchPatient()">

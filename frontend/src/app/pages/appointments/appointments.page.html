@@ -1,7 +1,6 @@
 <ion-content class="ion-padding bg-light">
   <div class="container py-4 max-w-1100">
 
-    <!-- Intestazione pagina -->
     <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
       <div>
         <div
@@ -13,7 +12,6 @@
         <p class="text-muted mb-0">Visualizza e gestisci gli appuntamenti associati agli slot di disponibilità.</p>
       </div>
 
-      <!-- Pulsante visibile solo per Paziente e Sportellista -->
       @if (authService.currentUser(); as user) {
       @if (user.role === 'paziente' || user.role === 'sportellista') {
       <ion-button color="primary" shape="round" (click)="openAddModal()" class="fw-bold shadow-sm">
@@ -24,7 +22,7 @@
       }
     </div>
 
-    <!-- Alert di feedback -->
+    <!-- Alert di successo o di errore -->
     @if (successMessage()) {
     <div class="alert alert-success d-flex align-items-center mb-4 py-2 small shadow-sm rounded-3" role="alert">
       <ion-icon name="checkmark-circle-outline" class="me-2 fs-5 flex-shrink-0"></ion-icon>
@@ -38,11 +36,12 @@
     </div>
     }
 
-    <!-- Sezione Filtri -->
     <h4 class="fw-bold text-dark mb-3 fs-5 d-flex align-items-center gap-2">
       <ion-icon name="time-outline" class="text-primary"></ion-icon>
       Elenco Appuntamenti
     </h4>
+
+    <!--Filter Component-->
     <app-filter-widget [data]="appointments()"
       [searchKeys]="['patient_name', 'patient_surname', 'medico_name', 'medico_surname', 'medico_specializzazione']"
       [filterProperty]="'stato'" [filterOptions]="[
@@ -53,6 +52,7 @@
       ]" (filterData)="filteredAppointments.set($event)">
     </app-filter-widget>
 
+    <!--Lista degli appuntamenti filtrati-->
     @if (filteredAppointments().length === 0) {
     <div class="text-center py-5 bg-white rounded-4 shadow-sm border border-light p-5">
       <div
@@ -64,14 +64,13 @@
       <p class="text-muted small mb-0">Non ci sono prenotazioni attive nel sistema al momento.</p>
     </div>
     } @else {
-    <!-- Griglia delle Card degli Appuntamenti -->
+
     <div class="row g-4">
       @for (item of filteredAppointments(); track item.id) {
       <div class="col-md-6 col-lg-4">
         <div class="card border-0 shadow-sm rounded-4 p-4 h-100 bg-white d-flex flex-column justify-content-between">
 
           <div>
-            <!-- Top Card: ID Appuntamento e Badge Stato -->
             <div class="d-flex justify-content-between align-items-center mb-3">
               <span class="badge bg-light text-dark border fw-bold px-3 py-2 rounded-pill">
                 #{{ item.id }}
@@ -83,7 +82,6 @@
               </span>
             </div>
 
-            <!-- Box Info Medico -->
             <div class="d-flex align-items-center gap-3 mb-3 p-3 rounded-3 bg-light border border-light-subtle">
               <div
                 class="d-flex align-items-center justify-content-center bg-danger-subtle text-danger rounded-circle fw-bold flex-shrink-0"
@@ -99,7 +97,6 @@
               </div>
             </div>
 
-            <!-- Box Info Paziente -->
             <div class="p-3 rounded-3 bg-white border border-light-subtle mb-3">
               <div class="d-flex align-items-center gap-2 mb-1 text-dark">
                 <ion-icon name="person-outline" color="primary" style="font-size: 16px;"></ion-icon>
@@ -108,7 +105,6 @@
               <div class="text-muted small ms-4 text-truncate">Email: {{ item.patient_email }}</div>
             </div>
 
-            <!-- Dettagli Data e Orari -->
             <div
               class="d-flex align-items-center justify-content-between p-3 rounded-3 bg-light border border-light-subtle mb-3">
               <div class="d-flex align-items-center gap-2">
@@ -136,7 +132,6 @@
             </div>
           </div>
 
-          <!-- Azioni Card -->
           @if (authService.currentUser()?.role === 'paziente' || authService.currentUser()?.role === 'sportellista' ||
           authService.currentUser()?.role === 'admin' || authService.currentUser()?.role === 'medico') {
           <div class="pt-3 border-top d-flex justify-content-between align-items-center">
@@ -144,7 +139,7 @@
                 item.creato_da }}</strong></span>
 
             <div class="d-flex gap-1 align-items-center">
-              <!-- Pulsante Valuta Visita -->
+
               @if (item.stato === 'completato' && authService.currentUser()?.role === 'paziente') {
               <ion-button fill="clear" color="warning" size="small" class="fw-bold" (click)="openFeedbackModal(item)">
                 <ion-icon name="star-outline" slot="start"></ion-icon>
@@ -152,7 +147,6 @@
               </ion-button>
               }
 
-              <!-- Pulsante Scrivi Referto -->
               @if (item.stato === 'completato' && authService.currentUser()?.role === 'medico') {
               <ion-button fill="clear" color="primary" size="small" class="fw-bold" (click)="openReportModal(item)">
                 <ion-icon name="document-text-outline" slot="start"></ion-icon>
@@ -160,7 +154,6 @@
               </ion-button>
               }
 
-              <!-- Azioni specifiche per il Medico -->
               @if (authService.currentUser()?.role === 'medico') {
               @if (item.stato !== 'completato') {
               <ion-button fill="clear" color="success" size="small" class="fw-bold" (click)="completeBooking(item.id!)">
@@ -174,7 +167,7 @@
                 Elimina
               </ion-button>
               } @else if (authService.currentUser()?.role !== 'paziente') {
-              <!-- Azioni sportellista -->
+
               @if (item.stato === 'attivo') {
               <ion-button fill="clear" color="success" size="small" class="fw-bold" (click)="confirmBooking(item.id!)">
                 <ion-icon name="checkmark-circle-outline" slot="start"></ion-icon>

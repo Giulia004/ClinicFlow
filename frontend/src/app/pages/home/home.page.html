@@ -1,11 +1,9 @@
 <ion-content class="ion-padding">
   <div class="container my-5 home-container">
 
-    <!-- Sezione Principale / Hero -->
     <div class="row align-items-center justify-content-center text-center py-4">
       <div class="col-lg-8">
 
-        <!-- Badge con il nome della clinica e icona migliorata -->
         <div
           class="badge bg-primary-subtle text-primary mb-4 px-4 py-2 rounded-pill fw-bold d-inline-flex align-items-center gap-2"
           style="font-size: 0.95rem;">
@@ -21,13 +19,11 @@
       </div>
     </div>
 
-    <!-- Box Area Riservata / Autenticazione -->
     <div class="row justify-content-center mb-5">
       <div class="col-md-8 col-lg-5">
         @if(!authService.isLoggedIn()){
         <div class="p-4 p-md-5 auth-card text-center animate-fade-in">
 
-          <!-- Icona centrale cerchiata -->
           <div class="icon-shape">
             <ion-icon name="shield-checkmark-outline"></ion-icon>
           </div>

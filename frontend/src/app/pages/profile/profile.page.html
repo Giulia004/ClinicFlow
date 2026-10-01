@@ -26,7 +26,7 @@
           {{ userProfile()!.name }} {{ userProfile()!.surname }}
         </ion-card-title>
 
-        <!-- Pulsante per aprire la modale -->
+        <!-- Pulsante per aprire la modale di modifica -->
         <ion-button fill="clear" (click)="openEditModal()">
           <ion-icon slot="icon-only" name="create-outline"></ion-icon>
         </ion-button>
@@ -49,7 +49,7 @@
         </ion-label>
       </ion-item>
 
-      <!-- Dettagli Paziente -->
+      <!-- Dettagli in base al ruolo -->
       @if (userProfile()!.role === 'paziente') {
       <ion-item>
         <ion-label>
@@ -65,7 +65,6 @@
       </ion-item>
       }
 
-      <!-- Dettagli Medico -->
       @if (userProfile()!.role === 'medico') {
       <ion-item>
         <ion-label>
@@ -81,7 +80,6 @@
       </ion-item>
       }
 
-      <!-- Dettagli Sportellista -->
       @if (userProfile()!.role === 'sportellista') {
       <ion-item>
         <ion-label>

@@ -1,7 +1,6 @@
 <ion-content class="ion-padding bg-light">
   <div class="container py-3 max-w-600">
 
-    <!-- Intestazione Modale -->
     <div class="d-flex justify-content-between align-items-center mb-4">
       <div>
         <h4 class="fw-bold text-dark mb-1">Carica Referto Medico</h4>
@@ -12,14 +11,14 @@
       </ion-button>
     </div>
 
-    <!-- Alert di errore -->
+    <!-- Alert per errori -->
     @if (errorMessage()) {
     <div class="alert alert-danger py-2 small rounded-3 mb-3 shadow-sm">
       {{ errorMessage() }}
     </div>
     }
 
-    <!-- Form di upload file -->
+    <!-- Form per l'upload del file -->
     <div class="bg-white p-4 rounded-4 shadow-sm border border-light">
 
       <div class="mb-4">

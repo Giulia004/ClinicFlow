@@ -21,7 +21,7 @@
     <h6 class="fw-bold text-dark mb-1">Com'è stata la tua esperienza?</h6>
     <p class="text-muted small mb-3">Lascia una valutazione da 1 a 5 stelle per lo specialista.</p>
 
-    <!-- Selettore a stelle interattivo -->
+    <!-- Selettore delle stelle -->
     <div class="d-flex justify-content-center gap-2 fs-1 text-warning">
       @for (star of [1, 2, 3, 4, 5]; track star) {
       <ion-icon [name]="star <= voto() ? 'star' : 'star-outline'" (click)="setRating(star)"

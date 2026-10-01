@@ -3,7 +3,7 @@
 
     @if (authService.currentUser(); as user) {
 
-    <!-- HEADER DI BENVENUTO DINAMICO PER RUOLO -->
+      <!--Header di benvenuto in base al ruolo-->
     <div class="row align-items-center mb-5 p-4 bg-white rounded-4 shadow-sm border border-light g-3">
       <div class="col-lg-8">
         <div class="d-flex align-items-center gap-2 mb-2">
@@ -13,7 +13,6 @@
             <span>ClinicFlow • Portale Sanitario</span>
           </div>
 
-          <!-- Badge personalizzato per colore in base al ruolo -->
           @switch (user.role) {
           @case ('admin') {
           <span
@@ -45,7 +44,6 @@
         </p>
       </div>
 
-      <!-- Pulsante di azione rapida differenziato per ruolo -->
       <div class="col-lg-4 text-lg-end">
         @if (user.role === 'paziente' || !user.role) {
         <ion-button shape="round" color="primary" routerLink="/dashboard/appointments" class="fw-bold shadow-sm">
@@ -67,10 +65,10 @@
     </div>
     }
 
+    <!--Servizi disponibili sempre in base al ruolo dell'utente loggato-->
     <h4 class="fw-bold text-dark mb-3">Servizi Disponibili</h4>
     <div class="row g-4">
 
-      <!-- Servizio Prenotazioni-->
       <div class="col-md-6 col-lg-4">
         <ion-card class="h-100 border-0 shadow-sm rounded-4 service-card ion-no-margin">
           <ion-card-content class="p-4 d-flex flex-column justify-content-between h-100">
@@ -90,7 +88,6 @@
         </ion-card>
       </div>
 
-      <!-- Servizio Referti -->
       <div class="col-md-6 col-lg-4">
         <ion-card class="h-100 border-0 shadow-sm rounded-4 service-card ion-no-margin">
           <ion-card-content class="p-4 d-flex flex-column justify-content-between h-100">
@@ -110,7 +107,6 @@
         </ion-card>
       </div>
 
-      <!-- Servizio Feedback / Assistenza -->
       <div class="col-md-6 col-lg-4">
         <ion-card class="h-100 border-0 shadow-sm rounded-4 service-card ion-no-margin"
           routerLink="/dashboard/feedbacks">
@@ -129,7 +125,6 @@
         </ion-card>
       </div>
 
-      <!-- Servizio Pianificazione Slot -->
       @if (authService.currentUser()?.role === 'admin') {
       <div class="col-md-6 col-lg-4">
         <ion-card class="h-100 border-0 shadow-sm rounded-4 service-card ion-no-margin">
@@ -152,5 +147,5 @@
 
     </div>
 
-  </div> <!-- Chiusura container aggiunta qui -->
+  </div>
 </ion-content>

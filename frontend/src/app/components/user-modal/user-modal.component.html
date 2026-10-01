@@ -12,6 +12,7 @@
 <ion-content class="ion-padding bg-light">
   <div class="container py-2 max-w-600">
 
+    <!--Alert per i messaggi di errore-->
     @if (errorMessage()) {
     <div class="alert alert-danger d-flex align-items-center mb-3 py-2 small shadow-sm rounded-3" role="alert">
       <ion-icon name="alert-circle-outline" class="me-2 fs-5 flex-shrink-0"></ion-icon>
@@ -65,7 +66,7 @@
           class="form-control bg-light"></ion-input>
       </div>
 
-      <!-- Campi specifici per Medico -->
+      <!-- Campi specifici per i dettagli del medico-->
       @if (userData.role === 'medico') {
       <div class="p-3 rounded-3 bg-light border border-light-subtle mb-4">
         <h6 class="fw-bold text-dark mb-3 small text-uppercase">Dettagli Specializzazione</h6>
@@ -82,7 +83,7 @@
       </div>
       }
 
-      <!-- Campi specifici per Sportellista -->
+      <!-- Campi specifici per i dettagli dello sportellista -->
       @if (userData.role === 'sportellista') {
       <div class="p-3 rounded-3 bg-light border border-light-subtle mb-4">
         <h6 class="fw-bold text-dark mb-3 small text-uppercase">Dettagli Postazione</h6>
