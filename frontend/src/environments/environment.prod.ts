@@ -1,4 +1,5 @@
+const currentHost = window.location.hostname;
 export const environment = {
   production: true,
-  apiUrl:'http://192.168.137.1:3000/api'
+  apiUrl:`http://${currentHost}:3000/api`
 };

@@ -57,8 +57,12 @@
             <p class="text-muted small mb-3">{{ u.email }}</p>
           </div>
 
-          <!-- Azione di rimozione riservata all'admin -->
+          <!-- Azione di modifica e rimozione riservate all'admin -->
           <div class="pt-3 border-top d-flex justify-content-end">
+            <ion-button fill="clear" color="dark" size="small" class="fw-bold" (click)="openEditUserModal(u.cf)">
+              <ion-icon name="create-outline" slot="start"></ion-icon>
+              Modifica
+            </ion-button>
             <ion-button fill="clear" color="danger" size="small" class="fw-bold" (click)="deleteUser(u.cf)">
               <ion-icon name="trash-outline" slot="start"></ion-icon>
               Rimuovi Utente

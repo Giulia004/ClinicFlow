@@ -15,6 +15,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class EditProfileModalComponent implements OnInit {
   @Input() profile: any = null; //Riceve i dati dalla pagina chiamante
+  @Input() isAdminEdit: boolean = false; //Sarà true quando l'admin modificherà il profilo di un altro utente
 
   private modalCtrl = inject(ModalController);
   private userService = inject(UserService);
@@ -23,6 +24,8 @@ export class EditProfileModalComponent implements OnInit {
   public successMessage = signal<string | null>(null);
 
   public editData = {
+    name: '',
+    surname:'',
     email: '',
     password: '',
     gruppo_sanguigno: '',
@@ -38,6 +41,8 @@ export class EditProfileModalComponent implements OnInit {
 
   ngOnInit() {
     if (this.profile) {
+      this.editData.name = this.profile.name || '';
+      this.editData.surname = this.profile.surname || '';
       this.editData.email = this.profile.email || '';
       this.editData.gruppo_sanguigno = this.profile.details?.gruppo_sanguigno || '';
       this.editData.telefono_emergenza = this.profile.details?.telefono_emergenza || '';
@@ -54,9 +59,20 @@ export class EditProfileModalComponent implements OnInit {
   public save() {
     if (!this.profile?.cf) return;
 
+    //Solo l'admin può modificare il nome ed il cognome
+    if (this.isAdminEdit && (!this.editData.name.trim() || !this.editData.surname.trim())) {
+      this.errorMessage.set("Nome e cognome sono obbligatori");
+      return;
+    }
+
     const payload: UpdateProfilePayload = {
       email: this.editData.email
     };
+
+    if (this.isAdminEdit) {
+      payload.name = this.editData.name.trim();
+      payload.surname = this.editData.surname.trim();
+    }
 
     if (this.editData.password.trim() !== '') payload.password = this.editData.password;
 

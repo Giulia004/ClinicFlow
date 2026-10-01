@@ -51,6 +51,8 @@ export interface RegisterPayload extends BaseUser {
 }
 
 export interface UpdateProfilePayload {
+    name?: string;
+    surname?: string;
     email?: string;
     password?: string;
     gruppo_sanguigno?: string;

@@ -1,12 +1,13 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { addIcons } from 'ionicons';
-import { addCircleOutline, alertCircleOutline, personOutline, trashOutline } from 'ionicons/icons';
+import { addCircleOutline, alertCircleOutline, createOutline, personOutline, trashOutline } from 'ionicons/icons';
 import { User, UserService } from '../../services/user.service';
 import { AuthService } from '../../services/auth.service';
 import { IonButton, IonContent, IonHeader, IonIcon, IonSpinner, IonTitle, IonToolbar, ModalController } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { UserModalComponent } from '../../components/user-modal/user-modal.component';
 import { FilterWidgetComponent } from '../../components/filter-widget/filter-widget.component';
+import { EditProfileModalComponent } from '../../components/edit-profile-modal/edit-profile-modal.component';
 
 @Component({
   selector: 'app-users.page',
@@ -27,7 +28,7 @@ export class UsersPage implements OnInit {
 
   constructor() {
     addIcons({
-      addCircleOutline, trashOutline, personOutline, alertCircleOutline
+      addCircleOutline, trashOutline, personOutline, alertCircleOutline,createOutline
     });
   }
 
@@ -77,5 +78,35 @@ export class UsersPage implements OnInit {
     });
 
     await modal.present();
+  }
+
+  public async openEditUserModal(cf: string) {
+    if (!cf) return;
+
+    this.userService.getUserByCf(cf).subscribe({
+      next: async (profile) => {
+        const modal = await this.modalCtrl.create({
+          component: EditProfileModalComponent,
+          componentProps: {
+            profile,
+            isAdminEdit: true
+          }
+        });
+
+        modal.onDidDismiss().then((result) => {
+          if (result.role === 'confirm') {
+            this.errorMessage.set(null);
+            this.successMessage.set("Profilo aggiornato con successo");
+            this.loadUsers();
+          }
+        });
+
+        await modal.present();
+      }, error: (err) => {
+        console.log(err);
+        this.successMessage.set(null);
+        this.errorMessage.set("Impossibile caricare i dati dell'utente");
+      }
+    });
   }
 }

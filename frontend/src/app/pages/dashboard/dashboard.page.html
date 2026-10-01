@@ -3,7 +3,7 @@
 
     @if (authService.currentUser(); as user) {
 
-      <!--Header di benvenuto in base al ruolo-->
+    <!--Header di benvenuto in base al ruolo-->
     <div class="row align-items-center mb-5 p-4 bg-white rounded-4 shadow-sm border border-light g-3">
       <div class="col-lg-8">
         <div class="d-flex align-items-center gap-2 mb-2">
@@ -12,34 +12,31 @@
             <ion-icon name="pulse-outline"></ion-icon>
             <span>ClinicFlow • Portale Sanitario</span>
           </div>
-
-          @switch (user.role) {
-          @case ('admin') {
-          <span
-            class="badge bg-danger-subtle text-danger px-3 py-2 rounded-pill fw-bold text-uppercase">Amministratore</span>
-          }
-          @case ('medico') {
-          <span class="badge bg-success-subtle text-success px-3 py-2 rounded-pill fw-bold text-uppercase">Medico</span>
-          }
-          @case ('sportellista') {
-          <span
-            class="badge bg-warning-subtle text-warning px-3 py-2 rounded-pill fw-bold text-uppercase">Sportellista</span>
-          }
-          @default {
-          <span
-            class="badge bg-secondary-subtle text-secondary px-3 py-2 rounded-pill fw-bold text-uppercase">Paziente</span>
-          }
-          }
         </div>
 
         <h2 class="fw-bold text-dark mb-1">Bentornato, {{ user.name }} {{ user.surname }}! 👋</h2>
 
         <p class="text-muted mb-0">
           @switch (user.role) {
-          @case ('admin') { Pannello di controllo globale, gestione utenti e configurazione del sistema. }
-          @case ('medico') { Gestisci la tua agenda visite, inserisci referti clinici e monitora i pazienti. }
-          @case ('sportellista') { Gestione accettazione, prenotazioni al banco e supporto allo sportello. }
-          @default { Gestisci i tuoi appuntamenti, consulta gli esiti clinici e monitora la tua salute. }
+          @case ('admin') {
+          <span
+            class="badge bg-danger-subtle text-danger px-3 py-2 rounded-pill fw-bold text-uppercase">Amministratore</span>
+            <br>
+          Pannello di controllo globale, gestione utenti e configurazione del sistema. }
+          @case ('medico') {
+          <span class="badge bg-success-subtle text-success px-3 py-2 rounded-pill fw-bold text-uppercase">Medico</span>
+          <br>
+          Gestisci la tua agenda visite, inserisci referti clinici e monitora i pazienti. }
+          @case ('sportellista') {
+          <span
+            class="badge bg-warning-subtle text-warning px-3 py-2 rounded-pill fw-bold text-uppercase">Sportellista</span>
+            <br>
+          Gestione accettazione, prenotazioni al banco e supporto allo sportello. }
+          @default {
+          <span
+            class="badge bg-secondary-subtle text-secondary px-3 py-2 rounded-pill fw-bold text-uppercase">Paziente</span>
+            <br>
+          Gestisci i tuoi appuntamenti, consulta gli esiti clinici e monitora la tua salute. }
           }
         </p>
       </div>
