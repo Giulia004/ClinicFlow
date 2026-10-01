@@ -11,7 +11,7 @@ import { RegisterPayload } from '../../services/user.service';
 @Component({
   selector: 'app-register',
   templateUrl: './register.page.html',
-  standalone:true,
+  standalone: true,
   styleUrls: ['./register.page.css'],
   imports: [CommonModule, FormsModule, RouterModule, IonContent, IonIcon, IonButton, IonSpinner],
 })
@@ -46,7 +46,7 @@ export class RegisterPage {
     this.authService.register(this.userData).subscribe({
       next: () => {
         this.isLoading.set(false);
-        this.router.navigate(['/dashboard']);
+        this.router.navigate(['/dashboard'], { replaceUrl: true });
       }, error: (err) => {
         this.isLoading.set(false);
         const msg = err.error?.message || 'Errore durante la registrazione. Riprova.';

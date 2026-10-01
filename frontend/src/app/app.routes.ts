@@ -10,6 +10,13 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/home/home.page').then((m) => m.HomePage),
   },
 
+  //Reindirizzamento iniziale
+  {
+    path: '',
+    redirectTo: 'home',
+    pathMatch: 'full',
+  },
+
   //Rotte pubbliche racchiuse nell'AuthLayout (Login e Registrazione)
   {
     path: '',
@@ -61,12 +68,7 @@ export const routes: Routes = [
       },
     ]
   },
-  //Reindirizzamento iniziale e gestione delle rotte non trovato
-  {
-    path: '',
-    redirectTo: 'home',
-    pathMatch: 'full',
-  },
+  //Gestione delle rotte non trovate
   {
     path: '**',
     redirectTo: 'home'

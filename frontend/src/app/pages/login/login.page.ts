@@ -11,7 +11,7 @@ import { FormsModule } from '@angular/forms';
   selector: 'app-login.page',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.css'],
-  imports: [CommonModule,IonContent,IonIcon,FormsModule,IonButton,IonSpinner],
+  imports: [CommonModule, IonContent, IonIcon, FormsModule, IonButton, IonSpinner],
 })
 export class LoginPage {
   private authService = inject(AuthService);
@@ -27,7 +27,7 @@ export class LoginPage {
 
   constructor() {
     addIcons({
-      mailOutline, lockClosedOutline, alertCircleOutline,logInOutline
+      mailOutline, lockClosedOutline, alertCircleOutline, logInOutline
     });
   }
 
@@ -43,7 +43,7 @@ export class LoginPage {
     this.authService.login(this.credentials).subscribe({
       next: () => {
         this.isLoading.set(false);
-        this.router.navigate(['/dashboard']);
+        this.router.navigate(['/dashboard'], { replaceUrl: true });
       },
       error: (err) => {
         const msg = err.error?.message || "Credenziali non valide";
