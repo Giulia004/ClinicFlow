@@ -41,7 +41,8 @@ class ReportService {
         const reportData = await ReportModel.getById(id);
         if (!reportData || !reportData.file_referto)
             throw new Error("Impossibile eiminare: referto non disponibile nel database");
-        const changes = await ReportModel.delete(id);
+
+        const changes = await ReportModel.deleteReport(id);
         if (changes === 0)
             throw new Error("Impossibile eliminare: referto inesistente");
 

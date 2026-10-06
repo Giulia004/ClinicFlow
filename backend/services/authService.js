@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const UserModel = require('../models/userModel');
+const db = require('../db/db');
 
 const SECRET = process.env.JWT_SECRET || "GA6aXzEKdt0mRjsIr7r9MeMlq2a8rSqnjJoRSV2X5Dz";
 
@@ -60,7 +61,7 @@ class AuthService {
 
             if (query) {
                 const row = await new Promise((resolve, reject) => {
-                    findByCf.get(query, [userFound.cf], (err, r) => err ? reject(err) : resolve(r));
+                    db.get(query, [userFound.cf], (err, r) => err ? reject(err) : resolve(r));
                 });
                 if (row) profileId = row.id;
             }

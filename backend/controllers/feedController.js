@@ -1,18 +1,8 @@
-const FeedModel = require("../models/feedModel");
+const FeedService = require('../services/feedService');
 
 exports.createFeedback = async (req, res) => {
     try {
-        const { appuntamento_id, paziente_id, medico_id, voto, commento } = req.body;
-
-        if (!appuntamento_id || !paziente_id || !medico_id || voto === undefined)
-            return res.status(400).json({ message: "Dati mancanti" });
-
-        if (voto < 1 || voto > 5)
-            return res.status(400).json({ message: "Il voto deve essere un intero compreso tra 1 e 5" });
-
-        const newFeedback = { appuntamento_id, paziente_id, medico_id, voto, commento };
-
-        const feedback = await FeedModel.createFeed(newFeedback);
+        const feedback = await FeedService.createNewFeedback(req.body);
 
         res.status(200).json(feedback);
 
@@ -24,10 +14,8 @@ exports.createFeedback = async (req, res) => {
 
 exports.getAll = async (req, res) => {
     try {
-        const allFeedback = await FeedModel.getAll();
+        const allFeedback = await FeedService.getAllFeedbacks();
 
-        if (!allFeedback) res.status(404).json({ message: "Nessun feedback registrato" });
-        console.log(allFeedback);
         return res.status(200).json(allFeedback);
     } catch (error) {
         console.log("Errore nel controller", error.message);
@@ -37,7 +25,7 @@ exports.getAll = async (req, res) => {
 
 exports.getFeedById = async (req, res) => {
     try {
-        const feedback = await FeedModel.getById(req.params.id);
+        const feedback = await FeedService.getById(req.params.id);
 
         res.status(200).json(feedback);
     } catch (err) {
@@ -47,10 +35,7 @@ exports.getFeedById = async (req, res) => {
 
 exports.getByAppId = async (req, res) => {
     try {
-        const feedback = await FeedModel.getByAppId(req.params.appuntamentoId);
-
-        if (!feedback)
-            return res.status(404).json({ message: "Feedback non trovato" });
+        const feedback = await FeedService.getByAppId(req.params.appuntamentoId);
 
         res.status(200).json(feedback);
     } catch (err) {
@@ -60,15 +45,7 @@ exports.getByAppId = async (req, res) => {
 
 exports.getFeedByVoto = async (req, res) => {
     try {
-        const voto = parseInt(req.params.voto, 10);
-
-        if (isNaN(voto) || voto < 1 || voto > 5)
-            return res.status(400).json({ message: "Il parametro voto deve essere un intero compreso tra 1 e 5" });
-
-        const feedback = await FeedModel.getByVoto(voto);
-
-        if (!feedback)
-            return res.status(404).json({ message: "Feedback non trovato" });
+        const feedback = await FeedService.getFeedbacksByVoto(req.params.voto);
 
         res.status(200).json(feedback);
     } catch (err) {
@@ -78,12 +55,8 @@ exports.getFeedByVoto = async (req, res) => {
 
 exports.deleteFeedback = async (req, res) => {
     try {
-        const changes = await FeedModel.deleteFeedback(req.params.id);
-
-        if (changes === 0)
-            return res.status(404).json({ message: "Feedback non trovato" });
-
-        res.status(200).json({ message: "Feedback rimosso" });
+        const result= await FeedService.removeFeedback(req.params.id);
+        res.status(200).json(result);
     } catch (err) {
         res.status(500).json(err.message);
     }

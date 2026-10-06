@@ -19,7 +19,7 @@ class FeedService {
             commento
         };
 
-        const insertId = await FeedModel.createFeed(newFeedbackData);
+        return await FeedModel.createFeed(newFeedbackData);
     }
 
     static async getById(id) {
@@ -58,6 +58,7 @@ class FeedService {
         const changes = await FeedModel.deleteFeedback(id);
         if (changes === 0)
             throw new Error("Feedback non trovato");
+        
         return { success: true, message: "Feedback rimosso" };
     }
 }

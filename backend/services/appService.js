@@ -29,15 +29,28 @@ class AppService {
             data_creazione: new Date().toISOString()
         };
 
-        const appointment = await AppService.createNewAppointment(appointmentData);
+        const appointment = await AppModel.createApp(appointmentData);
 
         await SlotModel.bookSlot(slot_id);
 
         return appointment;
     }
 
-    static async getAllAppointments() {
-        return await AppModel.getAll();
+    static async getAllAppointments(user) {
+        const { role, id: userId } = user;
+        let filterType = null;
+        let filterId = null;
+
+        if (role === 'paziente')
+        {
+            filterId = userId;
+            filterType = 'paziente';
+        } else if (role === 'medico') {
+            filterType = 'medico';
+            filterId = userId;
+        }
+
+        return await AppModel.getAllWithDetails(filterType, filterId);
     }
 
     static async getAppointmentById(id) {
@@ -47,20 +60,10 @@ class AppService {
         return result;
     }
 
-    static async getAppointmentsByPatient(patientId) {
-        if (!patientId)
-            throw new Error("ID paziente non valido");
-
-        const apps = await AppModel.getByPatientId(patientId);
-        if (!apps || apps.length === 0)
-            throw new Error("Nessun appuntamento trovato per il paziente");
-
-        return apps;
-    }
-
     static async unsubscribeAppointment(id) {
         const currentApp = await AppModel.getById(id);
         if (!currentApp) throw new Error("Appuntamento non trovato");
+
         if (currentApp.slot_id) await SlotModel.releaseSlot(currentApp.slot_id);
 
         return await AppModel.unsubscribeApp(id);
@@ -83,6 +86,8 @@ class AppService {
         const currentApp = await AppModel.getById(id);
         if (!currentApp) throw new Error("Appuntamento non trovato");
 
+        if (currentApp.slot_id) await SlotModel.releaseSlot(currentApp.slot_id);
+        
         return await AppModel.deleteApp(id);
     }
 
