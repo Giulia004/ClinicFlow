@@ -1,5 +1,5 @@
 import { HttpClient } from "@angular/common/http";
-import { inject, Injectable } from "@angular/core";
+import { Injectable } from "@angular/core";
 import { environment } from "../../environments/environment";
 import { Observable } from "rxjs";
 import { AuthService } from "./auth.service";
@@ -23,9 +23,9 @@ export interface Report {
 })
 
 export class ReportService {
-    private http = inject(HttpClient);
     private apiUrl = `${environment.apiUrl}/reports`;
-    private authService = inject(AuthService);
+
+    constructor(private http: HttpClient, private authService: AuthService) { }
 
     public getAllReports(): Observable<Report[]> {
         return this.http.get<Report[]>(this.apiUrl, { headers: this.authService.getHeaders() });

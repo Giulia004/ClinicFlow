@@ -1,5 +1,5 @@
 import { HttpClient } from "@angular/common/http";
-import { inject, Injectable } from "@angular/core";
+import { Injectable } from "@angular/core";
 import { environment } from "../../environments/environment";
 import { Observable } from "rxjs";
 import { AuthService } from "./auth.service";
@@ -39,9 +39,9 @@ export interface CreateAppPayload {
 })
 
 export class AppointmentService {
-    private http = inject(HttpClient);
     private apiUrl = `${environment.apiUrl}/appointments`;
-    private authService = inject(AuthService);
+
+    constructor(private http: HttpClient,private authService: AuthService) { }
 
     //Tutti gli appuntamenti
     public getAppointments(): Observable<Appointment[]> {

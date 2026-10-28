@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component} from '@angular/core';
 import { IonButton, IonCard, IonCardContent, IonContent, IonIcon, } from '@ionic/angular';
 import { addIcons } from 'ionicons';
 import { calendarOutline, checkmarkCircleOutline, documentTextOutline, logInOutline, medkitOutline, personAddOutline, personCircleOutline, pulseOutline, shieldCheckmarkOutline, shieldOutline, statsChartOutline } from 'ionicons/icons';
@@ -12,10 +12,7 @@ import { Router } from '@angular/router';
   imports: [IonContent, IonButton, IonCard, IonContent, IonCardContent, IonIcon],
 })
 export class HomePage {
-  public authService = inject(AuthService);
-  private router = inject(Router);
-
-  constructor() {
+  constructor(public authService:AuthService,private router:Router) {
     addIcons({
       medkitOutline, logInOutline, personAddOutline, checkmarkCircleOutline, shieldOutline, documentTextOutline, calendarOutline, statsChartOutline, shieldCheckmarkOutline, pulseOutline,personCircleOutline
     })

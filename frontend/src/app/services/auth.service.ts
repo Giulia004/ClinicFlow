@@ -1,8 +1,8 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { inject, Injectable, signal } from "@angular/core";
+import { Injectable, signal } from "@angular/core";
 import { environment } from "../../environments/environment";
 import { Observable, tap } from "rxjs";
-import { RegisterPayload, User, UserRole } from "./user.service";
+import { RegisterPayload, User } from "./user.service";
 
 //Il server risponderà inviando un oggetto JSON contenente il token e i dati dell'utente loggato
 export interface AuthResponse{
@@ -14,11 +14,12 @@ export interface AuthResponse{
     providedIn: 'root'
 })
 export class AuthService {
-    private http = inject(HttpClient);
     private apiUrl = `${environment.apiUrl}/auth`;
 
     public currentUser = signal<User | null>(this.getStoredUser());
     public token = signal<string | null>(this.getStoredToken());
+
+    constructor(private http: HttpClient) { }
 
     //Recupero e decodifica dell'utente salvato nel localStorage all'avvio
     private getStoredUser(): User | null {

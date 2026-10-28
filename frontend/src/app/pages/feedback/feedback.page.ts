@@ -1,4 +1,4 @@
-import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import { Component, computed,OnInit, signal } from '@angular/core';
 import { Feedback, FeedbackService } from '../../services/feedback.service';
 import { AuthService } from '../../services/auth.service';
 import { addIcons } from 'ionicons';
@@ -14,16 +14,13 @@ import { IonButton, IonContent, IonHeader, IonIcon, IonSpinner, IonTitle, IonToo
   imports: [CommonModule, IonIcon, IonContent, IonSpinner, IonHeader, IonToolbar, IonTitle, IonButton],
 })
 export class FeedbackPage implements OnInit {
-  private feedbackService = inject(FeedbackService);
-  public authService = inject(AuthService);
-
   public feedbackList = signal<Feedback[]>([]);
   public isLoading = signal<boolean>(false);
   public errorMessage = signal<string | null>(null);
 
   role = computed(() => this.authService.currentUser()?.role);
 
-  constructor() {
+  constructor(private feedbackService:FeedbackService,public authService:AuthService) {
     addIcons({
       star, starOutline, chatbubbleOutline, calendarOutline, trashOutline
     });

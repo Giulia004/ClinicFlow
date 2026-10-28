@@ -1,5 +1,5 @@
 import { HttpClient } from "@angular/common/http";
-import { inject, Injectable } from "@angular/core";
+import { Injectable } from "@angular/core";
 import { environment } from "../../environments/environment";
 import { Observable } from "rxjs";
 import { AuthService } from "./auth.service";
@@ -68,9 +68,9 @@ export type User = Medico | Paziente | Sportellista | Admin;
     providedIn: 'root'
 })
 export class UserService {
-    private authService = inject(AuthService);
-    private http = inject(HttpClient);
     private apiUrl = `${environment.apiUrl}/users`;
+
+    constructor(private http: HttpClient, private authService: AuthService) { }
 
     //Tutti gli utenti
     public getAllUsers(): Observable<User[]> {

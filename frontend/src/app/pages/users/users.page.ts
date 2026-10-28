@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { addIcons } from 'ionicons';
 import { addCircleOutline, alertCircleOutline, createOutline, personOutline, trashOutline } from 'ionicons/icons';
 import { User, UserService } from '../../services/user.service';
@@ -16,17 +16,13 @@ import { EditProfileModalComponent } from '../../components/edit-profile-modal/e
   imports: [CommonModule, IonHeader, IonToolbar, IonTitle, IonContent, IonIcon, IonButton, IonSpinner, FilterWidgetComponent],
 })
 export class UsersPage implements OnInit {
-  private userService = inject(UserService);
-  public authService = inject(AuthService);
-  private modalCtrl = inject(ModalController);
-
   public usersList = signal<User[]>([]);
   public filteredUsers = signal<User[]>([]);
   public isLoading = signal<boolean>(false);
   public errorMessage = signal<string | null>(null);
   public successMessage = signal<string | null>(null);
 
-  constructor() {
+  constructor(private userService:UserService,public authService:AuthService,private modalCtrl:ModalController) {
     addIcons({
       addCircleOutline, trashOutline, personOutline, alertCircleOutline,createOutline
     });

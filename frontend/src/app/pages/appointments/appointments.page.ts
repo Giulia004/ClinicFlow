@@ -19,10 +19,6 @@ import { ReportService } from '../../services/report.service';
   imports: [CommonModule, FormsModule, ReactiveFormsModule, IonIcon, IonButton, IonContent, FilterWidgetComponent, AppointmentModalComponent],
 })
 export class AppointmentsPage implements OnInit {
-  private appService = inject(AppointmentService);
-  private modalCtrl = inject(ModalController);
-  private reportService = inject(ReportService);
-
   public appointments = signal<Appointment[]>([]);
   public filteredAppointments = signal<Appointment[]>([]);
   public successMessage = signal<string | null>(null);
@@ -30,7 +26,7 @@ export class AppointmentsPage implements OnInit {
 
   role = computed(() => this.authService.currentUser()?.role);
 
-  constructor(public authService: AuthService) {
+  constructor(public authService: AuthService,private appService:AppointmentService,private modalCtrl:ModalController,private reportService:ReportService) {
     addIcons({
       calendarOutline, timeOutline, medkitOutline, personOutline, checkmarkCircleOutline, trashOutline, addCircleOutline, alertCircleOutline, todayOutline, closeCircleOutline
     });

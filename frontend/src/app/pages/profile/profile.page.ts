@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { User, UserService } from '../../services/user.service';
 import { addIcons } from 'ionicons';
@@ -14,15 +14,11 @@ import { CommonModule } from '@angular/common';
   imports: [CommonModule, IonItem, IonLabel, IonCard, IonCardContent, IonContent, IonButton, IonCardTitle, IonCardHeader, IonIcon, IonHeader, IonToolbar, IonTitle, IonSpinner, EditProfileModalComponent],
 })
 export class ProfilePage implements OnInit {
-  private authService = inject(AuthService);
-  private userService = inject(UserService);
-  private modalCtrl = inject(ModalController);
-
   public userProfile = signal<User | null>(null);
   public isLoading = signal<boolean>(false);
   public errorMessage = signal<string | null>(null);
 
-  constructor() {
+  constructor(private authService:AuthService,private userService:UserService,private modalCtrl:ModalController) {
     addIcons({ personOutline, createOutline, saveOutline, closeOutline });
   }
 

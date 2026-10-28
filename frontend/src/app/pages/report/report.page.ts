@@ -3,11 +3,10 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ReportService, Report } from '../../services/report.service';
 import { AuthService } from '../../services/auth.service';
-import { IonButton, IonContent, IonIcon, ModalController } from '@ionic/angular';
+import { IonButton, IonContent, IonIcon } from '@ionic/angular';
 import { addIcons } from 'ionicons';
 import { addCircleOutline, alertCircleOutline, checkmarkCircleOutline, documentOutline, downloadOutline, searchOutline, trashOutline } from 'ionicons/icons';
 import { FilterWidgetComponent } from '../../components/filter-widget/filter-widget.component';
-import { ReportModalComponent } from '../../components/report-modal/report-modal.component';
 
 @Component({
   selector: 'app-report.page',
@@ -16,16 +15,12 @@ import { ReportModalComponent } from '../../components/report-modal/report-modal
   imports: [CommonModule, FormsModule,IonButton,IonIcon,IonContent,FilterWidgetComponent],
 })
 export class ReportPage implements OnInit {
-  private reportService = inject(ReportService);
-  private modalCtrl = inject(ModalController);
-  public authService = inject(AuthService);
-
   public reports = signal<Report[]>([]);
   public filteredReports = signal<Report[]>([]);
   public successMessage = signal<string | null>(null);
   public errorMessage = signal<string | null>(null);
 
-  constructor() {
+  constructor(private reportService:ReportService,public authService:AuthService) {
     addIcons({
       documentOutline, downloadOutline, trashOutline, addCircleOutline, alertCircleOutline, checkmarkCircleOutline, searchOutline
     });

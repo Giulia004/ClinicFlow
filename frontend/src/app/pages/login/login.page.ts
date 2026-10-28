@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component,signal } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { addIcons } from 'ionicons';
@@ -14,9 +14,6 @@ import { FormsModule } from '@angular/forms';
   imports: [CommonModule, IonContent, IonIcon, FormsModule, IonButton, IonSpinner],
 })
 export class LoginPage {
-  private authService = inject(AuthService);
-  private router = inject(Router);
-
   public credentials = {
     email: '',
     password: ''
@@ -25,7 +22,7 @@ export class LoginPage {
   public isLoading = signal<boolean>(false);
   public errorMessage = signal<string | null>(null);
 
-  constructor() {
+  constructor(private authService: AuthService, private router: Router) {
     addIcons({
       mailOutline, lockClosedOutline, alertCircleOutline, logInOutline
     });
