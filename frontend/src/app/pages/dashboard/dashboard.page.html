@@ -105,8 +105,7 @@
       </div>
 
       <div class="col-md-6 col-lg-4">
-        <ion-card class="h-100 border-0 shadow-sm rounded-4 service-card ion-no-margin"
-          routerLink="/dashboard/feedbacks">
+        <ion-card class="h-100 border-0 shadow-sm rounded-4 service-card ion-no-margin">
           <ion-card-content class="p-4 d-flex flex-column justify-content-between h-100">
             <div>
               <div class="mb-3 text-warning bg-warning-subtle d-inline-block p-3 rounded-4">
@@ -115,8 +114,8 @@
               <h4 class="fw-bold fs-5 text-dark">Feedback</h4>
               <p class="text-muted small">Invia le tue opinioni.</p>
             </div>
-            <ion-button fill="clear" color="warning" class="fw-bold p-0 mt-3 align-self-start text-dark">
-              Supporto <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
+            <ion-button fill="clear" color="warning" class="fw-bold p-0 mt-3 align-self-start text-dark" routerLink="/dashboard/feedbacks">
+              Recensisci <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
             </ion-button>
           </ion-card-content>
         </ion-card>

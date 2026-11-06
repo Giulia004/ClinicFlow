@@ -30,7 +30,7 @@ exports.getUserByCf = async (req, res) => {
 
 exports.updateUser = async (req, res) => {
     try {
-        const result = await UserService.updateUser(req.params.cf, req.body);
+        const result = await UserService.updateUserData(req.user,req.params.cf, req.body);
         return res.status(200).json({ message: "Dati utente aggiornati con successo", result });
     } catch (err) {
         return res.status(500).json({ message: "Errore durante la modifica dei dati dell'utente" });

@@ -2,8 +2,8 @@ import { Component, OnInit, signal } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { User, UserService } from '../../services/user.service';
 import { addIcons } from 'ionicons';
-import { closeOutline, createOutline, personOutline, saveOutline } from 'ionicons/icons';
-import { IonButton, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonContent, IonHeader, IonIcon, IonItem, IonLabel, IonSpinner, IonTitle, IonToolbar, ModalController } from '@ionic/angular';
+import { alertCircleOutline, callOutline, cardOutline, closeOutline, createOutline, desktopOutline, mailOutline, medkitOutline, personOutline, saveOutline, waterOutline } from 'ionicons/icons';
+import { IonButton, IonContent, IonHeader, IonIcon, IonSpinner, IonTitle, IonToolbar, ModalController } from '@ionic/angular';
 import { EditProfileModalComponent } from '../../components/edit-profile-modal/edit-profile-modal.component';
 import { CommonModule } from '@angular/common';
 
@@ -11,7 +11,7 @@ import { CommonModule } from '@angular/common';
   selector: 'app-profile.page',
   templateUrl: './profile.page.html',
   styleUrls: ['./profile.page.css'],
-  imports: [CommonModule, IonItem, IonLabel, IonCard, IonCardContent, IonContent, IonButton, IonCardTitle, IonCardHeader, IonIcon, IonHeader, IonToolbar, IonTitle, IonSpinner, EditProfileModalComponent],
+  imports: [CommonModule, IonContent, IonButton, IonIcon, IonHeader, IonToolbar, IonTitle, IonSpinner, EditProfileModalComponent],
 })
 export class ProfilePage implements OnInit {
   public userProfile = signal<User | null>(null);
@@ -19,7 +19,7 @@ export class ProfilePage implements OnInit {
   public errorMessage = signal<string | null>(null);
 
   constructor(private authService:AuthService,private userService:UserService,private modalCtrl:ModalController) {
-    addIcons({ personOutline, createOutline, saveOutline, closeOutline });
+    addIcons({ personOutline, createOutline, saveOutline, closeOutline,alertCircleOutline,cardOutline,mailOutline,callOutline,waterOutline,medkitOutline,desktopOutline });
   }
 
   ngOnInit() {

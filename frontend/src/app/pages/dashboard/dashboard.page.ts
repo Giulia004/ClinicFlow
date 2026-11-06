@@ -1,4 +1,4 @@
-import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import { Component, computed} from '@angular/core';
 import { addIcons } from 'ionicons';
 import { AuthService } from '../../services/auth.service';
 import { Router, RouterLink } from '@angular/router';

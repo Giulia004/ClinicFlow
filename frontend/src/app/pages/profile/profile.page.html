@@ -1,94 +1,190 @@
-<ion-header>
+<ion-header class="ion-no-border">
   <ion-toolbar color="primary">
-    <ion-title>Il mio Profilo</ion-title>
+    <ion-title class="fw-bold text-center">Il mio Profilo</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
-
-  @if (errorMessage()) {
-  <div class="alert alert-danger" role="alert">
-    {{ errorMessage() }}
-  </div>
-  }
-
-  @if (isLoading()) {
-  <div class="text-center mt-5">
-    <ion-spinner name="crescent"></ion-spinner>
-    <p>Caricamento profilo...</p>
-  </div>
-  } @else if (userProfile()) {
-  <ion-card>
-    <ion-card-header>
-      <div class="d-flex justify-content-between align-items-center">
-        <ion-card-title>
-          <ion-icon name="person-outline" class="me-2"></ion-icon>
-          {{ userProfile()!.name }} {{ userProfile()!.surname }}
-        </ion-card-title>
-
-        <!-- Pulsante per aprire la modale di modifica -->
-        <ion-button fill="clear" (click)="openEditModal()">
-          <ion-icon slot="icon-only" name="create-outline"></ion-icon>
-        </ion-button>
+<ion-content class="ion-padding bg-light">
+  <div class="container py-4 max-width-800">
+    @if (errorMessage()) {
+    <div class="alert alert-danger shadow-sm rounded-4 border-0 mb-4" role="alert">
+      <div class="d-flex align-items-center gap-2">
+        <ion-icon name="alert-circle-outline" style="font-size: 1.2rem;"></ion-icon>
+        <span>{{ errorMessage() }}</span>
       </div>
-      <p class="text-muted text-uppercase mb-0">{{ userProfile()!.role }}</p>
-    </ion-card-header>
+    </div>
+    }
 
-    <ion-card-content>
-      <ion-item>
-        <ion-label>
-          <h2>Codice Fiscale</h2>
-          <p>{{ userProfile()!.cf }}</p>
-        </ion-label>
-      </ion-item>
+    @if (isLoading()) {
+    <div class="text-center py-5">
+      <ion-spinner name="crescent" color="primary"></ion-spinner>
+      <p>Caricamento profilo in corso...</p>
+    </div>
+    }
+    <!--Contenuto profilo-->
+    @else if (userProfile()) {
+    <div class="card profile-card border-0 shadow-sm rounded-4 bg-white overflow-hidden mb-4">
 
-      <ion-item>
-        <ion-label>
-          <h2>Email</h2>
-          <p>{{ userProfile()!.email }}</p>
-        </ion-label>
-      </ion-item>
+      <!--Header card-->
+      <div class="profile-header-bg p-4 p-md-5 text-white position-relative">
+        <div class="d-flex flex-column flew-md-row align-items-center gap-4 text-center text-md-start">
 
-      <!-- Dettagli in base al ruolo -->
-      @if (userProfile()!.role === 'paziente') {
-      <ion-item>
-        <ion-label>
-          <h2>Gruppo Sanguigno</h2>
-          <p>{{ ($any(userProfile())).gruppo_sanguigno || 'Non specificato' }}</p>
-        </ion-label>
-      </ion-item>
-      <ion-item>
-        <ion-label>
-          <h2>Telefono Emergenza</h2>
-          <p>{{ ($any(userProfile())).telefono_emergenza || 'Non specificato' }}</p>
-        </ion-label>
-      </ion-item>
-      }
+          <!--Avatar con icona-->
+          <div class="profile-avatar-large bg-white text-primary shadow-sm">
+            <ion-icon name="person-outline"></ion-icon>
+          </div>
 
-      @if (userProfile()!.role === 'medico') {
-      <ion-item>
-        <ion-label>
-          <h2>Specializzazione</h2>
-          <p>{{ ($any(userProfile())).specializzazione }}</p>
-        </ion-label>
-      </ion-item>
-      <ion-item>
-        <ion-label>
-          <h2>Numero Albo</h2>
-          <p>{{ ($any(userProfile())).numero_albo }}</p>
-        </ion-label>
-      </ion-item>
-      }
+          <!--Informazioni principali-->
+          <div class="flex-grow-1">
+            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-start gap-2 mb-1">
+              <h3 class="fw-bold mb-0 text-dark">{{userProfile()!.name}} {{userProfile()!.surname}}</h3>
+            </div>
 
-      @if (userProfile()!.role === 'sportellista') {
-      <ion-item>
-        <ion-label>
-          <h2>Postazione</h2>
-          <p>{{ ($any(userProfile())).postazione || 'Non assegnata' }}</p>
-        </ion-label>
-      </ion-item>
-      }
-    </ion-card-content>
-  </ion-card>
-  }
+            <p class="text-muted mb-2 small">{{userProfile()!.email}}</p>
+
+            <!-- Badge Ruolo Dinamico -->
+            <div>
+              @switch (userProfile()!.role) {
+              @case ('admin') {
+              <span
+                class="badge bg-danger-subtle text-danger px-3 py-2 rounded-pill fw-bold text-uppercase">Amministratore</span>
+              }
+              @case ('medico') {
+              <span
+                class="badge bg-success-subtle text-success px-3 py-2 rounded-pill fw-bold text-uppercase">Medico</span>
+              }
+              @case ('sportellista') {
+              <span
+                class="badge bg-warning-subtle text-warning px-3 py-2 rounded-pill fw-bold text-uppercase">Sportellista</span>
+              }
+              @default {
+              <span
+                class="badge bg-primary-subtle text-primary px-3 py-2 rounded-pill fw-bold text-uppercase">Paziente</span>
+              }
+              }
+            </div>
+          </div>
+
+          <!--Pulsante modifica-->
+          <ion-button shape="round" color="light" class="fw-bold text-dark shadow-sm rounded-4" (click)="openEditModal()">
+            <ion-icon slot="start" name="create-outline"></ion-icon>
+            Modifica Profilo
+          </ion-button>
+        </div>
+      </div>
+
+      <!--Corpo dettagli-->
+      <div class="card-body p-4 p-md-4">
+        <h5 class="fw-bold text-dark mb-3 fs-6 text-uppercase tracking wider text-muted">Informazioni Anagrafiche</h5>
+
+        <div class="row g-3 mb-4">
+          <div class="col-md-6">
+            <div class="p-3 bg-light rounded-4 border-light h-100 d-flex align-items-center gap-3">
+              <div
+                class="bg-primary-subtle text-primary p-3 rounded-3 d-flex align-items-center justify-content-center">
+                <ion-icon name="card-outline" style="font-size: 20px;"></ion-icon>
+              </div>
+              <div>
+                <span class="text-muted small d-block">Codice Fiscale</span>
+                <span class="fw-bold text-dark font-monospace">{{userProfile()!.cf}}</span>
+              </div>
+            </div>
+          </div>
+
+          <!--Email-->
+          <div class="col-md-6">
+            <div class="p-3 bg-light rounded-4 border border-light h-100 d-flex align-items-center gap-3">
+              <div
+                class="bg-success-subtle text-success p-3 rounded-3 d-flex align-items-center justify-content-center">
+                <ion-icon name="mail-outline" style="font-size: 20px;"></ion-icon>
+              </div>
+              <div>
+                <span class="text-muted small d-block">Indirizzo Email</span>
+                <span class="fw-bold text-dark">{{userProfile()!.email}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!--Deattgli specifici in base al ruolo-->
+        @if(userProfile()!.role==='paziente'){
+        <h5 class="fw-bold text-dark mb-3 fs-6 text-uppercase tracking-wider text-muted">Dettagli Sanitari</h5>
+        <div class="row g-3">
+          <div class="col-md-6">
+            <div class="p-3 bg-light rounded-4 border border-light h-100 d-flex align-items-center gap-3">
+              <div class="bg-danger-subtle text-danger p-3 rounded-3 d-flex align-items-center justify-content-center">
+                <ion-icon name="water-outline" style="font-size: 20px;"></ion-icon>
+              </div>
+              <div>
+                <span class="text-muted small d-block">Gruppo Sanguigno</span>
+                <span class="fw-bold text-dark">{{ ($any(userProfile())).gruppo_sanguigno || 'Non specificato' }}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="p-3 bg-light rounded-4 border border-light h-100 d-flex align-items-center gap-3">
+              <div
+                class="bg-warning-subtle text-warning p-3 rounded-3 d-flex align-items-center justify-content-center">
+                <ion-icon name="call-outline" style="font-size: 20px;"></ion-icon>
+              </div>
+              <div>
+                <span class="text-muted small d-block">Telefono Emergenza</span>
+                <span class="fw-bold text-dark">{{ ($any(userProfile())).telefono_emergenza || 'Non specificato'
+                  }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        }
+
+        @if(userProfile()!.role==='medico'){
+        <div class="row g-3">
+          <div class="col-md-6">
+            <div class="p-3 bg-light rounded-4 border border-light h-100 d-flex align-items-center gap-3">
+              <div class="bg-danger-subtle text-danger p-3 rounded-3 d-flex align-items-center justify-content-center">
+                <ion-icon name="medkit-outline" style="font-size: 20px;"></ion-icon>
+              </div>
+              <div>
+                <span class="text-muted small d-block">Specializzazione</span>
+                <span class="fw-bold text-dark">{{ ($any(userProfile())).specializzazione || 'Non specificato' }}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="p-3 bg-light rounded-4 border border-light h-100 d-flex align-items-center gap-3">
+              <div
+                class="bg-warning-subtle text-warning p-3 rounded-3 d-flex align-items-center justify-content-center">
+                <ion-icon name="call-outline" style="font-size: 20px;"></ion-icon>
+              </div>
+              <div>
+                <span class="text-muted small d-block">Numero Albo</span>
+                <span class="fw-bold text-dark">{{ ($any(userProfile())).numero_albo || 'Non specificato'
+                  }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        }
+
+        @if(userProfile()!.role==='sportellista'){
+        <div class="row g-3">
+          <div class="col-md-6">
+            <div class="p-3 bg-light rounded-4 border border-light h-100 d-flex align-items-center gap-3">
+              <div class="bg-danger-subtle text-danger p-3 rounded-3 d-flex align-items-center justify-content-center">
+                <ion-icon name="desktop-outline" style="font-size: 20px;"></ion-icon>
+              </div>
+              <div>
+                <span class="text-muted small d-block">Postazione Corrente</span>
+                <span class="fw-bold text-dark">{{ ($any(userProfile())).postazione || 'Non specificato' }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        }
+      </div>
+    </div>
+    }
+  </div>
 </ion-content>

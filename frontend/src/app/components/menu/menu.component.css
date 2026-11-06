@@ -1,0 +1,53 @@
+ion-item {
+    --background: transparent;
+    --background-hover: #f8f9fa;
+    --padding-start: 12px;
+    --padding-end: 12px;
+    --min-height: 48px;
+    margin-bottom: 4px;
+    transition: background-color 0.2s ease;
+}
+
+/*Stile della voce attiva (quando si trova in quella pagina)*/
+.active-link {
+    --background: var(--ion-color-primary-tint);
+    background-color: var(--ion-color-light, #f1f3f5) !important;
+    border-radius: 0.75rem;
+}
+
+.active-link ion-label {
+    color: var(--ion-color-light) !important;
+    font-weight: 700 !important;
+}
+
+.user-profile-box {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.user-profile-box:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.05) !important;
+}
+
+.icon-box {
+    width: 36px;
+    height: 36px;
+}
+
+.logout-btn {
+    --border-radius: 50px;
+    --box-shadow: none;
+    font-size: 0.9rem;
+    letter-spacing: 0.3px;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.logout-btn:hover {
+    transform: translateY(-2px);
+    --background: var(--ion-color-danger);
+    --color: #ffffff;
+}
+
+.logout-btn:hover ion-icon{
+    color: #ffffff !important;
+}

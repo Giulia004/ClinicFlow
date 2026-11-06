@@ -3,9 +3,10 @@
     justify-content: center;
     align-items: center;
     min-height: 100%;
+    padding: 2rem 1rem;
 }
 
 .auth-wrapper .auth-card-container {
     width: 100%;
-    max-width: 420px;
+    max-width: 440px;
 }

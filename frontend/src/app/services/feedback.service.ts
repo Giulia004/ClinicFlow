@@ -8,7 +8,11 @@ export interface Feedback {
     id?: number;
     appuntamento_id: number;
     paziente_id: number;
+    paziente_name: string;
+    paziente_surname: string;
     medico_id: number;
+    medico_name: string;
+    medico_surname: string;
     voto: number;
     commento?: string;
     data_creazione: string;

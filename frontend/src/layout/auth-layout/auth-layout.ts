@@ -7,8 +7,8 @@ import { arrowBackOutline, medkitOutline } from "ionicons/icons";
 
 @Component({
     selector: 'app-auth-layout',
-    templateUrl: './auth-layout.page.html',
-    styleUrls: ['./auth-layout.page.css'],
+    templateUrl: './auth-layout.html',
+    styleUrls: ['./auth-layout.css'],
     standalone: true,
     imports: [CommonModule, RouterModule, IonHeader, IonToolbar, IonButtons, IonTitle, IonContent,IonIcon,IonRouterOutlet,IonBackButton]
 })

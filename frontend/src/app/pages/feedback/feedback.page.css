@@ -42,8 +42,8 @@
 .empty-icon-box {
     width: 75px;
     height: 75px;
-    background: avr(--icon-color-step-100, #f1f3f5);
-    color: var(--ion-color-step-40, #adb5bd);
+    background: var(--ion-color-step-100, #f1f3f5);
+    color: var(--ion-color-step-400, #adb5bd);
     border-radius: 50%;
     display: inline-flex;
     align-items: center;

@@ -2,7 +2,7 @@ import { Component, computed,OnInit, signal } from '@angular/core';
 import { Feedback, FeedbackService } from '../../services/feedback.service';
 import { AuthService } from '../../services/auth.service';
 import { addIcons } from 'ionicons';
-import { calendarOutline, chatbubbleOutline, star, starOutline, trashOutline } from 'ionicons/icons';
+import { calendarOutline, chatbubbleOutline, personOutline, star, starOutline, trashOutline } from 'ionicons/icons';
 import { CommonModule } from '@angular/common';
 import { IonButton, IonContent, IonHeader, IonIcon, IonSpinner, IonTitle, IonToolbar } from '@ionic/angular';
 
@@ -22,7 +22,7 @@ export class FeedbackPage implements OnInit {
 
   constructor(private feedbackService:FeedbackService,public authService:AuthService) {
     addIcons({
-      star, starOutline, chatbubbleOutline, calendarOutline, trashOutline
+      star, starOutline, chatbubbleOutline, calendarOutline, trashOutline,personOutline
     });
   }
 

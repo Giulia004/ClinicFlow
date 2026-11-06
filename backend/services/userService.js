@@ -4,9 +4,9 @@ const bcrypt = require('bcryptjs');
 class UserService {
     //Logica di registrazione: controlli, hashing password e salvataggio
     static async registerUser(userData, details) {
-        const rawCF = req.body.CF || req.body.cf;
+        const rawCF = userData.CF || userData.cf;
         const cf = rawCF ? String(rawCF).trim() : '';
-        const { name, surname, email, password, role, specializzazione, numeroAlbo, postazione, gruppo_sanguigno, telefono_emergenza } = req.body;
+        const { name, surname, email, password, role, specializzazione, numeroAlbo, postazione, gruppo_sanguigno, telefono_emergenza } = details;
 
         //Se viene passata la password allora è una registrazione normale, altrimenti ci basta cf, nome e cognome
         const isQuickRegistration = !password;
@@ -19,13 +19,13 @@ class UserService {
             return res.status(400).json({ message: "L'email è obbligatoria" });
 
         if (email) {
-            const existingUser = await user.findByEmail(email);
+            const existingUser = await UserModel.findByEmail(email);
             if (existingUser) {
                 return res.status(400).json({ message: "Utente esistente" });
             }
         }
 
-        const existsUserByCf = await user.findByCf(cf.toUpperCase());
+        const existsUserByCf = await UserModel.findByCf(cf.toUpperCase());
         if (existsUserByCf)
             return res.status(400).json({ message: "Utente associato al codice fiscale inserito" });
 
@@ -40,7 +40,7 @@ class UserService {
             if (role && validRoles.includes(role)) finalRole = role;
         }
 
-        const userData = {
+        const newUser = {
             cf: cf.toUpperCase(),
             name,
             surname,
@@ -49,15 +49,15 @@ class UserService {
             role: finalRole
         };
 
-        const details = {
-            specializzazione: req.body.specializzazione,
-            numeroAlbo: req.body.numeroAlbo,
-            postazione: req.body.postazione,
-            gruppo_sanguigno: req.body.gruppo_sanguigno,
-            telefono_emergenza: req.body.telefono_emergenza
+        const userDetails = {
+            specializzazione: specializzazione,
+            numeroAlbo: numeroAlbo,
+            postazione: postazione,
+            gruppo_sanguigno: gruppo_sanguigno,
+            telefono_emergenza: telefono_emergenza
         };
 
-        return await UserModel.create(userData, details);
+        return await UserModel.create(newUser, userDetails);
     }
 
     //Recupero degli utenti mediante CF con gestione dell'errore se non esiste
