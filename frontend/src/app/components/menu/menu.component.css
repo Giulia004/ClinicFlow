@@ -1,53 +1,195 @@
-ion-item {
-    --background: transparent;
-    --background-hover: #f8f9fa;
-    --padding-start: 12px;
-    --padding-end: 12px;
-    --min-height: 48px;
-    margin-bottom: 4px;
-    transition: background-color 0.2s ease;
+ion-menu.clinic-sidebar {
+    --width: 280px;
+    --max-width: 85vw;
+    --background: #105B70;
 }
 
-/*Stile della voce attiva (quando si trova in quella pagina)*/
-.active-link {
-    --background: var(--ion-color-primary-tint);
-    background-color: var(--ion-color-light, #f1f3f5) !important;
-    border-radius: 0.75rem;
-}
-
-.active-link ion-label {
-    color: var(--ion-color-light) !important;
-    font-weight: 700 !important;
-}
-
-.user-profile-box {
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.user-profile-box:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.05) !important;
-}
-
-.icon-box {
-    width: 36px;
-    height: 36px;
-}
-
-.logout-btn {
-    --border-radius: 50px;
-    --box-shadow: none;
-    font-size: 0.9rem;
-    letter-spacing: 0.3px;
-    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.logout-btn:hover {
-    transform: translateY(-2px);
-    --background: var(--ion-color-danger);
+.sidebar-content {
+    --background: #105B70;
     --color: #ffffff;
 }
 
-.logout-btn:hover ion-icon{
-    color: #ffffff !important;
+.sidebar-profile {
+    margin: 36px 15px 29px;
+    padding: 15px 12px;
+    background: rgba(255, 255, 255, .08);
+    border: 1px solid rgba(255, 255, 255, .10);
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    cursor: pointer;
+    transition: background .2s ease;
+}
+
+.sidebar-profile:hover {
+    background: rgba(255, 255, 255, .13);
+}
+
+.profile-avatar {
+    width: 43px;
+    height: 43px;
+    min-width: 43px;
+    border-radius: 13px;
+    background: #16899A;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 15px;
+    font-weight: 750;
+}
+
+.profile-info {
+    min-width: 0;
+    flex: 1;
+}
+
+.profile-info h3 {
+    font-size: 12px;
+    font-weight: 700;
+    color: white;
+    margin: 0 0 4px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.profile-info p {
+    font-size: 10px;
+    color: #b7d1d7;
+    margin: 0 0 7px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.profile-role {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    color: #a9e4df;
+}
+
+.profile-role ion-icon {
+    font-size: 12px;
+}
+
+.profile-arrow {
+    font-size: 15px;
+    color: #a9d1d8;
+}
+
+/* NAVIGATION */
+
+.sidebar-navigation {
+    padding: 0 13px;
+}
+
+.navigation-label {
+    display: block;
+    padding: 0 11px;
+    margin-bottom: 11px;
+    font-size: 9px;
+    font-weight: 750;
+    letter-spacing: 1.3px;
+    color: #8eb8c3;
+}
+
+.navigation-list {
+    background: transparent;
+    padding: 0;
+    margin: 0;
+}
+
+.navigation-list ion-item {
+    --background: transparent;
+    --background-hover: rgba(255, 255, 255, .08);
+    --background-activated: rgba(255, 255, 255, .10);
+    --color: #d4e4e9;
+    --border-radius: 11px;
+    --padding-start: 13px;
+    --padding-end: 12px;
+    --inner-padding-end: 0;
+    --min-height: 47px;
+    margin-bottom: 5px;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all .2s ease;
+}
+
+.navigation-list ion-item ion-icon {
+    font-size: 19px;
+    margin-inline-end: 13px;
+    color: #a9cbd3;
+}
+
+.navigation-list ion-item ion-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: inherit;
+}
+
+.navigation-list ion-item.active-link {
+    --background: #16899A;
+    --color: #ffffff;
+    font-weight: 700;
+}
+
+.navigation-list ion-item.active-link ion-icon {
+    color: #ffffff;
+}
+
+.navigation-list ion-item:hover:not(.active-link) {
+    --background: rgba(255, 255, 255, .08);
+}
+
+.administration-label {
+    margin-top: 31px;
+}
+
+.account-label {
+    margin-top: 31px;
+}
+
+.sidebar-footer {
+    padding: 20px 16px 16px;
+    margin-top: 35px;
+    border-top: 1px solid rgba(255, 255, 255, .12);
+}
+
+.sidebar-logout {
+    --color: #ffd0d0;
+    --background: rgba(214, 91, 99, .12);
+    --background-hover: rgba(214, 91, 99, .22);
+    --border-radius: 11px;
+    --box-shadow: none;
+    font-size: 12px;
+    font-weight: 650;
+    margin: 0;
+    text-transform: none;
+}
+
+.sidebar-logout ion-icon {
+    font-size: 18px;
+}
+
+.sidebar-version {
+    text-align: center;
+    font-size: 8px;
+    letter-spacing: 1.2px;
+    font-weight: 600;
+    color: #80a9b5;
+    margin: 18px 0 0;
+}
+
+@media (max-width: 576px) {
+    ion-menu.clinic-sidebar {
+        --width: 290px;
+        --max-width: 88vw;
+    }
 }

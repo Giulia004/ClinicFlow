@@ -1,54 +1,64 @@
-<ion-header>
+<ion-header class="ion-no-border">
   <ion-toolbar color="primary">
-    <ion-title>{{ isEditMode ? 'Modifica Slot' : 'Nuovo Slot Orario' }}</ion-title>
+    <ion-title class="fw-semibold">
+      <ion-icon name="time-outline" class="me-2 align-middle"></ion-icon>
+      {{ isEditMode ? 'Modifica Slot' : 'Nuovo Slot' }}</ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="dismiss()">
+      <ion-button (click)="dismiss()" fill="clear" class="text-white">
         <ion-icon name="close-outline" slot="icon-only"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
-  <div class="container py-3">
+<ion-content class="ion-padding bg-light">
+  <div class="container py-2">
 
+    <div class="card border-0 shadow-sm rounded-4 p-3 bg-white">
+
+      <ion-item lines="none" class="mb-3 rounded-3 border bg-white item-input-wrapper">
+        <ion-icon name="person-outline" slot="start" color="primary" class="ms-2"></ion-icon>
+        <ion-select label="Medico Assegnato" label-placement="stacked" [(ngModel)]="formData.medico_id" name="medico_id"
+          placeholder="Seleziona medico" interface="popover">
+          @for (doc of (docList() || []); track doc.id || doc.medico_id) {
+          <ion-select-option [value]="doc.id || doc.medico_id">
+            Dr. {{ doc.name }} {{ doc.surname }} {{ doc.specializzazione ? '(' + doc.specializzazione + ')' : '' }}
+          </ion-select-option>
+          }
+        </ion-select>
+      </ion-item>
+
+      <!-- Data -->
+      <ion-item class="mb-3 rounded-4 border bg-white item-input-wrapper">
+        <ion-icon name="calendar-outline" slot="start" color="primary" class="ms-2"></ion-icon>
+        <ion-input label="Data Slot" label-placement="stacked" type="date" [(ngModel)]="formData.data" name="data">
+        </ion-input>
+      </ion-item>
+
+      <!-- Ora Inizio -->
+      <ion-item class="mb-3 rounded-4 border bg-white item-input-wrapper">
+        <ion-icon name="time-outline" slot="start" color="primary" class="ms-2"></ion-icon>
+        <ion-input label="Ora Inizio" label-placement="stacked" type="time" [(ngModel)]="formData.orario_inizio"
+          name="orario_inizio">
+        </ion-input>
+      </ion-item>
+
+      <!-- Ora Fine -->
+      <ion-item class="mb-3 rounded-4 border bg-white item-input-wrapper">
+        <ion-icon name="time-outline" slot="start" color="primary" class="ms-2"></ion-icon>
+        <ion-input label="Ora Fine" label-placement="stacked" type="time" [(ngModel)]="formData.orario_fine"
+          name="orario_fine">
+        </ion-input>
+      </ion-item>
+
+      <!-- Pulsante di Salvataggio -->
+      <ion-button expand="block" shape="round" color="primary" class="fw-bold shadow-sm py-2 my-2" (click)="save()">
+        <ion-icon name="save-outline" slot="start"></ion-icon>
+        {{ isEditMode ? 'Aggiorna Slot' : 'Crea Slot' }}
+      </ion-button>
+    </div>
     <!-- Selezione medico -->
-    <ion-item class="mb-3 rounded-4 border">
-      <ion-select label="Medico Assegnato" label-placement="stacked" [(ngModel)]="formData.medico_id" name="medico_id"
-        placeholder="Seleziona medico">
-        @for (doc of (docList() || []); track doc.id || doc.medico_id) {
-        <ion-select-option [value]="doc.id || doc.medico_id">
-          Dr. {{ doc.name }} {{ doc.surname }} {{ doc.specializzazione ? '(' + doc.specializzazione + ')' : '' }}
-        </ion-select-option>
-        }
-      </ion-select>
-    </ion-item>
 
-    <!-- Data -->
-    <ion-item class="mb-3 rounded-4 border">
-      <ion-input label="Data Slot" label-placement="stacked" type="date" [(ngModel)]="formData.data" name="data">
-      </ion-input>
-    </ion-item>
-
-    <!-- Ora Inizio -->
-    <ion-item class="mb-3 rounded-4 border">
-      <ion-input label="Ora Inizio" label-placement="stacked" type="time" [(ngModel)]="formData.orario_inizio"
-        name="orario_inizio">
-      </ion-input>
-    </ion-item>
-
-    <!-- Ora Fine -->
-    <ion-item class="mb-4 rounded-4 border">
-      <ion-input label="Ora Fine" label-placement="stacked" type="time" [(ngModel)]="formData.orario_fine"
-        name="orario_fine">
-      </ion-input>
-    </ion-item>
-
-    <!-- Pulsante di Salvataggio -->
-    <ion-button expand="block" shape="round" color="primary" class="fw-bold shadow-sm" (click)="save()">
-      <ion-icon name="save-outline" slot="start"></ion-icon>
-      {{ isEditMode ? 'Aggiorna Slot' : 'Crea Slot' }}
-    </ion-button>
 
   </div>
 </ion-content>

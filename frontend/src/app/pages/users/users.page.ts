@@ -1,9 +1,9 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { addIcons } from 'ionicons';
-import { addCircleOutline, alertCircleOutline, createOutline, personOutline, trashOutline } from 'ionicons/icons';
+import { alertCircleOutline, businessOutline, createOutline, fitnessOutline, headsetOutline, mailOutline, medkitOutline, peopleOutline, personAddOutline, personOutline, shieldCheckmarkOutline, shieldOutline, trashOutline } from 'ionicons/icons';
 import { User, UserService } from '../../services/user.service';
 import { AuthService } from '../../services/auth.service';
-import { IonButton, IonContent, IonHeader, IonIcon, IonSpinner, IonTitle, IonToolbar, ModalController } from '@ionic/angular';
+import { IonButton, IonCard, IonCardContent, IonContent, IonIcon, IonSpinner, ModalController } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { UserModalComponent } from '../../components/user-modal/user-modal.component';
 import { FilterWidgetComponent } from '../../components/filter-widget/filter-widget.component';
@@ -13,7 +13,7 @@ import { EditProfileModalComponent } from '../../components/edit-profile-modal/e
   selector: 'app-users.page',
   templateUrl: './users.page.html',
   styleUrls: ['./users.page.css'],
-  imports: [CommonModule, IonHeader, IonToolbar, IonTitle, IonContent, IonIcon, IonButton, IonSpinner, FilterWidgetComponent],
+  imports: [CommonModule, IonContent, IonIcon, IonButton, IonSpinner, FilterWidgetComponent,IonCard,IonCardContent],
 })
 export class UsersPage implements OnInit {
   public usersList = signal<User[]>([]);
@@ -24,7 +24,7 @@ export class UsersPage implements OnInit {
 
   constructor(private userService:UserService,public authService:AuthService,private modalCtrl:ModalController) {
     addIcons({
-      addCircleOutline, trashOutline, personOutline, alertCircleOutline,createOutline
+      shieldCheckmarkOutline,businessOutline,personAddOutline,alertCircleOutline,medkitOutline,fitnessOutline,headsetOutline,shieldOutline,mailOutline,createOutline,trashOutline,peopleOutline,personOutline
     });
   }
 

@@ -1,2 +1,73 @@
-// For information on how to create your own theme, please refer to:
-// https://ionicframework.com/docs/theming/
+/* ==========================================
+   CLINICFLOW - MODERN HEALTHCARE THEME
+   ========================================== */
+
+:root {
+
+    /* PRIMARY - Blu petrolio */
+    --ion-color-primary: #105B70;
+    --ion-color-primary-rgb: 16, 91, 112;
+    --ion-color-primary-contrast: #ffffff;
+    --ion-color-primary-contrast-rgb: 255, 255, 255;
+    --ion-color-primary-shade: #0e5063;
+    --ion-color-primary-tint: #287083;
+
+    /* SECONDARY - Verde acqua */
+    --ion-color-secondary: #16899A;
+    --ion-color-secondary-rgb: 22, 137, 154;
+    --ion-color-secondary-contrast: #ffffff;
+    --ion-color-secondary-contrast-rgb: 255, 255, 255;
+    --ion-color-secondary-shade: #137989;
+    --ion-color-secondary-tint: #2d95a5;
+
+    /* SUCCESS - Verde */
+    --ion-color-success: #26966F;
+    --ion-color-success-rgb: 38, 150, 111;
+    --ion-color-success-contrast: #ffffff;
+    --ion-color-success-shade: #218461;
+    --ion-color-success-tint: #3ba17e;
+
+    /* WARNING - Ambra */
+    --ion-color-warning: #E5A13A;
+    --ion-color-warning-rgb: 229, 161, 58;
+    --ion-color-warning-contrast: #243746;
+    --ion-color-warning-shade: #ca8e33;
+    --ion-color-warning-tint: #e8ad53;
+
+    /* DANGER - Rosso */
+    --ion-color-danger: #D65B63;
+    --ion-color-danger-rgb: 214, 91, 99;
+    --ion-color-danger-contrast: #ffffff;
+    --ion-color-danger-shade: #bc5057;
+    --ion-color-danger-tint: #da6c73;
+
+    /* DARK - Testi */
+    --ion-color-dark: #243746;
+    --ion-color-dark-rgb: 36, 55, 70;
+    --ion-color-dark-contrast: #ffffff;
+
+    /* MEDIUM - Testi secondari */
+    --ion-color-medium: #82919D;
+    --ion-color-medium-rgb: 130, 145, 157;
+    --ion-color-medium-contrast: #ffffff;
+
+    /* LIGHT - Background */
+    --ion-color-light: #F4F7FA;
+    --ion-color-light-rgb: 244, 247, 250;
+    --ion-color-light-contrast: #243746;
+
+    /* CUSTOM CLINICFLOW COLORS */
+
+    --clinic-primary: #105B70;
+    --clinic-secondary: #16899A;
+    --clinic-background: #F4F7FA;
+    --clinic-surface: #FFFFFF;
+    --clinic-text: #243746;
+    --clinic-muted: #82919D;
+    --clinic-border: #E8EEF2;
+
+    /* SIDEBAR */
+    --clinic-sidebar: #105B70;
+    --clinic-sidebar-hover: #164C5C;
+    --clinic-sidebar-text: #FFFFFF;
+}

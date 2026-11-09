@@ -1,81 +1,167 @@
-<ion-header>
-  <ion-toolbar color="primary">
-    <ion-title>Gestione Personale e Utenti</ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content class="ion-padding bg-light">
+<ion-content class="ion-padding clinic-dashboard-content">
   <div class="container py-4 max-w-1100">
 
+    <!-- Intestazione -->
     <div
-      class="mb-4 bg-white p-4 rounded-4 shadow-sm border border-light d-flex justify-content-between align-items-center">
+      class="page-header d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3 mb-4 pb-3">
       <div>
-        <h2 class="fw-bold text-dark mb-1">Staff e Pazienti della Struttura</h2>
-        <p class="text-muted mb-0">Gestisci i medici e gli sportellisti registrati nel sistema.</p>
+        <div class="page-eyebrow">Amministrazione</div>
+        <h1 class="page-title">Gestione personale e utenti</h1>
+        <p class="page-subtitle">
+          Panoramica completa del personale e dei pazienti
+        </p>
       </div>
-      
-      <ion-button color="primary" shape="round" (click)="openAddUserModal()" class="fw-bold shadow-sm">
-        <ion-icon name="add-circle-outline" slot="start"></ion-icon>
-        Registra Nuovo Membro
-      </ion-button>
+
+      <div class="admin-badge d-none d-md-flex">
+        <ion-icon name="shield-checkmark-outline"></ion-icon>
+        <span>Area amministrativa</span>
+      </div>
     </div>
 
-    <app-filter-widget [data]="usersList()"
-      [searchKeys]="['name','surname','email','cf']"
-      [filterProperty]="'role'" [filterOptions]="[
-        {label:'Medici',value:'medico'},
-        {label:'Pazienti',value:'paziente'},
-        {label:'Sportellisti',value:'sportellista'},
-        {label:'Amministratori',value:'admin'}
-      ]" (filterData)="filteredUsers.set($event)">
-    </app-filter-widget>
+    <!-- Banner principale -->
+    <ion-card class="dashboard-banner">
+      <ion-card-content>
+        <div class="banner-content">
+          <div class="banner-info">
+            <span class="section-label">
+              <ion-icon name="business-outline"></ion-icon>
+              Database struttura
+            </span>
+
+            <h2>Staff e Pazienti</h2>
+            <p>
+              Gestisci i ruoli, modifica i dati o rimuovi gli utenti
+            </p>
+          </div>
+
+          <ion-button color="primary" shape="round" class="add-user-btn" (click)="openAddUserModal()">
+            <ion-icon name="person-add-outline" slot="start"></ion-icon>
+            Registra nuovo utente
+          </ion-button>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Filtri -->
+    <div class="filter-section mb-4">
+      <app-filter-widget [data]="usersList()" [searchKeys]="['name','surname','email','cf']" [filterProperty]="'role'"
+        [filterOptions]="[
+          {label:'Medici',value:'medico'},
+          {label:'Pazienti',value:'paziente'},
+          {label:'Sportellisti',value:'sportellista'},
+          {label:'Amministratori',value:'admin'}
+        ]" (filterData)="filteredUsers.set($event)">
+      </app-filter-widget>
+    </div>
+
+    <!-- Messaggio di errore -->
     @if (errorMessage()) {
-    <div class="alert alert-danger mb-3" role="alert">{{ errorMessage() }}</div>
-    }
-    @if (successMessage()) {
-    <div class="alert alert-success mb-3" role="alert">{{ successMessage() }}</div>
+    <div class="status-message error-message" role="alert">
+      <ion-icon name="alert-circle-outline"></ion-icon>
+      <span>{{ errorMessage() }}</span>
+    </div>
     }
 
+    <!-- Messaggio di successo -->
+    @if (successMessage()) {
+    <div class="status-message success-message" role="status">
+      <ion-icon name="checkmark-circle-outline"></ion-icon>
+      <span>{{ successMessage() }}</span>
+    </div>
+    }
+
+    <!-- Caricamento -->
     @if (isLoading()) {
-    <div class="text-center py-5">
+    <div class="loading-container">
       <ion-spinner name="crescent" color="primary"></ion-spinner>
-      <p class="text-muted mt-2">Caricamento utenti in corso...</p>
+      <p>Caricamento utenti in corso...</p>
     </div>
     } @else {
+
+    <!-- Griglia utenti -->
     <div class="row g-4">
+
       @for (u of filteredUsers(); track u.cf) {
       <div class="col-md-6 col-lg-4">
-        <div class="card border-0 shadow-sm rounded-4 p-4 h-100 bg-white d-flex flex-column justify-content-between">
-          <div>
-            <div class="d-flex justify-content-between align-items-start mb-3">
-              <span class="badge bg-primary-subtle text-primary text-uppercase fw-bold px-3 py-2 rounded-pill">
+
+        <ion-card class="user-card">
+          <ion-card-content>
+
+            <!-- Ruolo e codice fiscale -->
+            <div class="user-card-header">
+              <span class="role-badge">
+                <ion-icon [name]="
+                        u.role === 'medico' ? 'medkit-outline' :
+                        u.role === 'paziente' ? 'fitness-outline' :
+                        u.role === 'sportellista' ? 'headset-outline' :
+                        'shield-outline'
+                      ">
+                </ion-icon>
                 {{ u.role }}
               </span>
-              <span class="text-muted small">CF: {{ u.cf }}</span>
-            </div>
-            <h5 class="fw-bold text-dark mb-1">{{ u.name }} {{ u.surname }}</h5>
-            <p class="text-muted small mb-3">{{ u.email }}</p>
-          </div>
 
-          <!-- Azione di modifica e rimozione riservate all'admin -->
-          <div class="pt-3 border-top d-flex justify-content-end">
-            <ion-button fill="clear" color="dark" size="small" class="fw-bold" (click)="openEditUserModal(u.cf)">
-              <ion-icon name="create-outline" slot="start"></ion-icon>
-              Modifica
-            </ion-button>
-            <ion-button fill="clear" color="danger" size="small" class="fw-bold" (click)="deleteUser(u.cf)">
-              <ion-icon name="trash-outline" slot="start"></ion-icon>
-              Rimuovi Utente
-            </ion-button>
-          </div>
-        </div>
+              <span class="user-cf">
+                CF: {{ u.cf }}
+              </span>
+            </div>
+
+            <!-- Informazioni utente -->
+            <div class="user-info">
+              <div class="user-avatar" [class.doctor-avatar]="u.role === 'medico'"
+                [class.patient-avatar]="u.role === 'paziente'" [class.staff-avatar]="u.role === 'sportellista'"
+                [class.admin-avatar]="u.role === 'admin'">
+
+                <ion-icon [name]="
+                        u.role === 'medico' ? 'medkit-outline' :
+                        u.role === 'paziente' ? 'person-outline' :
+                        u.role === 'sportellista' ? 'headset-outline' :
+                        'shield-outline'
+                      ">
+                </ion-icon>
+              </div>
+
+              <h3>{{ u.name }} {{ u.surname }}</h3>
+
+              <div class="user-email">
+                <ion-icon name="mail-outline"></ion-icon>
+                <span>{{ u.email }}</span>
+              </div>
+            </div>
+
+            <!-- Azioni -->
+            <div class="user-actions">
+              <ion-button fill="clear" color="primary" size="small" class="action-btn"
+                (click)="openEditUserModal(u.cf)">
+                <ion-icon name="create-outline" slot="start"></ion-icon>
+                Modifica
+              </ion-button>
+
+              <ion-button fill="clear" color="danger" size="small" class="action-btn" (click)="deleteUser(u.cf)">
+                <ion-icon name="trash-outline" slot="start"></ion-icon>
+                Rimuovi
+              </ion-button>
+            </div>
+
+          </ion-card-content>
+        </ion-card>
+
       </div>
       } @empty {
-      <div class="col-12 text-center py-5 bg-white rounded-4 shadow-sm border">
-        <p class="text-muted mb-0">Nessun utente trovato nel sistema.</p>
+      <div class="col-12">
+        <div class="empty-state">
+          <div class="empty-icon">
+            <ion-icon name="people-outline"></ion-icon>
+          </div>
+          <h3>Nessun utente trovato</h3>
+          <p>
+            Non sono presenti utenti corrispondenti ai criteri di ricerca.
+          </p>
+        </div>
       </div>
       }
+
     </div>
     }
+
   </div>
 </ion-content>

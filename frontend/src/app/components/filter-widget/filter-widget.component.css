@@ -1,0 +1,26 @@
+.search-filter-container {
+    border: 1px solid rgba(0, 0, 0, 0.04) !important;
+    transition: all 0.25s ease;
+}
+
+.custom-searchbar {
+    --background: #f8f9fa;
+    --border-radius: 12px;
+    --box-shadow: none;
+    padding: 0 !important;
+}
+
+.filter-pill{
+    font-size: 0.8rem;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+    transition: all 0.2s ease-in-out;
+}
+
+@media(max-width:768px){
+    .filter-pill{
+        flex: 1 1 calc(50%-6px) !important;
+        margin-bottom: 4px;
+        justify-content: center;
+    }
+}

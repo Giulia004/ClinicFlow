@@ -3,7 +3,7 @@ import { CreateSlotPayload, Slot } from '../../services/slot.service';
 import { IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonInput, IonItem, IonSelect, IonSelectOption, IonTitle, IonToolbar, ModalController } from '@ionic/angular';
 import { Medico, UserService } from '../../services/user.service';
 import { addIcons } from 'ionicons';
-import { calendarOutline, closeOutline, saveOutline, timeOutline } from 'ionicons/icons';
+import { calendarOutline, closeOutline, personOutline, saveOutline, timeOutline } from 'ionicons/icons';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -34,7 +34,7 @@ export class SlotModalComponent implements OnInit {
 
   constructor() {
     addIcons({
-      closeOutline, saveOutline, calendarOutline, timeOutline
+      closeOutline, saveOutline, calendarOutline, timeOutline,personOutline
     });
   }
 

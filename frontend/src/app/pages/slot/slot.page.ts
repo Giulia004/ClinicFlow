@@ -2,8 +2,8 @@ import { Component, OnInit, signal } from '@angular/core';
 import { Slot, SlotService } from '../../services/slot.service';
 import { Medico, UserService } from '../../services/user.service';
 import { addIcons } from 'ionicons';
-import { addOutline, calendarOutline, closeOutline, timeOutline, trashOutline } from 'ionicons/icons';
-import { IonButton, IonIcon, IonSpinner, ModalController } from '@ionic/angular';
+import { addOutline, calendarNumberOutline, calendarOutline, checkmarkCircleOutline, closeOutline, createOutline, lockClosedOutline, timeOutline, trashOutline } from 'ionicons/icons';
+import { IonButton, IonCard, IonCardContent, IonIcon, IonSpinner, ModalController } from '@ionic/angular';
 import { SlotModalComponent } from '../../components/slot-modal/slot-modal.component';
 import { IonContent } from "@ionic/angular";
 import { CommonModule } from '@angular/common';
@@ -14,7 +14,7 @@ import { FilterWidgetComponent } from '../../components/filter-widget/filter-wid
   templateUrl: './slot.page.html',
   styleUrls: ['./slot.page.css'],
   standalone: true,
-  imports: [IonContent, IonIcon, IonButton, CommonModule, IonSpinner, FilterWidgetComponent],
+  imports: [IonContent, IonIcon, IonButton, CommonModule, IonSpinner, FilterWidgetComponent,IonCard,IonCardContent],
 })
 export class SlotPage implements OnInit {
   public slots = signal<Slot[]>([]);
@@ -32,7 +32,7 @@ export class SlotPage implements OnInit {
 
   constructor(private slotService:SlotService,private userService:UserService,private modalCtrl:ModalController) {
     addIcons({
-      addOutline, trashOutline, calendarOutline, timeOutline, closeOutline
+      addOutline, trashOutline, calendarOutline, timeOutline, closeOutline,lockClosedOutline,checkmarkCircleOutline,calendarNumberOutline,createOutline
     });
   }
 

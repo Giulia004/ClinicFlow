@@ -1,55 +1,285 @@
-.menu-content {
-    height: 100%;
+:host {
+    --clinic-primary: #167d91;
+    --clinic-primary-dark: #105b70;
+    --clinic-background: #f4f7fa;
+    --clinic-text: #243746;
+    --clinic-muted: #82919d;
+}
+
+.clinic-content {
+    --background: var(--clinic-background);
+}
+
+.dashboard-container {
+    max-width: 1440px;
+    padding: 35px 32px 25px;
+    margin: 0 auto;
+}
+
+.welcome-panel {
+    background: linear-gradient(115deg, #105b70, #16899a);
+    border-radius: 22px;
+    padding: 38px 42px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 25px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 12px 30px rgba(16, 91, 112, .12);
+}
+
+.welcome-panel::after {
+    content: "";
+    position: absolute;
+    width: 280px;
+    height: 280px;
+    border: 1px solid rgba(255, 255, 255, .12);
+    border-radius: 50%;
+    right: 13%;
+    top: -170px;
+    pointer-events: none;
+}
+
+.welcome-content,
+.welcome-action {
+    position: relative;
+    z-index: 1;
+}
+
+.brand-label {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: rgba(255, 255, 255, .85);
+    margin-bottom: 27px;
+}
+
+.brand-label ion-icon {
+    font-size: 20px;
+}
+
+.welcome-eyebrow,
+.section-eyebrow {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    margin-bottom: 8px;
+    opacity: .8;
+}
+
+.welcome-panel h1 {
+    font-size: clamp(25px, 3vw, 34px);
+    font-weight: 750;
+    margin: 0 0 12px;
+    color: white;
+}
+
+.welcome-description {
+    font-size: 14px;
+    color: rgba(255, 255, 255, .83);
+    margin: 0;
+    line-height: 1.7;
+}
+
+.welcome-footer {
+    margin-top: 22px;
+}
+
+.role-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 7px 13px;
+    border-radius: 30px;
+    background: rgba(255, 255, 255, .15);
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.role-label ion-icon {
+    font-size: 16px;
+}
+
+.main-action {
+    --background: white;
+    --color: #105b70;
+    --border-radius: 12px;
+    --box-shadow: none;
+    font-weight: 700;
+    height: 48px;
+    margin: 0;
+}
+
+.section-heading {
+    margin-top: 35px;
+    margin-bottom: 22px !important;
+}
+
+.section-eyebrow {
+    color: var(--clinic-primary);
+    display: block;
+}
+
+.section-heading h2 {
+    color: var(--clinic-text);
+    font-size: 23px;
+    font-weight: 750;
+    margin: 5px 0;
+}
+
+.section-heading p {
+    font-size: 13px;
+    color: var(--clinic-muted);
+    margin: 0;
+}
+
+/*Card per i servizi*/
+.service-card {
+    margin: 0;
+    height: calc(100% - 4px);
+    min-height: 265px;
+    border: 1px solid #e9eef2;
+    border-radius: 17px;
+    box-shadow: 0 4px 15px rgba(35, 65, 85, .035);
+    background: white;
+    transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.service-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 25px rgba(35, 65, 85, .09);
+}
+
+.service-card ion-card-content {
+    padding: 25px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    background-color: #ffffff;
-    border-right: 1px solid #e9ecef;
+    align-items: flex-start;
+    height: 100%;
 }
 
-.user-profile-box {
-    background-color: #f8f9fa;
-    border: 1px solid #e9ecef !important;
-    border-radius: 12px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
-    transition: all 0.3s ease;
+.service-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
 }
 
-.user-profile-box:hover {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+.service-icon ion-icon {
+    font-size: 26px;
 }
 
-.avatar-icon {
-    line-height: 1;
+.icon-blue {
+    background: #e7f2fa;
+    color: #287ba8;
 }
 
-ion-list {
-    border-bottom: 1px solid #f1f3f5;
-    padding-bottom: 15px;
-    margin-bottom: 15px;
+.icon-green {
+    background: #e5f5ef;
+    color: #26966f;
 }
 
-ion-item {
-    --background: transparent;
-    --background-hover: rgba(var(--ion-color-primary-rgb, 56, 128, 255), 0.08);
-    --border-radius: 8px;
-    margin-bottom: 6px;
-    font-weight: 500;
-    color: #495057;
-    transition: background-color 0.2s ease, color 0.2s ease;
+.icon-orange {
+    background: #fff2e4;
+    color: #d58a36;
 }
 
-ion-item:hover {
-    --color: var(--ion-color-primary, #3880ff);
+.icon-purple {
+    background: #f0ebfa;
+    color: #8565bc;
 }
 
-ion-item.router-link-active {
-    --background: rgba(var(--ion-color-primary-rgb, 56, 128, 255), 0.12);
-    --color: var(--ion-color-primary, #3880ff);
-    font-weight: 600;
+.icon-red {
+    background: #fcebea;
+    color: #ce5e5e;
 }
 
-.logout-container {
-    margin-top: auto;
-    padding-top: 0.5rem;
+.service-category {
+    font-size: 9px;
+    font-weight: 750;
+    letter-spacing: 1.2px;
+    color: var(--clinic-primary);
+    margin-bottom: 8px;
+}
+
+.service-card h3 {
+    font-size: 17px;
+    font-weight: 750;
+    color: var(--clinic-text);
+    margin: 0 0 9px;
+}
+
+.service-card p {
+    font-size: 12px;
+    line-height: 1.7;
+    color: var(--clinic-muted);
+    margin: 0;
+    flex-grow: 1;
+}
+
+.service-link {
+    --padding-start: 0;
+    --padding-end: 0;
+    --color: var(--clinic-primary);
+    font-size: 12px;
+    font-weight: 700;
+    margin: 18px 0 0;
+    min-height: 30px;
+}
+
+.dashboard-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: #9aa8b2;
+    font-size: 11px;
+    padding: 35px 0 10px;
+}
+
+.dashboard-footer ion-icon {
+    font-size: 16px;
+    color: var(--clinic-primary);
+}
+
+@media (max-width: 768px) {
+    .dashboard-container {
+        padding: 20px 15px;
+    }
+
+    .welcome-panel {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 28px 23px;
+        border-radius: 17px;
+    }
+
+    .welcome-action {
+        width: 100%;
+    }
+
+    .main-action {
+        width: 100%;
+    }
+
+    .brand-label {
+        margin-bottom: 22px;
+    }
+
+    .section-heading {
+        margin-top: 27px;
+    }
+
+    .service-card {
+        min-height: 245px;
+    }
 }

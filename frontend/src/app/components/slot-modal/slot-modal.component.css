@@ -1,0 +1,51 @@
+ion-content {
+    --background: #f8f9fa;
+}
+
+.card {
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+ion-item.item-input-wrapper {
+    --background: #ffffff;
+    --border-radius: 14px;
+    --padding-start: 12px;
+    --padding-end: 12px;
+    --min-height: 58px;
+    border: 1px solid #e2e8f0 !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+    transition: all 0.25s ease-in-out;
+}
+
+/*Effetto al passaggio del mouse o quando l'utente compila il campo*/
+ion-item.item-input-wrapper:hover {
+    border-color: #cbd5e1 !important;
+}
+
+/*Focus sul campo quando viene selezionato*/
+ion-item.item-input-wrapper:focus-within {
+    border-color: var(--ion-color-primary) !important;
+    box-shadow: 0 0 0 4px rgba(var(--ion-color-primary-rgb), 0.12);
+    background: #ffffff;
+}
+
+ion-item.item-input-wrapper ion-input,
+ion-item.item-input-wrapper ion-select {
+    --placeholder-color: #94a3b8;
+    --placeholder-opacity: 1;
+    font-size: 0.95rem;
+}
+
+/*Pulsante principale con un leggero effetto hover*/
+ion-button[expand="block"] {
+    --box-shadow: 0 4px 12px rgba(var(--ion-color-primary-rgb), 0.25);
+    font-size: 1rem;
+    letter-spacing: 0.3px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+ion-button[expand="block"]:hover {
+    transform: translateY(-1px);
+    --box-shadow: 0 6px 16px rgba(var(--ion-color-primary-rgb), 0.35);
+}

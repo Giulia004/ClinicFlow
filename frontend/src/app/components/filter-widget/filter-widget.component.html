@@ -1,17 +1,27 @@
-<div class="search-filter-container mb-3">
-  <ion-searchbar (ionInput)="onSearch($event)" placeholder="Cerca..." [debounce]="300" showClearButton="always">
-  </ion-searchbar>
+<div class="search-filter-container mb-4 p-3 bg-white rounded-4 shadow-sm border">
+  <div class="d-flex flex-column flex-md-row gap-3">
+    <div class="flew-grow-1">
+      <ion-searchbar (ionInput)="onSearch($event)" placeholder="Cerca..." [debounce]="300" showClearButton="always"
+      class="custom-searchbar">
+      </ion-searchbar>
+    </div>
+  </div>
 
   <!--Pulsanti di filtraggio rapido-->
-  @if(filterOptions().length>0){
-  <div class="filter-buttons d-flex gap-2 px-2 overflow-x-auto">
-    <ion-button size="small" [fill]="activeFilter()==='all'? 'solid':'outline'"
-      (click)="setFilter('all')">Tutti</ion-button>
+  <div class="filter-select-wrapper">
+    <ion-item list="none" class="rounded-3 border bg-white">
+      <ion-icon name="filter-outline" slot="start" color="primary"></ion-icon>
+      <ion-select [value]="activeFilter()"
+      (ionChange)="setFilter($event.detail.value)"
+      interface="popover"
+      placeholder="Filtra per ruolo">
+      
+      <ion-select-option value="all">Tutti i ruoli</ion-select-option>
+        @for(option of filterOptions();track option.value){
+          <ion-select-option [value]="option.value">{{option.label}}</ion-select-option>
+        }
+    </ion-select>
 
-    @for(option of filterOptions();track option.value){
-    <ion-button size="small" [fill]="activeFilter()==='option.value'? 'solid':'outline'"
-      (click)="setFilter(option.value)">{{option.label}}</ion-button>
-    }
+    </ion-item>
   </div>
-  }
 </div>

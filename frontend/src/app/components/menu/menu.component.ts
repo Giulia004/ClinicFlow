@@ -4,14 +4,14 @@ import { Router, RouterModule } from '@angular/router';
 import { IonButton, IonContent, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonMenu, IonMenuButton, IonMenuToggle, IonTitle, IonToolbar } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { addIcons } from 'ionicons';
-import { calendarOutline, chatbubbleOutline, documentTextOutline, homeOutline, logOutOutline, medkitOutline, peopleCircleOutline, shieldCheckmarkOutline } from 'ionicons/icons';
+import { calendarOutline, chatbubbleEllipsesOutline, chatbubbleOutline, documentTextOutline, gridOutline, homeOutline, logOutOutline, medkitOutline, peopleCircleOutline, peopleOutline, personCircleOutline, shieldCheckmarkOutline, timeOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.css'],
   standalone:true,
-  imports: [CommonModule,RouterModule,IonItem,IonIcon,IonLabel,IonButton,IonHeader,IonToolbar,IonTitle,IonContent,IonList,IonMenuToggle,IonMenu],
+  imports: [CommonModule,RouterModule,IonItem,IonIcon,IonLabel,IonButton,IonContent,IonList,IonMenuToggle,IonMenu],
 })
 export class MenuComponent{
 
@@ -22,10 +22,12 @@ export class MenuComponent{
       homeOutline,
       calendarOutline,
       documentTextOutline,
-      chatbubbleOutline,
-      peopleCircleOutline, logOutOutline
+      chatbubbleEllipsesOutline,
+      peopleOutline, logOutOutline,gridOutline,timeOutline,personCircleOutline
     });
   }
+
+  public currentUser = this.authService.currentUser();
 
   logout() {
     this.authService.logout();

@@ -1,13 +1,13 @@
-import { Component, effect, input, OnInit, output, signal } from '@angular/core';
+import { Component, effect, input, output, signal } from '@angular/core';
 import { addIcons } from 'ionicons';
-import { filterOutline } from 'ionicons/icons';
-import { IonSearchbar, IonButton } from '@ionic/angular';
+import { appsOutline, filterOutline } from 'ionicons/icons';
+import { IonSearchbar, IonIcon, IonItem, IonSelect, IonSelectOption } from '@ionic/angular';
 
 @Component({
   selector: 'app-filter-widget',
   templateUrl: './filter-widget.component.html',
   styleUrls: ['./filter-widget.component.css'],
-  imports: [IonSearchbar, IonButton],
+  imports: [IonSearchbar, IonIcon,IonItem,IonSelect,IonSelectOption],
 })
 export class FilterWidgetComponent {
   public data = input.required<any[]>();
@@ -23,7 +23,7 @@ export class FilterWidgetComponent {
   public activeFilter = signal<string>('all');
 
   constructor() {
-    addIcons({ filterOutline });
+    addIcons({ filterOutline,appsOutline });
     //Ricalcolo dei dati filtrati ogni volta che cambiano input o selezioni
     effect(() => {
       const term = this.searchTerm().toLowerCase().trim();

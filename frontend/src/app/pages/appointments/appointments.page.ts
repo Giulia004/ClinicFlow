@@ -1,11 +1,11 @@
-import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, OnInit, signal } from '@angular/core';
 import { addIcons } from 'ionicons';
-import { addCircleOutline, alertCircleOutline, calendarOutline, checkmarkCircleOutline, closeCircleOutline, medkitOutline, personOutline, timeOutline, todayOutline, trashOutline } from 'ionicons/icons';
+import { addOutline, alertCircleOutline, calendarNumberOutline, calendarOutline, checkmarkCircleOutline, closeCircleOutline, medkitOutline, personOutline, timeOutline, todayOutline, trashOutline } from 'ionicons/icons';
 import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Appointment, AppointmentService, CreateAppPayload } from '../../services/appointment.service';
-import { IonButton, IonContent, IonIcon, ModalController } from '@ionic/angular';
+import { IonButton, IonCard, IonCardContent, IonContent, IonIcon, ModalController } from '@ionic/angular';
 import { AppointmentModalComponent } from '../../components/appointment-modal/appointment-modal.component';
 import { FilterWidgetComponent } from '../../components/filter-widget/filter-widget.component';
 import { FeedbackModalComponent } from '../../components/feedback-modal/feedback-modal.component';
@@ -16,7 +16,7 @@ import { ReportService } from '../../services/report.service';
   selector: 'app-appointments.page',
   templateUrl: './appointments.page.html',
   styleUrls: ['./appointments.page.css'],
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, IonIcon, IonButton, IonContent, FilterWidgetComponent, AppointmentModalComponent],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, IonIcon, IonButton, IonContent, FilterWidgetComponent, AppointmentModalComponent,IonCard,IonCardContent],
 })
 export class AppointmentsPage implements OnInit {
   public appointments = signal<Appointment[]>([]);
@@ -28,7 +28,7 @@ export class AppointmentsPage implements OnInit {
 
   constructor(public authService: AuthService,private appService:AppointmentService,private modalCtrl:ModalController,private reportService:ReportService) {
     addIcons({
-      calendarOutline, timeOutline, medkitOutline, personOutline, checkmarkCircleOutline, trashOutline, addCircleOutline, alertCircleOutline, todayOutline, closeCircleOutline
+      calendarOutline, timeOutline, medkitOutline, personOutline, checkmarkCircleOutline, trashOutline, addOutline, alertCircleOutline, todayOutline, closeCircleOutline,calendarNumberOutline
     });
   }
 
