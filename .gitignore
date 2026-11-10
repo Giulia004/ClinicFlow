@@ -10,4 +10,4 @@
 node_modules/
 
 #Altri file
-.pdf
+*.pdf

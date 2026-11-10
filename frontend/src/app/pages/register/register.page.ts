@@ -19,6 +19,8 @@ export class RegisterPage {
   private authService = inject(AuthService);
   private router = inject(Router);
 
+  public readonly emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  public readonly passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/;
 
   public userData: RegisterPayload = {
     cf: '',
@@ -40,6 +42,16 @@ export class RegisterPage {
   public onRegister() {
     if (!this.userData.name || !this.userData.surname || !this.userData.email || !this.userData.password) {
       this.errorMessage.set('Compila tutti i campi obbligatori.');
+      return;
+    }
+
+    if (!this.emailPattern.test(this.userData.email)) {
+      this.errorMessage.set('Inserisci un indirizzo email valido.');
+      return;
+    }
+
+    if (!this.passwordPattern.test(this.userData.password)) {
+      this.errorMessage.set('La password deve contenere almeno 8 caratteri, una maiuscola, una minuscola, un numero e un simbolo (!@#$%^&*).');
       return;
     }
 
