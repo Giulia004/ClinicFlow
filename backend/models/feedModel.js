@@ -74,6 +74,18 @@ const FeedModel = {
             });
         });
     },
+    getByPatientId: (patientId) => new Promise((resolve, reject) => {
+        db.all("SELECT * FROM feedback WHERE paziente_id=? ORDER BY data_creazione DESC", [patientId], (err, rows) => {
+            if (err) reject(err);
+            else resolve(rows);
+        });
+    }),
+    getByDoctorId: (doctorId) => new Promise((resolve, reject) => {
+        db.all("SELECT * FROM feedback WHERE medico_id=? ORDER BY data_creazione DESC", [doctorId], (err, rows) => {
+            if (err) reject(err);
+            else resolve(rows);
+        });
+    }),
     //Ricerca dei feedback tramite voto, ordinati per data di creazione in ordine decrescente
     getByVoto: (value) => {
         return new Promise((resolve, reject) => {

@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, OnInit, signal, inject } from '@angular/core';
 import { addIcons } from 'ionicons';
 import { alertCircleOutline, businessOutline, createOutline, fitnessOutline, headsetOutline, mailOutline, medkitOutline, peopleOutline, personAddOutline, personOutline, shieldCheckmarkOutline, shieldOutline, trashOutline } from 'ionicons/icons';
 import { User, UserService } from '../../services/user.service';
@@ -16,13 +16,17 @@ import { EditProfileModalComponent } from '../../components/edit-profile-modal/e
   imports: [CommonModule, IonContent, IonIcon, IonButton, IonSpinner, FilterWidgetComponent,IonCard,IonCardContent],
 })
 export class UsersPage implements OnInit {
+  private userService = inject(UserService);
+  authService = inject(AuthService);
+  private modalCtrl = inject(ModalController);
+
   public usersList = signal<User[]>([]);
   public filteredUsers = signal<User[]>([]);
   public isLoading = signal<boolean>(false);
   public errorMessage = signal<string | null>(null);
   public successMessage = signal<string | null>(null);
 
-  constructor(private userService:UserService,public authService:AuthService,private modalCtrl:ModalController) {
+  constructor() {
     addIcons({
       shieldCheckmarkOutline,businessOutline,personAddOutline,alertCircleOutline,medkitOutline,fitnessOutline,headsetOutline,shieldOutline,mailOutline,createOutline,trashOutline,peopleOutline,personOutline
     });

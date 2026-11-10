@@ -1,10 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router, RouterModule } from '@angular/router';
-import { IonButton, IonContent, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonMenu, IonMenuButton, IonMenuToggle, IonTitle, IonToolbar } from '@ionic/angular';
+import { IonButton, IonContent, IonIcon, IonItem, IonLabel, IonList, IonMenu, IonMenuToggle } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { addIcons } from 'ionicons';
-import { calendarOutline, chatbubbleEllipsesOutline, chatbubbleOutline, documentTextOutline, gridOutline, homeOutline, logOutOutline, medkitOutline, peopleCircleOutline, peopleOutline, personCircleOutline, shieldCheckmarkOutline, timeOutline } from 'ionicons/icons';
+import { calendarOutline, chatbubbleEllipsesOutline, chatbubbleOutline, documentTextOutline, gridOutline, homeOutline, logOutOutline, medkitOutline,peopleOutline, personCircleOutline, shieldCheckmarkOutline, timeOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'app-menu',
@@ -14,8 +14,11 @@ import { calendarOutline, chatbubbleEllipsesOutline, chatbubbleOutline, document
   imports: [CommonModule,RouterModule,IonItem,IonIcon,IonLabel,IonButton,IonContent,IonList,IonMenuToggle,IonMenu],
 })
 export class MenuComponent{
+  authService = inject(AuthService);
+  private router = inject(Router);
 
-  constructor(public authService: AuthService, private router: Router) { 
+
+  constructor() { 
     addIcons({
       medkitOutline,
       shieldCheckmarkOutline,
@@ -23,7 +26,7 @@ export class MenuComponent{
       calendarOutline,
       documentTextOutline,
       chatbubbleEllipsesOutline,
-      peopleOutline, logOutOutline,gridOutline,timeOutline,personCircleOutline
+      peopleOutline, logOutOutline,gridOutline,timeOutline,personCircleOutline,chatbubbleOutline
     });
   }
 

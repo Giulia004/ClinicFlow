@@ -13,7 +13,7 @@ import { arrowBackOutline, medkitOutline } from "ionicons/icons";
     imports: [CommonModule, RouterModule, IonHeader, IonToolbar, IonButtons, IonTitle, IonContent,IonIcon,IonRouterOutlet,IonBackButton]
 })
 
-export class AuthLayout {
+export class AuthLayoutComponent {
     constructor() {
         addIcons({
             arrowBackOutline, medkitOutline

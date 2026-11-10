@@ -1,9 +1,9 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, OnInit, signal, inject } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { User, UserService } from '../../services/user.service';
 import { addIcons } from 'ionicons';
-import { alertCircleOutline, callOutline, cardOutline, closeOutline, createOutline, desktopOutline, mailOutline, medkitOutline, personOutline, saveOutline, waterOutline } from 'ionicons/icons';
-import { IonButton, IonContent, IonHeader, IonIcon, IonSpinner, IonTitle, IonToolbar, ModalController } from '@ionic/angular';
+import { alertCircleOutline, callOutline, cardOutline, createOutline, desktopOutline, headsetOutline, heartOutline, mailOutline, medkitOutline, personCircleOutline, personOutline, ribbonOutline, shieldCheckmarkOutline, waterOutline } from 'ionicons/icons';
+import { IonButton, IonCard, IonCardContent, IonContent, IonIcon, IonSpinner, ModalController } from '@ionic/angular';
 import { EditProfileModalComponent } from '../../components/edit-profile-modal/edit-profile-modal.component';
 import { CommonModule } from '@angular/common';
 
@@ -11,15 +11,19 @@ import { CommonModule } from '@angular/common';
   selector: 'app-profile.page',
   templateUrl: './profile.page.html',
   styleUrls: ['./profile.page.css'],
-  imports: [CommonModule, IonContent, IonButton, IonIcon, IonHeader, IonToolbar, IonTitle, IonSpinner, EditProfileModalComponent],
+  imports: [CommonModule, IonContent, IonButton, IonIcon, IonSpinner, IonCard, IonCardContent],
 })
 export class ProfilePage implements OnInit {
+  private authService = inject(AuthService);
+  private userService = inject(UserService);
+  private modalCtrl = inject(ModalController);
+
   public userProfile = signal<User | null>(null);
   public isLoading = signal<boolean>(false);
   public errorMessage = signal<string | null>(null);
 
-  constructor(private authService:AuthService,private userService:UserService,private modalCtrl:ModalController) {
-    addIcons({ personOutline, createOutline, saveOutline, closeOutline,alertCircleOutline,cardOutline,mailOutline,callOutline,waterOutline,medkitOutline,desktopOutline });
+  constructor() {
+    addIcons({ alertCircleOutline,personOutline,mailOutline,shieldCheckmarkOutline,medkitOutline,headsetOutline,createOutline,personCircleOutline,cardOutline,heartOutline,waterOutline,callOutline,ribbonOutline,desktopOutline });
   }
 
   ngOnInit() {

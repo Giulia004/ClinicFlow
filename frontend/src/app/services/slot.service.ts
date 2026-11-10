@@ -1,5 +1,5 @@
 import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import { environment } from "../../environments/environment";
 import { Observable } from "rxjs";
 import { AuthService } from "./auth.service";
@@ -28,9 +28,10 @@ export interface CreateSlotPayload {
 })
 
 export class SlotService {
-    private apiUrl = `${environment.apiUrl}/slots`;
+    private http = inject(HttpClient);
+    private authService = inject(AuthService);
 
-    constructor(private http: HttpClient, private authService: AuthService) { }
+    private apiUrl = `${environment.apiUrl}/slots`;
 
     //Tutti gli slot disponibili per medico
     public getSlotByDocId(medicoId: number): Observable<Slot[]> {

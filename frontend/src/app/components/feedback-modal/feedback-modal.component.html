@@ -35,7 +35,7 @@
   <div class="bg-white p-4 rounded-4 shadow-sm border border-light mb-4">
     <ion-item class="rounded-3 border-0 p-0">
       <ion-label position="stacked" class="fw-bold text-dark mb-2">Commento (opzionale)</ion-label>
-      <ion-textarea [(ngModel)]="commento" rows="4" placeholder="Scrivi una breve recensione sulla visita ricevuta..."
+      <ion-textarea [ngModel]="commento()" (ngModelChange)="commento.set($event)" rows="4" placeholder="Scrivi una breve recensione sulla visita ricevuta..."
         class="form-control"></ion-textarea>
     </ion-item>
   </div>

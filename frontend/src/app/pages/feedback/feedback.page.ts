@@ -1,28 +1,31 @@
-import { Component, computed,OnInit, signal } from '@angular/core';
+import { Component, computed, OnInit, signal, inject } from '@angular/core';
 import { Feedback, FeedbackService } from '../../services/feedback.service';
 import { AuthService } from '../../services/auth.service';
 import { addIcons } from 'ionicons';
-import { calendarOutline, chatbubbleOutline, personOutline, star, starOutline, trashOutline } from 'ionicons/icons';
+import { calendarOutline, chatbubbleEllipsesOutline, chatbubbleOutline, personOutline, star, starOutline, trashOutline } from 'ionicons/icons';
 import { CommonModule } from '@angular/common';
-import { IonButton, IonContent, IonHeader, IonIcon, IonSpinner, IonTitle, IonToolbar } from '@ionic/angular';
+import { IonButton, IonCard, IonCardContent, IonContent, IonHeader, IonIcon, IonSpinner, IonTitle, IonToolbar } from '@ionic/angular';
 
 @Component({
   selector: 'app-feedback.page',
   templateUrl: './feedback.page.html',
   standalone: true,
   styleUrls: ['./feedback.page.css'],
-  imports: [CommonModule, IonIcon, IonContent, IonSpinner, IonHeader, IonToolbar, IonTitle, IonButton],
+  imports: [CommonModule, IonIcon, IonContent, IonSpinner, IonButton,IonCard,IonCardContent],
 })
 export class FeedbackPage implements OnInit {
+  private feedbackService = inject(FeedbackService);
+  authService = inject(AuthService);
+
   public feedbackList = signal<Feedback[]>([]);
   public isLoading = signal<boolean>(false);
   public errorMessage = signal<string | null>(null);
 
   role = computed(() => this.authService.currentUser()?.role);
 
-  constructor(private feedbackService:FeedbackService,public authService:AuthService) {
+  constructor() {
     addIcons({
-      star, starOutline, chatbubbleOutline, calendarOutline, trashOutline,personOutline
+      star, starOutline, chatbubbleOutline, calendarOutline, trashOutline,personOutline,chatbubbleEllipsesOutline
     });
   }
 
@@ -42,7 +45,7 @@ export class FeedbackPage implements OnInit {
           const medicoId = currentUser.id || (currentUser as any).medico_id;
           data = res.filter(f => f.medico_id === medicoId);
         } else if (currentUser && this.role() === 'paziente') {
-          const pazienteId = currentUser.id || (currentUser as any).pazinte_id;
+          const pazienteId = currentUser.id || (currentUser as any).paziente_id;
           data = res.filter(f => f.paziente_id === pazienteId);
         }
         this.feedbackList.set(data);

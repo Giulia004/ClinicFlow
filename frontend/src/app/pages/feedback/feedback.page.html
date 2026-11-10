@@ -1,114 +1,134 @@
-<ion-header>
-  <ion-toolbar color="primary">
-    <ion-title>Valutazioni e Recensioni</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content class="feedback-content">
+  <div class="container py-4 feedback-container">
 
-<ion-content class="ion-padding bg-light">
-  <div class="container py-4 max-w-1100">
-
-    <div
-      class="mb-4 bg-white p-4 rounded-4 shadow-sm border border-light d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
-      <div>
-        <div
-          class="badge bg-primary-subtle text-primary px-3 py-2 rounded-pill fw-bold mb-2 d-inline-flex align-items-center gap-2">
+    <div class="feedback-header">
+      <div class="feedback-header-info">
+        <div class="section-label">
           <ion-icon name="star"></ion-icon>
           <span>Gestione Feedback</span>
         </div>
-        @if (this.role() !== 'paziente') {
-        <h2 class="fw-bold text-dark mb-1">Feedback Ricevuti</h2>
-        <p class="text-muted mb-0">Consulta le valutazioni espresse dai pazienti sulle visite effettuate.</p>
+
+        @if (role() !== 'paziente') {
+        <h2>Feedback Ricevuti</h2>
+        <p>Consulta le valutazioni espresse dai pazienti sulle visite effettuate.</p>
         } @else {
-        <h2 class="fw-bold text-dark mb-1">Feedback Inviati</h2>
-        <p class="text-muted mb-0">Le recensioni che hai rilasciato per le visite concluse.</p>
+        <h2>Feedback Inviati</h2>
+        <p>Le recensioni che hai rilasciato per le visite concluse.</p>
         }
       </div>
-      <div class="text-muted small bg-light px-3 py-2 rounded-pill border">
-        Totale recensioni: <strong class="text-dark">{{ feedbackList().length }}</strong>
+
+      <div class="feedback-total">
+        <ion-icon name="chatbubble-outline"></ion-icon>
+        <span>Totale recensioni</span>
+        <strong>{{ feedbackList().length }}</strong>
       </div>
     </div>
 
-    <!--Alert di errore-->
+    <!-- Messaggio di errore -->
     @if (errorMessage()) {
-    <div class="alert alert-danger d-flex align-items-center mb-4 py-2 small shadow-sm rounded-3" role="alert">
-      <ion-icon name="alert-circle-outline" class="me-2 fs-5 flex-shrink-0"></ion-icon>
-      <div>{{ errorMessage() }}</div>
+    <div class="feedback-alert" role="alert">
+      <ion-icon name="alert-circle-outline"></ion-icon>
+      <span>{{ errorMessage() }}</span>
     </div>
     }
 
+    <!-- Caricamento -->
     @if (isLoading()) {
-    <div class="text-center py-5">
-      <ion-spinner name="crescent" color="primary" style="width: 40px; height: 40px;"></ion-spinner>
-      <p class="text-muted mt-3 fw-medium">Caricamento recensioni in corso...</p>
+    <div class="feedback-loading">
+      <ion-spinner name="crescent" color="primary"></ion-spinner>
+      <p>Caricamento recensioni in corso...</p>
     </div>
     } @else {
+
     <div class="row g-4">
+
+      <!--Iterazione sulla lista di feedback del sistema-->
       @for (item of feedbackList(); track item.id) {
-      <div class="col-md-6 col-lg-4">
-        <div
-          class="card feedback-card border-0 shadow-sm p-4 h-100 bg-white d-flex flex-column justify-content-between">
-          <div>
-            <div class="d-flex justify-content-between align-items-center mb-3">
-              <!--Blocco avatar del paziente con nome, cognome e icona-->
-              <div class="d-flex align-items-center gap-2">
-                <div class="feedback-avatar bg-primary-subtle text-primary">
+      <div class="col-md-6 col-xl-4">
+
+        <ion-card class="feedback-card">
+          <ion-card-content>
+
+            <div class="feedback-card-header">
+
+              <div class="patient-info">
+                <div class="feedback-avatar">
                   <ion-icon name="person-outline"></ion-icon>
                 </div>
-                <div>
-                  <h6 class="mb-0 fw-bold text-dark" style="font-size: 0.75rem;">{{item.paziente_name}}
-                    {{item.paziente_surname}}
-                  </h6>
-                  <span class="text-muted" style="font-size:0.75rem;">Paziente</span>
+
+                <div class="patient-details">
+                  <h3>
+                    {{ item.paziente_name }}
+                    {{ item.paziente_surname }}
+                  </h3>
+                  <span>Paziente</span>
                 </div>
               </div>
-              <!--Stelle-->
-              <div class="d-flex gap-1 text-warning fs-5">
-                @for (s of [1, 2, 3, 4, 5]; track s) {
-                <ion-icon [name]="s <= item.voto ? 'star' : 'star-outline'"></ion-icon>
-                }
-              </div>
-              <div class="d-flex justify-content-end mb-2">
-                <span class="badge bg-primary-subtle text-primary fw-bold px-3 py-2 rounded-pill"
-                  style="font-size: 0.8rem;">
-                  {{ item.voto }}.0 / 5
-                </span>
+
+              <div class="rating-value">
+                <ion-icon name="star"></ion-icon>
+                <strong>{{ item.voto }}.0</strong>
+                <span>/ 5</span>
               </div>
             </div>
 
-            <div class="feedback-comment mb-3">
-              <p class="mb-0 fst-italic text-dark">
-                "{{ item.commento || 'Nessun commento scritto dal paziente.' }}"
+            <!--Rating di stelle-->
+            <div class="feedback-stars">
+              @for (s of [1, 2, 3, 4, 5]; track s) {
+              <ion-icon [name]="s <= item.voto ? 'star' : 'star-outline'">
+              </ion-icon>
+              }
+            </div>
+
+            <div class="feedback-comment">
+              <ion-icon name="chatbubble-ellipses-outline"></ion-icon>
+
+              <p>
+                {{ item.commento || 'Nessun commento scritto dal paziente.' }}
               </p>
             </div>
-          </div>
 
-          <div class="pt-3 border-top d-flex justify-content-between align-items-center">
-            <div class="d-flex align-items-center gap-2 text-muted small">
-              <ion-icon name="calendar-outline"></ion-icon>
-              <span>{{ item.data_creazione | date:'dd/MM/yyyy' }}</span>
+            <div class="feedback-card-footer">
+              <div class="feedback-date">
+                <ion-icon name="calendar-outline"></ion-icon>
+                <span>Data</span>
+                <strong>{{ item.data_creazione | date:'dd/MM/yyyy' }}</strong>
+              </div>
+
+              @if (authService.currentUser()?.role === 'admin') {
+              <ion-button fill="clear" color="danger" size="small" class="delete-feedback-btn"
+                (click)="deleteFeedback(item.id!)">
+
+                <ion-icon name="trash-outline" slot="start"></ion-icon>
+                Elimina
+              </ion-button>
+              }
             </div>
 
-            @if (authService.currentUser()?.role === 'admin') {
-            <ion-button fill="clear" color="danger" size="small" class="fw-bold m-0" (click)="deleteFeedback(item.id!)">
-              <ion-icon name="trash-outline" slot="start"></ion-icon>
-              Elimina
-            </ion-button>
-            }
-          </div>
-        </div>
+          </ion-card-content>
+        </ion-card>
+
       </div>
       } @empty {
       <div class="col-12">
-        <div class="text-center py-5 bg-white rounded-4 shadow-sm border border-light p-5">
+        <div class="feedback-empty">
+
           <div class="empty-icon-box">
-            <ion-icon name="chatbubble-outline" style="font-size: 36px;"></ion-icon>
+            <ion-icon name="chatbubbles-outline"></ion-icon>
           </div>
-          <h5 class="fw-bold text-dark">Nessuna recensione presente</h5>
-          <p class="text-muted small mb-0">Non ci sono ancora valutazioni registrate nel sistema al momento.</p>
+
+          <h3>Nessuna recensione presente</h3>
+          <p>
+            Non ci sono ancora valutazioni registrate nel sistema al momento.
+          </p>
+
         </div>
       </div>
+
       }
+
     </div>
     }
+
   </div>
 </ion-content>

@@ -1,36 +1,75 @@
 const ReportModel = require('../models/reportModel');
+const AppModel = require('../models/appModel');
 const path = require('path');
 const fs = require('fs');
 
 class ReportService {
-    static async createNewReport(data, file) {
+    static async createNewReport(data, file, user) {
         if (!file) throw new Error("File referto mancante");
-        if (!data.appuntamento_id || !data.medico_id || !data.paziente_id)
-            throw new Error("Campi obbligatori mancanti: appuntamento_id, medico_id, paziente_id");
+        const appointmentId = Number(data.appuntamento_id);
+        if (!Number.isInteger(appointmentId) || appointmentId <= 0)
+            throw new Error("ID appuntamento non valido");
+        const appointment = await AppModel.getById(appointmentId);
+        if (!appointment) throw new Error("Appuntamento non trovato");
+        if (user.role !== 'medico' || appointment.medico_id !== user.id) {
+            const error = new Error("Non autorizzato a creare un referto per questo appuntamento");
+            error.statusCode = 403;
+            throw error;
+        }
+        if (appointment.stato !== 'completato')
+            throw new Error("Il referto può essere creato solo per un appuntamento completato");
 
         const newReport = {
-            appuntamento_id: data.appuntamento_id,
-            paziente_id: data.paziente_id,
-            medico_id: data.medico_id,
+            appuntamento_id: appointmentId,
+            paziente_id: appointment.paziente_id,
+            medico_id: appointment.medico_id,
             file_referto: file.filename
         };
 
         return await ReportModel.createReport(newReport);
     }
 
-    static async getReportById(id) {
+    static async authorizeReport(report, user) {
+        if (user.role === 'admin' || user.role === 'sportellista' ||
+            (user.role === 'paziente' && report.paziente_id === user.id) ||
+            (user.role === 'medico' && report.medico_id === user.id)) return;
+        const error = new Error("Non autorizzato ad accedere a questo referto");
+        error.statusCode = 403;
+        throw error;
+    }
+
+    static async getReportById(id, user) {
         const report = await ReportModel.getById(id);
         if (!report) throw new Error("Referto non trovato");
-
+        await this.authorizeReport(report, user);
         return report;
     }
 
-    static async getReportsByDoc(medicoId) {
+    static async getReportsByDoc(medicoId, user) {
+        if (user.role !== 'admin' && (user.role !== 'medico' || Number(medicoId) !== user.id)) {
+            const error = new Error("Non autorizzato ad accedere a questi referti");
+            error.statusCode = 403;
+            throw error;
+        }
         return await ReportModel.getByDocId(medicoId);
     }
 
-    static async getReportsByPatient(patientId) {
-        return await ReportModel.getByPatientId(patientId);
+    static async getReportsByPatient(patientId, user) {
+        const reports = await ReportModel.getByPatientId(patientId);
+        if (user.role === 'paziente' && Number(patientId) !== user.id) {
+            const error = new Error("Non autorizzato ad accedere a questi referti");
+            error.statusCode = 403;
+            throw error;
+        }
+        if (user.role === 'medico') {
+            return reports.filter((report) => report.medico_id === user.id);
+        }
+        if (!['paziente', 'sportellista', 'admin'].includes(user.role)) {
+            const error = new Error("Non autorizzato ad accedere a questi referti");
+            error.statusCode = 403;
+            throw error;
+        }
+        return reports;
     }
 
     static async getAllReports() {
@@ -58,7 +97,7 @@ class ReportService {
         if (!reportFile || !reportFile.file_referto)
             throw new Error("File referto non trovato");
 
-        const filePath = path.join(process.cwd(), 'uploads', 'reports', reportFile.file_referto);
+        const filePath = path.join(__dirname, '..', 'uploads', 'reports', reportFile.file_referto);
         if (!fs.existsSync(filePath))
             throw new Error("File non trovato");
 

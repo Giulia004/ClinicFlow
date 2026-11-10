@@ -1,4 +1,4 @@
-import { Component, computed} from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { addIcons } from 'ionicons';
 import { AuthService } from '../../services/auth.service';
 import { Router, RouterLink } from '@angular/router';
@@ -13,10 +13,13 @@ import { addCircleOutline, arrowForwardOutline, calendarOutline, chatbubbleEllip
   imports: [IonIcon, IonButton, IonCard, IonCardContent, IonContent, RouterLink],
 })
 export class DashboardPage{
+  authService = inject(AuthService);
+  router = inject(Router);
+
 
   public role = computed(() => this.authService.currentUser()?.role);
 
-  constructor(public authService: AuthService, public router: Router) {
+  constructor() {
     addIcons({
       calendarOutline, documentTextOutline, personOutline, logOutOutline, notificationsOutline, pulseOutline, timeOutline, chevronForwardOutline, shieldCheckmarkOutline, addCircleOutline, peopleOutline, medkitOutline, statsChartOutline,arrowForwardOutline,personCircleOutline,chatbubbleEllipsesOutline
     });

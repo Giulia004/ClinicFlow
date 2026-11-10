@@ -2,7 +2,7 @@ const SlotService = require('../services/slotService');
 
 exports.createSlot = async (req, res) => {
     try {
-        await SlotService.createNewSlot(req.body);
+        await SlotService.createNewSlot(req.body, req.user);
         return res.status(201).json({ message: "Nuovo slot creato" });
     } catch (error) {
         if (error.message.includes("Slot sovrapposto"))
@@ -51,11 +51,11 @@ exports.releaseSlot = async (req, res) => {
     try {
         const slotId = Number(req.params.id);
 
-        const result = await SlotService.releaseSlot(slotId);
+        const result = await SlotService.releaseSlot(slotId, req.user);
 
         return res.status(200).json({ message: "Slot liberato", result });
     } catch (error) {
-        return res.status(500).json({ error: "Errore", details: error.message });
+        return res.status(error.statusCode || 500).json({ error: "Errore", details: error.message });
     }
 };
 

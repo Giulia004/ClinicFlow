@@ -1,45 +1,417 @@
-.bg-light {
-    background-color: #f8f9fa !important;
+/*Container principale*/
+.reports-content {
+    --background: #F4F7FA;
 }
 
-.max-w-1100 {
-    max-width: 1100px;
-    margin: 0 auto;
+.reports-container {
+    max-width: 1200px;
 }
 
-.card {
+/*Intestazione pagina*/
+.reports-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+    padding: 28px 30px;
+    margin-bottom: 26px;
+    border: 1px solid #E8EEF2;
+    border-radius: 18px;
+    box-shadow: 0 4px 18px rgba(36, 55, 70, 0.04);
+}
+
+.section-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 13px;
+    margin-bottom: 13px;
+    border-radius: 30px;
+    background: rgba(22, 137, 154, 0.10);
+    color: #16899A;
+    font-size: 0.78rem;
+    font-weight: 700;
+}
+
+.section-label ion-icon {
+    font-size: 16px;
+}
+
+.reports-header h2 {
+    margin: 0 0 7px;
+    color: #243746;
+    font-size: 1.55rem;
+    font-weight: 750;
+}
+
+.reports-header p {
+    margin: 0;
+    color: #82919D;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.reports-total {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 13px 17px;
+    border: 1px solid #E8EEF2;
+    border-radius: 14px;
+    background: #F4F7FA;
+    flex-shrink: 0;
+}
+
+.reports-total>ion-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    padding: 10px;
+    border-radius: 12px;
+    background: rgba(22, 137, 154, 0.11);
+    color: #16899A;
+    font-size: 22px;
+}
+
+.reports-total div {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.reports-total span {
+    color: #82919D;
+    font-size: 0.75rem;
+}
+
+.reports-total strong {
+    color: #105B70;
+    font-size: 1.2rem;
+    font-weight: 750;
+}
+
+.reports-alert {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding: 14px 17px;
+    margin-bottom: 18px;
+    border: 1px solid;
+    border-radius: 12px;
+    font-size: 0.88rem;
+}
+
+.reports-alert ion-icon {
+    flex-shrink: 0;
+    font-size: 20px;
+}
+
+.success-alert {
+    border-color: #B9E3D3;
+    background: #EFF9F4;
+    color: #21815F;
+}
+
+.error-alert {
+    border-color: #F2C7CA;
+    background: #FFF1F1;
+    color: #B83D48;
+}
+
+/*Elenco referti*/
+.reports-section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 30px 0 16px;
+}
+
+.reports-section-header h3 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 0 6px;
+    color: #243746;
+    font-size: 1.1rem;
+    font-weight: 750;
+}
+
+.reports-section-header h3 ion-icon {
+    color: #16899A;
+    font-size: 21px;
+}
+
+.reports-section-header p {
+    margin: 0;
+    color: #82919D;
+    font-size: 0.84rem;
+}
+
+/*Sezione filtro*/
+.reports-filter {
+    padding: 17px;
+    border: 1px solid #E8EEF2;
+    border-radius: 15px;
+    background: #FFFFFF;
+    box-shadow: 0 3px 12px rgba(36, 55, 70, 0.035);
+}
+
+.reports-grid {
+    margin-top: 10px;
+}
+
+/*Card referto*/
+.report-card {
+    height: calc(100% - 16px);
+    margin: 0;
+    border: 1px solid #E8EEF2;
+    border-radius: 17px;
+    background: #FFFFFF;
+    box-shadow: 0 4px 16px rgba(36, 55, 70, 0.045);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
-    border: 1px solid rgba(0, 0, 0, .02) !important;
 }
 
-.card:hover {
+.report-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .07) !important;
+    box-shadow: 0 9px 24px rgba(36, 55, 70, 0.09);
 }
 
-.card .bg-light.rounded-4 {
-    background-color: #f1f3f5 !important;
-    transition: background-color 0.2s ease;
+.report-card ion-card-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 22px;
 }
 
-.card:hover .bg-light.rounded-4 {
-    background-color: #e9ecef !important;
+/*Intestazione card e informazioni sul report*/
+.report-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.report-id {
+    padding: 7px 11px;
+    border: 1px solid #E8EEF2;
+    border-radius: 30px;
+    background: #F4F7FA;
+    color: #526574;
+    font-size: 0.76rem;
+    font-weight: 700;
+}
+
+.report-type {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 7px 10px;
+    border-radius: 30px;
+    background: rgba(38, 150, 111, 0.10);
+    color: #26966F;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.report-type ion-icon {
+    font-size: 14px;
+}
+
+.report-document {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 23px 16px 18px;
+    margin-bottom: 20px;
+    border: 1px solid #E8EEF2;
+    border-radius: 15px;
+    background: #F7F9FB;
+    text-align: center;
+}
+
+.document-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 62px;
+    height: 62px;
+    margin-bottom: 14px;
+    border-radius: 17px;
+    background: rgba(16, 91, 112, 0.09);
+    color: #105B70;
+}
+
+.document-icon ion-icon {
+    font-size: 34px;
+}
+
+.document-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 7px;
+}
+
+.document-label {
+    color: #82919D;
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.document-info strong {
+    display: block;
+    max-width: 100%;
+    overflow: hidden;
+    color: #243746;
+    font-size: 0.86rem;
+    font-weight: 700;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.appointment-reference {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    width: 100%;
+    padding-top: 15px;
+    margin-top: 16px;
+    border-top: 1px solid #E8EEF2;
+    color: #82919D;
+    font-size: 0.76rem;
+}
+
+.appointment-reference ion-icon {
+    color: #16899A;
+    font-size: 16px;
+}
+
+.appointment-reference strong {
+    color: #105B70;
+}
+
+/*Footer e actions btn*/
+.report-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    padding-top: 15px;
+    margin-top: auto;
+    border-top: 1px solid #E8EEF2;
+}
+
+.download-btn {
+    --background: #105B70;
+    --background-hover: #0E5063;
+    --background-activated: #0E5063;
+    --border-radius: 10px;
+    --box-shadow: none;
+    height: 38px;
+    margin: 0;
+    font-size: 0.8rem;
+    font-weight: 650;
+}
+
+.download-btn ion-icon {
+    font-size: 17px;
+}
+
+.delete-report-btn {
+    --padding-start: 9px;
+    --padding-end: 9px;
+    --border-radius: 9px;
+    height: 36px;
+    margin: 0;
+    font-size: 0.78rem;
+    font-weight: 650;
+}
+
+.reports-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 65px 24px;
+    margin-top: 20px;
+    border: 1px solid #E8EEF2;
+    border-radius: 18px;
+    background: #FFFFFF;
+    text-align: center;
+    box-shadow: 0 4px 18px rgba(36, 55, 70, 0.04);
 }
 
 .empty-icon-box {
-    background-color: #f1f3f5;
-    color: #adb5bd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 70px;
+    height: 70px;
+    margin-bottom: 20px;
+    border-radius: 20px;
+    background: rgba(22, 137, 154, 0.10);
+    color: #16899A;
 }
 
-.badge {
-    font-weight: 600;
-    letter-spacing: 0.3px;
+.empty-icon-box ion-icon {
+    font-size: 34px;
 }
 
-.rounded-4 {
-    border-radius: 1rem !important;
+.reports-empty h3 {
+    margin: 0 0 8px;
+    color: #243746;
+    font-size: 1.1rem;
+    font-weight: 750;
 }
 
-.shadow-sm {
-    box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .04) !important;
+.reports-empty p {
+    max-width: 400px;
+    margin: 0;
+    color: #82919D;
+    font-size: 0.86rem;
+    line-height: 1.6;
+}
+
+@media (max-width: 767px) {
+    .reports-header {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 22px;
+        gap: 18px;
+    }
+
+    .reports-header h2 {
+        font-size: 1.3rem;
+    }
+
+    .reports-total {
+        align-self: flex-start;
+    }
+
+    .reports-section-header {
+        margin-top: 25px;
+    }
+}
+
+@media (max-width: 400px) {
+    .report-card ion-card-content {
+        padding: 17px;
+    }
+
+    .report-card-header {
+        align-items: flex-start;
+    }
+
+    .report-id,
+    .report-type {
+        font-size: 0.68rem;
+    }
 }

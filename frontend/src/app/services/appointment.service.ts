@@ -1,10 +1,10 @@
 import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import { environment } from "../../environments/environment";
 import { Observable } from "rxjs";
 import { AuthService } from "./auth.service";
 
-export type AppointmentStatus = 'attivo' | 'confermata' | 'annullata' | 'completato';
+export type AppointmentStatus = 'attivo' | 'confermato' | 'annullato' | 'completato';
 
 //Interfaccia per la tipizzazione dell'appuntamento
 export interface Appointment {
@@ -21,7 +21,7 @@ export interface Appointment {
     data: string;
     orario_inizio: string;
     orario_fine: string;
-    stato: string; //Attivo, confermata, annullata,completata
+    stato: AppointmentStatus;
     creato_da: 'paziente' | 'sportellista';
     data_creazione?: string;
 }
@@ -39,9 +39,10 @@ export interface CreateAppPayload {
 })
 
 export class AppointmentService {
-    private apiUrl = `${environment.apiUrl}/appointments`;
+    private http = inject(HttpClient);
+    private authService = inject(AuthService);
 
-    constructor(private http: HttpClient,private authService: AuthService) { }
+    private apiUrl = `${environment.apiUrl}/appointments`;
 
     //Tutti gli appuntamenti
     public getAppointments(): Observable<Appointment[]> {
@@ -49,32 +50,32 @@ export class AppointmentService {
     }
 
     //Creazione appuntamento
-    public createAppointment(app: CreateAppPayload): Observable<Appointment> {
-        return this.http.post<Appointment>(this.apiUrl, app, { headers: this.authService.getHeaders() });
+    public createAppointment(app: CreateAppPayload): Observable<{ message: string; appointment: Appointment }> {
+        return this.http.post<{ message: string; appointment: Appointment }>(this.apiUrl, app, { headers: this.authService.getHeaders() });
     }
 
     //Aggiornamento appuntamento
-    public updateAppointment(id: number, app: Partial<Appointment>): Observable<Appointment> {
+    public updateAppointment(id: number, app: Partial<Appointment>): Observable<unknown> {
         return this.http.put<Appointment>(`${this.apiUrl}/${id}`, app, { headers: this.authService.getHeaders() });
     }
 
     //Eliminazione appuntamento
-    public removeAppointment(id: number): Observable<void> {
-        return this.http.delete<void>(`${this.apiUrl}/${id}`, { headers: this.authService.getHeaders() });
+    public removeAppointment(id: number): Observable<{ message: string }> {
+        return this.http.delete<{ message: string }>(`${this.apiUrl}/${id}`, { headers: this.authService.getHeaders() });
     }
 
     //Conferma appuntamento (check-in)
-    public confirmAppointment(id: number): Observable<Appointment> {
-        return this.http.put<Appointment>(`${this.apiUrl}/${id}/confirm`, {}, { headers: this.authService.getHeaders() });
+    public confirmAppointment(id: number): Observable<{ message: string }> {
+        return this.http.put<{ message: string }>(`${this.apiUrl}/${id}/confirm`, {}, { headers: this.authService.getHeaders() });
     }
 
     //Completa appuntamento
-    public completeAppointment(id: number): Observable<Appointment> {
-        return this.http.put<Appointment>(`${this.apiUrl}/${id}/complete`, {}, { headers: this.authService.getHeaders() });
+    public completeAppointment(id: number): Observable<{ message: string }> {
+        return this.http.put<{ message: string }>(`${this.apiUrl}/${id}/complete`, {}, { headers: this.authService.getHeaders() });
     }
 
     //Disdire appuntamento
-    public deleteAppointment(id: number): Observable<Appointment> {
-        return this.http.put<Appointment>(`${this.apiUrl}/${id}/unsubscribe`, {}, { headers: this.authService.getHeaders() });
+    public unsubscribeAppointment(id: number): Observable<{ message: string }> {
+        return this.http.put<{ message: string }>(`${this.apiUrl}/${id}/unsubscribe`, {}, { headers: this.authService.getHeaders() });
     }
 }

@@ -50,8 +50,8 @@
               'medico_surname',
               'medico_id'
             ]" [filterProperty]="'disponibile'" [filterOptions]="[
-              { label: 'Occupato', value: '0' },
-              { label: 'Disponibile', value: '1' }
+              { label: 'Occupato', value: 'false' },
+              { label: 'Disponibile', value: 'true' }
             ]" (filterData)="filteredSlots.set($event)">
           </app-filter-widget>
 

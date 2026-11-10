@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, OnInit, signal, inject } from '@angular/core';
 import { Slot, SlotService } from '../../services/slot.service';
 import { Medico, UserService } from '../../services/user.service';
 import { addIcons } from 'ionicons';
@@ -17,6 +17,10 @@ import { FilterWidgetComponent } from '../../components/filter-widget/filter-wid
   imports: [IonContent, IonIcon, IonButton, CommonModule, IonSpinner, FilterWidgetComponent,IonCard,IonCardContent],
 })
 export class SlotPage implements OnInit {
+  private slotService = inject(SlotService);
+  private userService = inject(UserService);
+  private modalCtrl = inject(ModalController);
+
   public slots = signal<Slot[]>([]);
   public filteredSlots = signal<Slot[]>([]);
   public docList = signal<Medico[]>([]);
@@ -30,7 +34,7 @@ export class SlotPage implements OnInit {
     disponibile: true
   };
 
-  constructor(private slotService:SlotService,private userService:UserService,private modalCtrl:ModalController) {
+  constructor() {
     addIcons({
       addOutline, trashOutline, calendarOutline, timeOutline, closeOutline,lockClosedOutline,checkmarkCircleOutline,calendarNumberOutline,createOutline
     });

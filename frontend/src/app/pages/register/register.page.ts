@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, inject } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { addIcons } from 'ionicons';
 import { CommonModule } from '@angular/common';
@@ -16,6 +16,9 @@ import { RegisterPayload } from '../../services/user.service';
   imports: [CommonModule, FormsModule, RouterModule, IonContent, IonIcon, IonButton, IonSpinner],
 })
 export class RegisterPage {
+  private authService = inject(AuthService);
+  private router = inject(Router);
+
 
   public userData: RegisterPayload = {
     cf: '',
@@ -28,7 +31,7 @@ export class RegisterPage {
   public isLoading = signal<boolean>(false);
   public errorMessage = signal<string | null>(null);
 
-  constructor(private authService: AuthService, private router: Router) {
+  constructor() {
     addIcons({
       personOutline, mailOutline, lockClosedOutline, personAddOutline, alertCircleOutline
     });

@@ -3,40 +3,41 @@ const bcrypt = require('bcryptjs');
 
 class UserService {
     //Logica di registrazione: controlli, hashing password e salvataggio
-    static async registerUser(userData, details) {
+    static async registerUser(userData, details = {}, requester = null) {
         const rawCF = userData.CF || userData.cf;
         const cf = rawCF ? String(rawCF).trim() : '';
-        const { name, surname, email, password, role, specializzazione, numeroAlbo, postazione, gruppo_sanguigno, telefono_emergenza } = details;
+        const { name, surname, email, password, role, specializzazione, numeroAlbo, postazione, gruppo_sanguigno, telefono_emergenza } = {
+            ...userData,
+            ...details
+        };
 
         //Se viene passata la password allora è una registrazione normale, altrimenti ci basta cf, nome e cognome
         const isQuickRegistration = !password;
 
         if (!cf || !name || !surname) {
-            return res.status(400).json({ message: "Inserire i valori nei campi" });
+            throw new Error("Inserire i valori nei campi");
         }
 
         if (!isQuickRegistration && !email)
-            return res.status(400).json({ message: "L'email è obbligatoria" });
+            throw new Error("L'email è obbligatoria");
 
         if (email) {
             const existingUser = await UserModel.findByEmail(email);
             if (existingUser) {
-                return res.status(400).json({ message: "Utente esistente" });
+                throw new Error("Utente esistente");
             }
         }
 
         const existsUserByCf = await UserModel.findByCf(cf.toUpperCase());
         if (existsUserByCf)
-            return res.status(400).json({ message: "Utente associato al codice fiscale inserito" });
+            throw new Error("Utente associato al codice fiscale inserito");
 
-        let hashedPassword = null;
-        if (password)
-            hashedPassword = await bcrypt.hash(password, 10);
+        const hashedPassword = password ? await bcrypt.hash(password, 10) : null;
 
         const validRoles = ['paziente', 'medico', 'sportellista', 'admin'];
         let finalRole = 'paziente';
 
-        if (req.user && req.user.role === 'admin') {
+        if (requester?.role === 'admin') {
             if (role && validRoles.includes(role)) finalRole = role;
         }
 
@@ -86,10 +87,29 @@ class UserService {
             throw new Error("Non autorizzato a modificare questo utente");
         }
 
-        let updateData = { ...bodyData }
-        if (bodyData.password) {
-            const salt = await bcrypt.genSalt(10);
-            updateData.password = await bcrypt.hash(bodyData.password, salt);
+        const updateData = {
+            email: bodyData.email,
+            password: bodyData.password
+        };
+        const target = isSelf ? requester : await UserModel.findByCf(cf);
+        if (isAdmin) {
+            Object.assign(updateData, {
+                name: bodyData.name,
+                surname: bodyData.surname,
+                gruppo_sanguigno: bodyData.gruppo_sanguigno,
+                telefono_emergenza: bodyData.telefono_emergenza,
+                specializzazione: bodyData.specializzazione,
+                numero_albo: bodyData.numero_albo,
+                postazione: bodyData.postazione
+            });
+        } else if (target?.role === 'paziente' && (isSelf || isSportellistaOnPatient)) {
+            updateData.gruppo_sanguigno = bodyData.gruppo_sanguigno;
+            updateData.telefono_emergenza = bodyData.telefono_emergenza;
+        } else if (isSelf && target?.role === 'medico') {
+            updateData.specializzazione = bodyData.specializzazione;
+            updateData.numero_albo = bodyData.numero_albo;
+        } else if (isSelf && target?.role === 'sportellista') {
+            updateData.postazione = bodyData.postazione;
         }
 
         const result = await UserModel.updateUser(cf, updateData);

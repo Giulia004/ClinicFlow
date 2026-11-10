@@ -2,10 +2,10 @@ const UserService = require('../services/userService');
 
 exports.registerUser = async (req, res) => {
     try {
-        const newUser = await UserService.registerUser(req.body, req.body.details);
+        const newUser = await UserService.registerUser(req.body, req.body.details || {}, req.user);
         return res.status(201).json({ message: "Utente registrato con successo", user: newUser });
     } catch (error) {
-        res.status(500).json({ err: error.message });
+        return res.status(error.statusCode || 400).json({ err: error.message });
     }
 };
 
@@ -39,10 +39,10 @@ exports.updateUser = async (req, res) => {
 
 exports.deleteUser = async (req, res) => {
     try {
-        await UserService.deleteUser(req.params.cf);
+        await UserService.deleteUser(req.user, req.params.cf);
         return res.status(200).json({ message: "Operatore eliminato con successo" });
     } catch (error) {
-        return res.status(500).json({ error: error.message });
+        return res.status(error.statusCode || 500).json({ error: error.message });
     }
 };
 

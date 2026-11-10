@@ -1,7 +1,6 @@
 require('dotenv').config();
 const express = require('express'); //Importare express
 const cors = require('cors');
-const path = require('path');
 
 const app = express();
 
@@ -16,8 +15,6 @@ app.use(cors({
 })); //Abilita CORS per tutte le rotte
 
 app.use(express.json()); //Il server leggerà i dati in formato JSON
-
-app.use("/uploads", express.static(path.join(__dirname, 'uploads')));
 
 //Routes
 app.use('/api/auth', require("./routes/authRoutes"));

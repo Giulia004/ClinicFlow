@@ -1,4 +1,4 @@
-import { Component,signal } from '@angular/core';
+import { Component, signal, inject } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { addIcons } from 'ionicons';
@@ -14,6 +14,9 @@ import { FormsModule } from '@angular/forms';
   imports: [CommonModule, IonContent, IonIcon, FormsModule, IonButton, IonSpinner],
 })
 export class LoginPage {
+  private authService = inject(AuthService);
+  private router = inject(Router);
+
   public credentials = {
     email: '',
     password: ''
@@ -22,7 +25,7 @@ export class LoginPage {
   public isLoading = signal<boolean>(false);
   public errorMessage = signal<string | null>(null);
 
-  constructor(private authService: AuthService, private router: Router) {
+  constructor() {
     addIcons({
       mailOutline, lockClosedOutline, alertCircleOutline, logInOutline
     });
@@ -44,6 +47,7 @@ export class LoginPage {
       },
       error: (err) => {
         const msg = err.error?.message || "Credenziali non valide";
+        this.isLoading.set(false);
         this.errorMessage.set(msg);
       }
     });

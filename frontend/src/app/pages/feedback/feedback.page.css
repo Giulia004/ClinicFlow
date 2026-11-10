@@ -1,52 +1,362 @@
-.max-width-1100 {
-    max-width: 1100px;
-    margin-inline: 0 auto;
+.feedback-content {
+    --background: #F4F7FA;
 }
 
+.feedback-container {
+    max-width: 1200px;
+}
+
+.feedback-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+    padding: 28px 30px;
+    margin-bottom: 28px;
+    background: #FFFFFF;
+    border: 1px solid #E8EEF2;
+    border-radius: 18px;
+    box-shadow: 0 4px 18px rgba(36, 55, 70, 0.04);
+}
+
+.section-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 13px;
+    margin-bottom: 13px;
+    border-radius: 30px;
+    background: rgba(22, 137, 154, 0.10);
+    color: #16899A;
+    font-size: 0.78rem;
+    font-weight: 700;
+}
+
+.section-label ion-icon {
+    font-size: 16px;
+}
+
+.feedback-header-info h2 {
+    margin: 0 0 7px;
+    color: #243746;
+    font-size: 1.55rem;
+    font-weight: 750;
+}
+
+.feedback-header-info p {
+    margin: 0;
+    color: #82919D;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.feedback-total {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 12px 16px;
+    border: 1px solid #E8EEF2;
+    border-radius: 30px;
+    background: #F4F7FA;
+    color: #82919D;
+    font-size: 0.82rem;
+    white-space: nowrap;
+}
+
+.feedback-total ion-icon {
+    color: #16899A;
+    font-size: 19px;
+}
+
+.feedback-total strong {
+    color: #105B70;
+    font-size: 1rem;
+}
+
+/*Alert*/
+.feedback-alert {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding: 14px 17px;
+    margin-bottom: 24px;
+    border: 1px solid #F2C7CA;
+    border-radius: 12px;
+    background: #FFF1F1;
+    color: #B83D48;
+    font-size: 0.88rem;
+}
+
+.feedback-alert ion-icon {
+    flex-shrink: 0;
+    font-size: 20px;
+}
+
+.feedback-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 280px;
+    gap: 15px;
+}
+
+.feedback-loading ion-spinner {
+    width: 42px;
+    height: 42px;
+}
+
+.feedback-loading p {
+    margin: 0;
+    color: #82919D;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+/*Card*/
 .feedback-card {
-    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
-        box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-    border-radius: 1rem;
-    will-change: transform, box-shadow;
+    height: calc(100% - 16px);
+    margin: 0;
+    border: 1px solid #E8EEF2;
+    border-radius: 17px;
+    background: #FFFFFF;
+    box-shadow: 0 4px 16px rgba(36, 55, 70, 0.045);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .feedback-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 0.75rem 1.5rem rgba(0, 0, 0, 0.06),
-        0 0.25rem 0.5rem rgba(0, 0, 0, 0.04) !important;
+    box-shadow: 0 9px 24px rgba(36, 55, 70, 0.09);
+}
+
+.feedback-card ion-card-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 22px;
+}
+
+/*Informazioni sul paziente*/
+.feedback-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+}
+
+.patient-info {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    min-width: 0;
 }
 
 .feedback-avatar {
-    width: 42px;
-    height: 42px;
-    max-width: 42px;
-    flex-shrink: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 50%;
-    font-weight: bold;
-    font-size: 1rem;
+    flex-shrink: 0;
+    width: 43px;
+    height: 43px;
+    border-radius: 13px;
+    background: rgba(22, 137, 154, 0.11);
+    color: #16899A;
 }
 
+.feedback-avatar ion-icon {
+    font-size: 21px;
+}
+
+.patient-details {
+    min-width: 0;
+}
+
+.patient-details h3 {
+    margin: 0 0 4px;
+    overflow-wrap: anywhere;
+    color: #243746;
+    font-size: 0.87rem;
+    font-weight: 750;
+}
+
+.patient-details span {
+    color: #82919D;
+    font-size: 0.76rem;
+}
+
+.rating-value {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    padding: 7px 10px;
+    border-radius: 10px;
+    background: rgba(229, 161, 58, 0.12);
+    color: #C68B2D;
+    white-space: nowrap;
+}
+
+.rating-value ion-icon {
+    font-size: 16px;
+}
+
+.rating-value strong {
+    font-size: 0.9rem;
+    font-weight: 750;
+}
+
+.rating-value span {
+    color: #A98A5A;
+    font-size: 0.72rem;
+}
+
+.feedback-stars {
+    display: flex;
+    gap: 5px;
+    margin: 20px 0 15px;
+    color: #E5A13A;
+}
+
+.feedback-stars ion-icon {
+    font-size: 19px;
+}
+
+/*Commento lasciato*/
 .feedback-comment {
-    font-size: 0.95rem;
-    line-height: 1.5;
-    color: var(--ion-text-color, #495057);
-    background-color: #f8f9fa;
-    padding: 0.75rem 1rem;
-    border-radius: 0.75rem;
-    border-left: 4px solid var(--ion-color-primary);
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    min-height: 76px;
+    padding: 14px;
+    margin-bottom: 20px;
+    border-radius: 12px;
+    background: #F4F7FA;
+}
+
+.feedback-comment ion-icon {
+    flex-shrink: 0;
+    margin-top: 2px;
+    color: #16899A;
+    font-size: 17px;
+}
+
+.feedback-comment p {
+    margin: 0;
+    color: #526574;
+    font-size: 0.84rem;
+    font-style: italic;
+    line-height: 1.6;
+}
+
+.feedback-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    padding-top: 14px;
+    border-top: 1px solid #E8EEF2;
+}
+
+.feedback-date {
+    display: flex;
+    align-items: center;
+    padding-top: 8px;
+    padding-bottom: 12px;
+    gap: 7px;
+    color: #82919D;
+    font-size: 0.78rem;
+}
+
+.feedback-date ion-icon {
+    color: #16899A;
+    font-size: 16px;
+}
+
+.delete-feedback-btn {
+    --padding-start: 9px;
+    --padding-end: 9px;
+    --border-radius: 9px;
+    height: 34px;
+    margin: 0;
+    font-size: 0.78rem;
+    font-weight: 650;
+}
+
+/*Stato vuoto*/
+.feedback-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 65px 24px;
+    border: 1px solid #E8EEF2;
+    border-radius: 18px;
+    background: #FFFFFF;
+    text-align: center;
+    box-shadow: 0 4px 18px rgba(36, 55, 70, 0.04);
 }
 
 .empty-icon-box {
-    width: 75px;
-    height: 75px;
-    background: var(--ion-color-step-100, #f1f3f5);
-    color: var(--ion-color-step-400, #adb5bd);
-    border-radius: 50%;
-    display: inline-flex;
+    display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0 auto 1rem auto;
+    width: 68px;
+    height: 68px;
+    margin-bottom: 20px;
+    border-radius: 20px;
+    background: rgba(22, 137, 154, 0.10);
+    color: #16899A;
+}
+
+.empty-icon-box ion-icon {
+    font-size: 32px;
+}
+
+.feedback-empty h3 {
+    margin: 0 0 8px;
+    color: #243746;
+    font-size: 1.1rem;
+    font-weight: 750;
+}
+
+.feedback-empty p {
+    max-width: 400px;
+    margin: 0;
+    color: #82919D;
+    font-size: 0.86rem;
+    line-height: 1.6;
+}
+
+@media (max-width: 767px) {
+    .feedback-header {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 22px;
+        gap: 18px;
+    }
+
+    .feedback-header-info h2 {
+        font-size: 1.3rem;
+    }
+
+    .feedback-total {
+        align-self: flex-start;
+    }
+}
+
+@media (max-width: 400px) {
+    .feedback-card ion-card-content {
+        padding: 17px;
+    }
+
+    .feedback-card-header {
+        align-items: flex-start;
+    }
+
+    .rating-value {
+        padding: 6px 8px;
+    }
+
+    .patient-details h3 {
+        font-size: 0.8rem;
+    }
 }

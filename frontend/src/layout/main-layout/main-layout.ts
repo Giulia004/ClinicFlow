@@ -1,5 +1,5 @@
 import { CommonModule } from "@angular/common";
-import { Component } from "@angular/core";
+import { Component, inject } from "@angular/core";
 import { Router } from "@angular/router";
 import { IonButtons, IonContent, IonHeader, IonIcon,  IonMenuButton, IonRouterOutlet, IonTitle, IonToolbar} from "@ionic/angular";
 import { addIcons } from "ionicons";
@@ -15,8 +15,11 @@ import { MenuComponent } from "../../app/components/menu/menu.component";
     imports: [CommonModule, IonContent, IonToolbar, IonTitle, IonHeader, IonRouterOutlet,IonIcon, IonButtons, IonContent, IonMenuButton, MenuComponent,MenuComponent]
 })
 
-export class MainLayout {
-    constructor(public authService: AuthService, private router: Router) {
+export class MainLayoutComponent {
+    authService = inject(AuthService);
+    private router = inject(Router);
+
+    constructor() {
         addIcons({menuOutline});
     }
 }

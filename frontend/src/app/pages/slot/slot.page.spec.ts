@@ -1,13 +1,13 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SlotPageComponent } from './slot.page';
+import { SlotPage } from './slot.page';
 
-describe('SlotPageComponent', () => {
-  let component: SlotPageComponent;
-  let fixture: ComponentFixture<SlotPageComponent>;
+describe('SlotPage', () => {
+  let component: SlotPage;
+  let fixture: ComponentFixture<SlotPage>;
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SlotPageComponent);
+    fixture = TestBed.createComponent(SlotPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

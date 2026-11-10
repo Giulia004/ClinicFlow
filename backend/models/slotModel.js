@@ -54,7 +54,7 @@ const SlotModel = {
     //Filtra gli slot per data e/o medico
     getSlotsByFilter: (medicoId, date) => {
         return new Promise((resolve, reject) => {
-            let query = 'SELECT s.*, u.name as medico_name,u.surname as medico_surname FROM slot_disponibilita s JOIN medici m ON s.medico_id=m.id JOIN users u ON m.cf_utente=u.cf WHERE 1=1 AND s.disponibile=1 AND s.date>CURRENT_DATE';
+            let query = "SELECT s.*, u.name as medico_name,u.surname as medico_surname FROM slot_disponibilita s JOIN medici m ON s.medico_id=m.id JOIN users u ON m.cf_utente=u.cf WHERE s.disponibile=1 AND s.date>=CURRENT_DATE";
             const params = [];
 
             if (medicoId) {
@@ -77,7 +77,7 @@ const SlotModel = {
     //Prenotazione slot
     bookSlot: (slotId) => {
         return new Promise((resolve, reject) => {
-            const query = "UPDATE slot_disponibilita SET disponibile=0 WHERE id=?";
+            const query = "UPDATE slot_disponibilita SET disponibile=0 WHERE id=? AND disponibile=1";
 
             db.run(query, [slotId], function (err) {
                 if (err) reject(err);
@@ -89,7 +89,13 @@ const SlotModel = {
     //Annulla prenotazione
     releaseSlot: (slotId) => {
         return new Promise((resolve, reject) => {
-            const query = "UPDATE slot_disponibilita SET disponibile=1 WHERE id=?";
+            const query = `UPDATE slot_disponibilita SET disponibile=1
+                WHERE id=? AND disponibile=0
+                AND NOT EXISTS (
+                    SELECT 1 FROM appuntamenti
+                    WHERE appuntamenti.slot_id=slot_disponibilita.id
+                    AND appuntamenti.stato IN ('attivo', 'confermato')
+                )`;
 
             db.run(query, [slotId], function (err) {
                 if (err) reject(err);

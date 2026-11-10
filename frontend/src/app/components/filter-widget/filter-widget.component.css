@@ -19,7 +19,7 @@
 
 @media(max-width:768px){
     .filter-pill{
-        flex: 1 1 calc(50%-6px) !important;
+        flex: 1 1 calc(50% - 6px) !important;
         margin-bottom: 4px;
         justify-content: center;
     }

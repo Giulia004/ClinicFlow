@@ -8,6 +8,7 @@ describe('FilterWidgetComponent', () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(FilterWidgetComponent);
+    fixture.componentRef.setInput('data', []);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

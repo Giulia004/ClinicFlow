@@ -8,7 +8,7 @@ exports.createApp = async (req, res) => {
         });
     } catch (error) {
         console.error(error.stack || error);
-        return res.status(500).json({ message: error.message });
+        return res.status(error.statusCode || 500).json({ message: error.message });
     }
 };
 
@@ -27,11 +27,11 @@ exports.unsubApp = async (req, res) => {
     try {
         const appId = Number(req.params.id);
 
-        await AppService.unsubscribeAppointment(appId);
+        await AppService.unsubscribeAppointment(appId, req.user);
 
         return res.status(200).json({ message: "Appuntamento disdetto" });
     } catch (error) {
-        return res.status(500).json({ message: error.message });
+        return res.status(error.statusCode || 500).json({ message: error.message });
     }
 };
 
@@ -39,31 +39,31 @@ exports.confirmApp = async (req, res) => {
     try {
         const appId = Number(req.params.id);
 
-        await AppService.confirmAppointment(appId);
+        await AppService.confirmAppointment(appId, req.user);
 
         return res.status(200).json({ message: "Appuntamento confermato" });
     } catch (error) {
-        return res.status(500).json({ message: error.message });
+        return res.status(error.statusCode || 500).json({ message: error.message });
     }
 };
 
 exports.completeApp = async (req, res) => {
     try {
         const appId = Number(req.params.id);
-        await AppService.completeAppointment(appId);
+        await AppService.completeAppointment(appId, req.user);
         return res.status(200).json({ message: "Appuntamento completato" });
     } catch (error) {
-        return res.status(500).json({ message: error.message });
+        return res.status(error.statusCode || 500).json({ message: error.message });
     }
 };
 
 exports.deleteApp = async (req, res) => {
     try {
         const appId = Number(req.params.id);
-        await AppService.deleteAppointment(appId);
+        await AppService.deleteAppointment(appId, req.user);
         return res.status(200).json({ message: "Appuntamento cancellato con successo" });
     } catch (error) {
-        return res.status(500).json({ message: error.message });
+        return res.status(error.statusCode || 500).json({ message: error.message });
     }
 };
 

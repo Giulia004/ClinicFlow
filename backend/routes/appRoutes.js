@@ -29,6 +29,6 @@ router.put("/:id/unsubscribe", validateId, checkRole(["paziente", "sportellista"
 router.put("/:id/complete", validateId, checkRole(["medico"]), appController.completeApp);
 
 //Eliminazione appuntamento
-router.delete("/:id", validateId, checkRole(["admin", "sportellista", "paziente"]), appController.deleteApp);
+router.delete("/:id", validateId, checkRole(["admin", "sportellista"]), appController.deleteApp);
 
 module.exports = router;

@@ -1,11 +1,22 @@
 const FeedModel = require('../models/feedModel');
+const AppModel = require('../models/appModel');
 
 class FeedService {
-    static async createNewFeedback(data) {
-        const { appuntamento_id, paziente_id, medico_id, voto, commento } = data;
+    static async createNewFeedback(data, user) {
+        const appuntamento_id = Number(data.appuntamento_id);
+        const { voto, commento } = data;
 
-        if (!appuntamento_id || !paziente_id || !medico_id || voto === undefined)
+        if (!appuntamento_id || voto === undefined)
             throw new Error("Dati mancanti");
+        const appointment = await AppModel.getById(appuntamento_id);
+        if (!appointment) throw new Error("Appuntamento non trovato");
+        if (user.role !== 'paziente' || appointment.paziente_id !== user.id) {
+            const error = new Error("Non autorizzato a valutare questo appuntamento");
+            error.statusCode = 403;
+            throw error;
+        }
+        if (appointment.stato !== 'completato')
+            throw new Error("È possibile valutare solo un appuntamento completato");
 
         const numericVoto = Number(voto);
         if (isNaN(numericVoto) || numericVoto < 1 || numericVoto > 5)
@@ -13,8 +24,8 @@ class FeedService {
 
         const newFeedbackData = {
             appuntamento_id,
-            paziente_id,
-            medico_id,
+            paziente_id: appointment.paziente_id,
+            medico_id: appointment.medico_id,
             voto: numericVoto,
             commento
         };
@@ -22,10 +33,17 @@ class FeedService {
         return await FeedModel.createFeed(newFeedbackData);
     }
 
-    static async getById(id) {
+    static async getById(id, user) {
         const feedback = await FeedModel.getById(id);
         if (!feedback)
             throw new Error("Feedback non trovato");
+        if (user.role !== 'admin' &&
+            !((user.role === 'paziente' && feedback.paziente_id === user.id) ||
+                (user.role === 'medico' && feedback.medico_id === user.id))) {
+            const error = new Error("Non autorizzato ad accedere a questo feedback");
+            error.statusCode = 403;
+            throw error;
+        }
         return feedback;
     }
 
@@ -36,8 +54,14 @@ class FeedService {
         return feedback;
     }
     
-    static async getAllFeedbacks() {
-        const allFeedback = await FeedModel.getAll();
+    static async getAllFeedbacks(user) {
+        const allFeedback = user.role === 'admin'
+            ? await FeedModel.getAll()
+            : user.role === 'paziente'
+                ? await FeedModel.getByPatientId(user.id)
+                : user.role === 'medico'
+                    ? await FeedModel.getByDoctorId(user.id)
+                    : [];
         if (!allFeedback || allFeedback.length === 0)
             throw new Error("Nessun feedback registrato");
         return allFeedback;
@@ -56,7 +80,7 @@ class FeedService {
 
     static async removeFeedback(id) {
         const changes = await FeedModel.deleteFeedback(id);
-        if (changes === 0)
+        if (changes.updated === 0)
             throw new Error("Feedback non trovato");
         
         return { success: true, message: "Feedback rimosso" };

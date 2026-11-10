@@ -29,9 +29,6 @@ export class ReportModalComponent {
     });
   }
 
-  ngOnInit() {
-  }
-
   onFileSelected(event:any) {
     const file = event.target.files[0];
     if (file) {

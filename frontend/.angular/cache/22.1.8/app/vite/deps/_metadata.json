@@ -1,67 +1,67 @@
 {
-  "hash": "f2751d8f",
-  "configHash": "11537e8a",
+  "hash": "61dd95ba",
+  "configHash": "af5a06e4",
   "lockfileHash": "482d1510",
-  "browserHash": "6bb61a98",
+  "browserHash": "ab5a37c5",
   "optimized": {
     "@angular/common": {
       "src": "../../../../../../node_modules/@angular/common/fesm2022/common.mjs",
       "file": "@angular_common.js",
-      "fileHash": "1795b49e",
+      "fileHash": "5565b79a",
       "needsInterop": false
     },
     "@angular/common/http": {
       "src": "../../../../../../node_modules/@angular/common/fesm2022/http.mjs",
       "file": "@angular_common_http.js",
-      "fileHash": "009f0b79",
+      "fileHash": "aaa3ca10",
       "needsInterop": false
     },
     "@angular/core": {
       "src": "../../../../../../node_modules/@angular/core/fesm2022/core.mjs",
       "file": "@angular_core.js",
-      "fileHash": "f7f7c616",
+      "fileHash": "50a31e5e",
       "needsInterop": false
     },
     "@angular/forms": {
       "src": "../../../../../../node_modules/@angular/forms/fesm2022/forms.mjs",
       "file": "@angular_forms.js",
-      "fileHash": "ad174f2c",
+      "fileHash": "153f10d8",
       "needsInterop": false
     },
     "@angular/platform-browser": {
       "src": "../../../../../../node_modules/@angular/platform-browser/fesm2022/platform-browser.mjs",
       "file": "@angular_platform-browser.js",
-      "fileHash": "f71fc903",
+      "fileHash": "413f2358",
       "needsInterop": false
     },
     "@angular/router": {
       "src": "../../../../../../node_modules/@angular/router/fesm2022/router.mjs",
       "file": "@angular_router.js",
-      "fileHash": "f9434e21",
+      "fileHash": "458fdca6",
       "needsInterop": false
     },
     "@ionic/angular": {
       "src": "../../../../../../node_modules/@ionic/angular/dist/standalone/index.js",
       "file": "@ionic_angular.js",
-      "fileHash": "925cffb4",
+      "fileHash": "9219868d",
       "needsInterop": false
     },
     "ionicons": {
       "src": "../../../../../../node_modules/ionicons/dist/index.js",
       "file": "ionicons.js",
-      "fileHash": "0159466e",
+      "fileHash": "76f3afe3",
       "needsInterop": false
     },
     "ionicons/icons": {
       "src": "../../../../../../node_modules/ionicons/icons/index.mjs",
       "file": "ionicons_icons.js",
-      "fileHash": "693ece51",
+      "fileHash": "4d17ed09",
       "needsInterop": false
     },
     "rxjs": {
       "src": "../../../../../../node_modules/rxjs/dist/esm5/index.js",
       "file": "rxjs.js",
-      "fileHash": "8db16345",
+      "fileHash": "876d27da",
       "needsInterop": false
     }
   },

@@ -2,8 +2,9 @@ const SlotModel = require('../models/slotModel');
 
 class SlotService {
     //Creazione di un nuovo slot di prenotazione
-    static async createNewSlot(slotData) {
-        const { medico_id, date, orario_inizio, orario_fine } = slotData;
+    static async createNewSlot(slotData, requester) {
+        const { date, orario_inizio, orario_fine } = slotData;
+        const medico_id = requester.role === 'medico' ? requester.id : Number(slotData.medico_id);
 
         if (!medico_id || !date || !orario_inizio || !orario_fine) throw new Error("Dati mancanti: medico_id,date,orario_inizio e orario_fine");
 
@@ -43,17 +44,27 @@ class SlotService {
     static async bookSlot(slotId) {
         const slot = await SlotModel.getById(slotId);
         if (!slot) throw new Error("Slot non trovato");
-        if (slot.disponibile === 0) throw new Error("Slot già prenotato");
+        if (!slot.disponibile) throw new Error("Slot già prenotato");
 
         return await SlotModel.bookSlot(slotId);
     }
 
     //Rilascio o annullamento della prenotazione di uno slot
-    static async releaseSlot(slotId) {
+    static async releaseSlot(slotId, requester) {
         const slot = await SlotModel.getById(slotId);
         if (!slot) throw new Error("Slot non trovato");
 
-        return await SlotModel.releaseSlot(slotId);
+        if (requester.role !== 'admin' && requester.role !== 'sportellista' &&
+            (requester.role !== 'medico' || requester.id !== slot.medico_id)) {
+            const error = new Error("Non autorizzato a liberare questo slot");
+            error.statusCode = 403;
+            throw error;
+        }
+
+        const result = await SlotModel.releaseSlot(slotId);
+        if (result.updated === 0)
+            throw new Error("Slot non occupato o associato a un appuntamento attivo");
+        return result;
     }
 
     static async updateSlot(slotId, slotData) {
@@ -62,7 +73,7 @@ class SlotService {
         const { medico_id, date, orario_inizio, orario_fine } = slotData;
         if (!medico_id || !date || !orario_inizio || !orario_fine) throw new Error("Dati mancanti: medico_id,date,orario_inizio e orario_fine");
 
-        const updatedSlot = await SlotModel.updateSlot(slotId, { medico_id: Number(medico_id), date, orario_inizio, orario_fine });
+        const updatedSlot = await SlotModel.update(slotId, { medico_id: Number(medico_id), date, orario_inizio, orario_fine });
         
         if (!updatedSlot) throw new Error("Impossibile aggiornare: slot non trovato");
         

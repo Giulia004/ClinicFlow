@@ -27,7 +27,6 @@
       }
     </div>
 
-    <!-- MESSAGGIO SUCCESSO -->
     @if (successMessage()) {
     <ion-card class="feedback-card success-card">
       <ion-card-content>
@@ -39,7 +38,6 @@
     </ion-card>
     }
 
-    <!-- MESSAGGIO ERRORE -->
     @if (errorMessage()) {
     <ion-card class="feedback-card error-card">
       <ion-card-content>
@@ -51,7 +49,6 @@
     </ion-card>
     }
 
-    <!-- SEZIONE APPUNTAMENTI -->
     <div class="section-heading">
 
       <div>
@@ -66,7 +63,6 @@
 
     </div>
 
-    <!-- FILTRI -->
     <ion-card class="filter-card">
       <ion-card-content>
 
@@ -87,7 +83,6 @@
       </ion-card-content>
     </ion-card>
 
-    <!-- LISTA APPUNTAMENTI -->
     @if (filteredAppointments().length === 0) {
 
     <ion-card class="empty-state-card">
@@ -121,7 +116,6 @@
 
         <ion-card-content>
 
-          <!-- ID E STATO -->
           <div class="appointment-top">
 
             <span class="appointment-id">
@@ -134,7 +128,6 @@
 
           </div>
 
-          <!-- MEDICO -->
           <div class="doctor-info">
 
             <div class="doctor-avatar">
@@ -156,7 +149,6 @@
 
           </div>
 
-          <!-- PAZIENTE -->
           <div class="patient-info">
 
             <div class="info-label">
@@ -174,7 +166,6 @@
 
           </div>
 
-          <!-- DATA E ORARIO -->
           <div class="appointment-details">
 
             <div class="detail-item">
@@ -209,7 +200,6 @@
 
           </div>
 
-          <!-- FOOTER -->
           @if (
           authService.currentUser()?.role === 'paziente' ||
           authService.currentUser()?.role === 'sportellista' ||
@@ -224,10 +214,9 @@
               <strong>{{ item.creato_da }}</strong>
             </div>
 
-            <!-- AZIONI -->
             <div class="appointment-actions">
 
-              <!-- PAZIENTE: VALUTA VISITA -->
+              <!--Valutazione visita del paziente-->
               @if (
               item.stato === 'completato' &&
               authService.currentUser()?.role === 'paziente'
@@ -240,7 +229,6 @@
               </ion-button>
               }
 
-              <!-- MEDICO: SCRIVI REFERTO -->
               @if (
               item.stato === 'completato' &&
               authService.currentUser()?.role === 'medico'
@@ -253,7 +241,6 @@
               </ion-button>
               }
 
-              <!-- MEDICO: COMPLETA -->
               @if (authService.currentUser()?.role === 'medico') {
 
               @if (item.stato !== 'completato') {
@@ -267,10 +254,9 @@
 
               }
 
-              <!-- ADMIN: ELIMINA -->
               @else if (authService.currentUser()?.role === 'admin') {
 
-              <ion-button fill="clear" color="danger" size="small" (click)="cancelBooking(item.id!)">
+              <ion-button fill="clear" color="danger" size="small" (click)="removeBooking(item.id!)">
 
                 <ion-icon name="trash-outline" slot="start"></ion-icon>
                 Elimina
@@ -279,7 +265,29 @@
 
               }
 
-              <!-- SPORTELLISTA: CONFERMA E DISDICI -->
+              @else if (
+              authService.currentUser()?.role === 'paziente' &&
+              (item.stato === 'attivo' || item.stato === 'confermato')
+              ) {
+
+              @if (item.stato === 'attivo') {
+              <ion-button fill="clear" color="success" size="small" (click)="confirmBooking(item.id!)">
+
+                <ion-icon name="checkmark-circle-outline" slot="start"></ion-icon>
+                Conferma
+
+              </ion-button>
+              }
+
+              <ion-button fill="clear" color="danger" size="small" (click)="cancelBooking(item.id!)">
+
+                <ion-icon name="close-circle-outline" slot="start"></ion-icon>
+                Disdici
+
+              </ion-button>
+
+              }
+
               @else if (authService.currentUser()?.role !== 'paziente') {
 
               @if (item.stato === 'attivo') {

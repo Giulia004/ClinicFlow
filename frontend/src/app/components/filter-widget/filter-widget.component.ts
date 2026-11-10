@@ -38,7 +38,10 @@ export class FilterWidgetComponent {
           return val && String(val).toLowerCase().includes(term);
         });
 
-        const matchesFilter = currentFilter === 'all' || !this.filterProperty() || String(item[this.filterProperty()]).toLowerCase().trim() === String(currentFilter).toLowerCase().trim();
+        const filterValue = item[this.filterProperty()];
+        const normalizedFilterValue = filterValue === 0 ? 'false' : filterValue === 1 ? 'true' : String(filterValue).toLowerCase().trim();
+        const matchesFilter = currentFilter === 'all' || !this.filterProperty() ||
+          normalizedFilterValue === String(currentFilter).toLowerCase().trim();
 
         return matchesSearch && matchesFilter;
       });

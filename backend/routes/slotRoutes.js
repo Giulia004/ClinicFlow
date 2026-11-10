@@ -25,7 +25,7 @@ router.put("/:id", verifyToken, checkRole(["admin"]), slotController.updateSlot)
 router.put("/:id/book", verifyToken, checkRole(["paziente", "sportellista"]), slotController.bookSlot);
 
 //Disdetta dello slot
-router.put("/:id/release", verifyToken, checkRole(["medico", "admin", "sportellista", "paziente"]), slotController.releaseSlot);
+router.put("/:id/release", verifyToken, checkRole(["medico", "admin", "sportellista"]), slotController.releaseSlot);
 
 //Eliminazione slot
 router.delete("/:id", verifyToken, checkRole(["medico", "admin"]), slotController.deleteSlot);

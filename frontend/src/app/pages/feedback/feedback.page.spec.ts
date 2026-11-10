@@ -1,13 +1,13 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FeedbackPageComponent } from './feedback.page';
+import { FeedbackPage } from './feedback.page';
 
-describe('FeedbackPageComponent', () => {
-  let component: FeedbackPageComponent;
-  let fixture: ComponentFixture<FeedbackPageComponent>;
+describe('FeedbackPage', () => {
+  let component: FeedbackPage;
+  let fixture: ComponentFixture<FeedbackPage>;
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(FeedbackPageComponent);
+    fixture = TestBed.createComponent(FeedbackPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

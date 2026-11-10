@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
-import { AuthLayout } from '../layout/auth-layout/auth-layout';
-import { MainLayout } from '../layout/main-layout/main-layout';
+import { AuthLayoutComponent } from '../layout/auth-layout/auth-layout';
+import { MainLayoutComponent } from '../layout/main-layout/main-layout';
 import { authGuard, roleGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
@@ -20,7 +20,7 @@ export const routes: Routes = [
   //Rotte pubbliche racchiuse nell'AuthLayout (Login e Registrazione)
   {
     path: '',
-    component: AuthLayout,
+    component: AuthLayoutComponent,
     children: [
       {
         path: 'login',
@@ -34,7 +34,7 @@ export const routes: Routes = [
   },
   {
     path: '',
-    component: MainLayout,
+    component: MainLayoutComponent,
     canActivate: [authGuard],
     children: [
       {
@@ -55,7 +55,7 @@ export const routes: Routes = [
         loadComponent: () => import('./pages/report/report.page').then((m) => m.ReportPage)
       },
       {
-        path: 'dashboard/feedbacks',
+        path: 'dashboard/feedback',
         loadComponent: () => import('./pages/feedback/feedback.page').then((m) => m.FeedbackPage)
       },
       {

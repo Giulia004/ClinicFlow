@@ -1,5 +1,5 @@
 import { HttpClient } from "@angular/common/http";
-import {  Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import { environment } from "../../environments/environment";
 import { Observable } from "rxjs";
 import { AuthService } from "./auth.service";
@@ -32,9 +32,10 @@ export interface CreateFeedbackPayload {
 })
 
 export class FeedbackService {
-    private apiUrl = `${environment.apiUrl}/feedback`;
+    private http = inject(HttpClient);
+    private authService = inject(AuthService);
 
-    constructor(private http: HttpClient, private authService: AuthService) { }
+    private apiUrl = `${environment.apiUrl}/feedback`;
 
     public getAllFeedback(): Observable<Feedback[]> {
         return this.http.get<Feedback[]>(this.apiUrl, { headers: this.authService.getHeaders() });

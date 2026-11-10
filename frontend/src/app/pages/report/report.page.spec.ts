@@ -1,13 +1,13 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ReportPageComponent } from './report.page';
+import { ReportPage } from './report.page';
 
-describe('ReportPageComponent', () => {
-  let component: ReportPageComponent;
-  let fixture: ComponentFixture<ReportPageComponent>;
+describe('ReportPage', () => {
+  let component: ReportPage;
+  let fixture: ComponentFixture<ReportPage>;
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ReportPageComponent);
+    fixture = TestBed.createComponent(ReportPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

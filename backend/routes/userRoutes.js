@@ -25,7 +25,7 @@ router.get("/:cf", userController.getUserByCf);
 router.put("/:cf",checkRole(["medico","sportellista","admin","paziente"]), userController.updateUser);
 
 //Eliminazione dell'utente dal db. Solo l'admin può eseguire questa operazione
-router.delete("/:cf", userController.deleteUser);
+router.delete("/:cf", checkRole(["admin"]), userController.deleteUser);
 
 
 module.exports = router;

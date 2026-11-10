@@ -1,4 +1,4 @@
-import { Component, computed, OnInit, signal } from '@angular/core';
+import { Component, computed, OnInit, signal, inject } from '@angular/core';
 import { addIcons } from 'ionicons';
 import { addOutline, alertCircleOutline, calendarNumberOutline, calendarOutline, checkmarkCircleOutline, closeCircleOutline, medkitOutline, personOutline, timeOutline, todayOutline, trashOutline } from 'ionicons/icons';
 import { AuthService } from '../../services/auth.service';
@@ -16,9 +16,14 @@ import { ReportService } from '../../services/report.service';
   selector: 'app-appointments.page',
   templateUrl: './appointments.page.html',
   styleUrls: ['./appointments.page.css'],
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, IonIcon, IonButton, IonContent, FilterWidgetComponent, AppointmentModalComponent,IonCard,IonCardContent],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, IonIcon, IonButton, IonContent, FilterWidgetComponent, IonCard, IonCardContent],
 })
 export class AppointmentsPage implements OnInit {
+  authService = inject(AuthService);
+  private appService = inject(AppointmentService);
+  private modalCtrl = inject(ModalController);
+  private reportService = inject(ReportService);
+
   public appointments = signal<Appointment[]>([]);
   public filteredAppointments = signal<Appointment[]>([]);
   public successMessage = signal<string | null>(null);
@@ -26,7 +31,7 @@ export class AppointmentsPage implements OnInit {
 
   role = computed(() => this.authService.currentUser()?.role);
 
-  constructor(public authService: AuthService,private appService:AppointmentService,private modalCtrl:ModalController,private reportService:ReportService) {
+  constructor() {
     addIcons({
       calendarOutline, timeOutline, medkitOutline, personOutline, checkmarkCircleOutline, trashOutline, addOutline, alertCircleOutline, todayOutline, closeCircleOutline,calendarNumberOutline
     });
@@ -162,18 +167,26 @@ export class AppointmentsPage implements OnInit {
   public cancelBooking(id?: number) {
     if (!id) return;
 
-    this.appService.deleteAppointment(id).subscribe({
+    this.appService.unsubscribeAppointment(id).subscribe({
       next: () => {
         this.loadAppointments();
+        this.errorMessage.set(null);
         this.successMessage.set("Appuntamento cancellato con successo");
-      }, error: (err) => console.error("Errore durante la cancellazione:", err)
+      }, error: (err) => {
+        this.errorMessage.set(err.error?.message || "Errore durante la cancellazione");
+        this.successMessage.set(null);
+      }
     });
   }
 
   public completeBooking(id: number) {
     if (!id) return;
     this.appService.completeAppointment(id).subscribe({
-      next: () => this.successMessage.set("Appuntamento completato"),
+      next: () => {
+        this.successMessage.set("Appuntamento completato");
+        this.errorMessage.set(null);
+        this.loadAppointments();
+      },
       error: (err) => {
         this.errorMessage.set("Qualcosa è andato storto");
         console.log(err);
@@ -185,7 +198,11 @@ export class AppointmentsPage implements OnInit {
     if (!id) return;
 
     this.appService.removeAppointment(id).subscribe({
-      next: () => this.successMessage.set("Eliminazione avvenuta con successo"),
+      next: () => {
+        this.successMessage.set("Eliminazione avvenuta con successo");
+        this.errorMessage.set(null);
+        this.loadAppointments();
+      },
       error: (err) => {
         this.errorMessage.set("Errore durante la rimozione");
         console.log(err);

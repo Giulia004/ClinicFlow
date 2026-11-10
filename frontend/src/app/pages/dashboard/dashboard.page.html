@@ -4,7 +4,7 @@
 
     @if (authService.currentUser(); as user) {
 
-    <!-- WELCOME -->
+      <!--Messaggio di benvenuto-->
     <section class="welcome-panel mb-4">
       <div class="welcome-content">
         <div class="brand-label">
@@ -20,6 +20,7 @@
           Bentornato, {{ user.name }}!
         </h1>
 
+        <!--Paragrafo dinamico in base al ruolo dell'utente-->
         <p class="welcome-description">
           @switch (user.role) {
           @case ('admin') {
@@ -70,7 +71,6 @@
 
     }
 
-    <!-- SECTION HEADER -->
     <div class="section-heading mb-3">
       <div>
         <span class="section-eyebrow">IL TUO SPAZIO DI LAVORO</span>
@@ -79,10 +79,9 @@
       </div>
     </div>
 
-    <!-- SERVICES -->
+    <!--Servizi offerti dal sistema-->
     <div class="row g-3">
 
-      <!-- APPUNTAMENTI -->
       <div class="col-md-6 col-xl-4">
         <ion-card class="service-card">
           <ion-card-content>
@@ -109,7 +108,6 @@
         </ion-card>
       </div>
 
-      <!-- REFERTI -->
       <div class="col-md-6 col-xl-4">
         <ion-card class="service-card">
           <ion-card-content>
@@ -132,8 +130,7 @@
         </ion-card>
       </div>
 
-      <!-- FEEDBACK -->
-      @if (authService.currentUser()?.role === 'paziente') {
+      @if (authService.currentUser()?.role !=='sportellista') {
       <div class="col-md-6 col-xl-4">
         <ion-card class="service-card">
           <ion-card-content>
@@ -148,7 +145,7 @@
               a migliorare i nostri servizi.
             </p>
 
-            <ion-button fill="clear" routerLink="/dashboard/feedbacks" class="service-link">
+            <ion-button fill="clear" routerLink="/dashboard/feedback" class="service-link">
               Lascia un feedback
               <ion-icon name="arrow-forward-outline" slot="end"></ion-icon>
             </ion-button>
@@ -157,7 +154,6 @@
       </div>
       }
 
-      <!-- SLOT ADMIN -->
       @if (authService.currentUser()?.role === 'admin') {
       <div class="col-md-6 col-xl-4">
         <ion-card class="service-card">
