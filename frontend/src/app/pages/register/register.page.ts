@@ -19,6 +19,7 @@ export class RegisterPage {
   private authService = inject(AuthService);
   private router = inject(Router);
 
+  public readonly cfPattern = /^[A-Z]{6}[0-9]{2}[A-Z][0-9]{2}[A-Z][0-9]{3}[A-Z]$/;
   public readonly emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   public readonly passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/;
 
@@ -45,6 +46,14 @@ export class RegisterPage {
       return;
     }
 
+    this.userData.cf = this.userData.cf.trim().toUpperCase();
+    this.userData.email = this.userData.email.trim().toLowerCase();
+
+    if (!this.cfPattern.test(this.userData.cf)) {
+      this.errorMessage.set('Inserisci un codice fiscale valido.');
+      return;
+    }
+
     if (!this.emailPattern.test(this.userData.email)) {
       this.errorMessage.set('Inserisci un indirizzo email valido.');
       return;
@@ -64,7 +73,7 @@ export class RegisterPage {
         this.router.navigate(['/dashboard'], { replaceUrl: true });
       }, error: (err) => {
         this.isLoading.set(false);
-        const msg = err.error?.message || 'Errore durante la registrazione. Riprova.';
+        const msg = err.error?.message || err.error?.err || 'Errore durante la registrazione. Riprova.';
         this.errorMessage.set(msg);
       }
     });

@@ -1,11 +1,7 @@
 const sqlite3 = require("sqlite3").verbose();
 const path = require('path');
 
-const dbPath = process.env.CLINICFLOW_DB_PATH
-    ? path.resolve(process.env.CLINICFLOW_DB_PATH)
-    : path.resolve(__dirname, 'database.sqlite');
-
-const db = new sqlite3.Database(dbPath, (err) => {
+const db = new sqlite3.Database("./db/database.sqlite", (err) => {
     if (err) console.log(err.message);
     else {
         console.log("Connected to SQLite DB");

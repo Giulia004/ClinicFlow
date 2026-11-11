@@ -5,44 +5,49 @@ const User = {
     //Creazione di un nuovo utente con i dettagli specifici in base al ruolo
     create: (userData, details) => {
         return new Promise((resolve, reject) => {
-            db.serialize(() => {
-                const query = 'INSERT INTO users (cf,name,surname, email,password,role) VALUES (?, ?,?,?,?,?)';
-                const params = [userData.cf.toUpperCase(), userData.name, userData.surname, userData.email, userData.password, userData.role];
+            let detailsQuery = "";
+            let detailsParams = [];
+            const cf = userData.cf.toUpperCase();
 
-                //Inserimento nuovo user
-                db.run(query, params, function (error) {
-                    if (error) reject(error);
-                    //else resolve({ id: this.lastID, cf, email, name, surname, role });
-                });
+            if (userData.role === 'medico') {
+                detailsQuery = "INSERT INTO medici (cf_utente, specializzazione, numero_albo) VALUES(?,?,?)";
+                detailsParams = [cf, details.specializzazione, details.numeroAlbo];
+            } else if (userData.role === 'sportellista') {
+                detailsQuery = "INSERT INTO sportellisti (cf_utente,postazione) VALUES(?,?)";
+                detailsParams = [cf, details.postazione];
+            } else if (userData.role === 'paziente') {
+                detailsQuery = "INSERT INTO pazienti (cf_utente) VALUES(?)";
+                detailsParams = [cf];
+            }
 
-                let detailsQuery = "";
-                let detailsParams = [];
+            const query = 'INSERT INTO users (cf,name,surname,email,password,role) VALUES (?,?,?,?,?,?)';
+            const params = [cf, userData.name, userData.surname, userData.email, userData.password, userData.role];
 
-                if (userData.role === 'medico') {
-                    detailsQuery = "INSERT INTO medici (cf_utente, specializzazione, numero_albo) VALUES(?,?,?)";
-                    detailsParams = [userData.cf.toUpperCase(), details.specializzazione, details.numeroAlbo];
-                } else if (userData.role === 'sportellista') {
-                    detailsQuery = "INSERT INTO sportellisti (cf_utente,postazione) VALUES(?,?)";
-                    detailsParams = [userData.cf.toUpperCase(), details.postazione];
-                } else if (userData.role === 'paziente') {
-                    detailsQuery = "INSERT INTO pazienti (cf_utente) VALUES(?)";
-                    detailsParams = [userData.cf.toUpperCase()];
+            db.run(query, params, (userError) => {
+                if (userError) {
+                    reject(userError);
+                    return;
                 }
 
-                //Inserimento dei dettagli
-                if (detailsQuery) {
-                    db.run(detailsQuery, detailsParams, function (err) {
-                        if (err) reject(err);
-                        else resolve({ cf: userData.cf, role: userData.role, id: this.lastID });
-                    });
-                } else resolve({ cf: userData.cf, role: userData.role });
+                if (!detailsQuery) {
+                    resolve({ cf, role: userData.role });
+                    return;
+                }
+
+                db.run(detailsQuery, detailsParams, function (detailsError) {
+                    if (detailsError) {
+                        reject(detailsError);
+                        return;
+                    }
+                    resolve({ cf, role: userData.role, id: this.lastID });
+                });
             });
         });
     },
     //Ricerca dell'utente in base all'email
     findByEmail: (email) => {
         return new Promise((resolve, reject) => {
-            const query = "SELECT * FROM users WHERE email=?";
+            const query = "SELECT * FROM users WHERE lower(trim(email))=lower(trim(?))";
             db.get(query, [email], (err, row) => {
                 if (err) reject(err);
                 else resolve(row);

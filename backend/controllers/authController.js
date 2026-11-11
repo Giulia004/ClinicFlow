@@ -3,11 +3,22 @@ const AuthService = require("../services/authService");
 //Registrazione nuovo utente
 exports.register = async (req, res) => {
     try {
-
-        await AuthService.registerUser(req.body, req.user);
-        res.status(201).json({ message: "Utente creato con successo" });
+        const result = await AuthService.registerUser(req.body, req.user);
+        res.status(201).json(result);
     } catch (error) {
-        res.status(500).json({ err: error.message });
+        const status = error.statusCode || (
+            error.code === "SQLITE_CONSTRAINT" ? 409
+                : error.code === "SQLITE_BUSY" || error.code === "SQLITE_LOCKED" ? 503
+                    : 500
+        );
+        if (status === 500) console.error("Errore registrazione:", error);
+        res.status(status).json({
+            message: status === 503
+                ? "Database momentaneamente occupato. Riprova tra qualche secondo."
+                : status === 500
+                    ? "Errore durante la registrazione"
+                    : error.message || "Email o codice fiscale già registrati"
+        });
     }
 };
 
@@ -18,7 +29,15 @@ exports.login = async (req, res) => {
         const result = await AuthService.loginUser(email, password);
         res.status(200).json(result);
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        const status = err.message === "Credenziali non valide"
+            ? 401
+            : err.message === "Email e password obbligatorie"
+                ? 400
+                : 500;
+        if (status === 500) console.error("Errore login:", err);
+        res.status(status).json({
+            message: status === 500 ? "Errore durante l'accesso" : err.message
+        });
     }
 };
 

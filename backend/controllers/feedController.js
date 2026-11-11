@@ -7,7 +7,6 @@ exports.createFeedback = async (req, res) => {
         return res.status(201).json(feedback);
 
     } catch (error) {
-        console.error("ERRORE NEL MODEL/DB:", error);
         return res.status(error.statusCode || 400).json({ message: error.message });
     }
 };
@@ -18,7 +17,6 @@ exports.getAll = async (req, res) => {
 
         return res.status(200).json(allFeedback);
     } catch (error) {
-        console.log("Errore nel controller", error.message);
         res.status(500).json({ message: error.message });
     }
 };

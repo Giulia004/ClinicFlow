@@ -9,22 +9,31 @@ class AuthService {
     //Logica di registrazione
     static async registerUser(bodyData, currentUser) {
         const { cf, name, surname, email, password, role, specializzazione, numeroAlbo, postazione } = bodyData;
+        const normalizedCf = typeof cf === "string" ? cf.trim().toUpperCase() : "";
+        const normalizedEmail = typeof email === "string" ? email.trim().toLowerCase() : "";
 
-        if (!email || !password || !role)
-            throw new Error("Inserire i valori nei campi obbligatori");
+        if (!normalizedCf || !name?.trim() || !surname?.trim() || !normalizedEmail || !password || !role) {
+            throw Object.assign(new Error("Compila tutti i campi obbligatori"), { statusCode: 400 });
+        }
 
-        const existingUser = await UserModel.findByCf(cf);
-        if (existingUser)
-            throw new Error("Utente esistente");
+        const existingUser = await UserModel.findByCf(normalizedCf);
+        if (existingUser) {
+            throw Object.assign(new Error("Codice fiscale già registrato"), { statusCode: 409 });
+        }
+
+        const existingEmail = await UserModel.findByEmail(normalizedEmail);
+        if (existingEmail) {
+            throw Object.assign(new Error("Email già registrata"), { statusCode: 409 });
+        }
 
         const hashedPassword = await bcrypt.hash(password, 10);
         const finalRole = currentUser && currentUser.role === 'admin' ? (role || 'paziente') : 'paziente';
 
         const userData = {
-            cf: cf.toUpperCase(),
-            name,
-            surname,
-            email,
+            cf: normalizedCf,
+            name: name.trim(),
+            surname: surname.trim(),
+            email: normalizedEmail,
             password: hashedPassword,
             role: finalRole
         };
@@ -35,18 +44,22 @@ class AuthService {
             postazione
         };
 
-        return await UserModel.create(userData, details);
+        await UserModel.create(userData, details);
+        return this.loginUser(normalizedEmail, password);
     }
 
     //Logica di login
     static async loginUser(email, password) {
-        const userFound = await UserModel.findByEmail(email);
+        if (!email?.trim() || !password)
+            throw new Error("Email e password obbligatorie");
+
+        const userFound = await UserModel.findByEmail(email.trim());
         if (!userFound)
-            throw new Error("Credenziali non valide (Utente non trovato)");
+            throw new Error("Credenziali non valide");
 
         const isMatch = await bcrypt.compare(password, userFound.password);
         if (!isMatch)
-            throw new Error("Password non corretta");
+            throw new Error("Credenziali non valide");
 
         let profileId = null;
         try {

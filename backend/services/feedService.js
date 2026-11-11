@@ -62,8 +62,6 @@ class FeedService {
                 : user.role === 'medico'
                     ? await FeedModel.getByDoctorId(user.id)
                     : [];
-        if (!allFeedback || allFeedback.length === 0)
-            throw new Error("Nessun feedback registrato");
         return allFeedback;
     }
 

@@ -45,7 +45,19 @@
                 [(ngModel)]="userData.surname" name="surname" required>
             </div>
           </div>
+
+          <div class="mb-3">
+            <label for="cf" class="form-label small fw-bold text-secondary">Codice Fiscale</label>
+            <div class="input-group">
+              <span class="input-group-text bg-light border-end-0">
+                <ion-icon name="person-outline" class="text-muted"></ion-icon>
+              </span>
+              <input type="text" id="cf" class="form-control border-start-0 ps-0 shadow-none" placeholder="RSSMRA85M01H501Z"
+                [(ngModel)]="userData.cf" name="cf" required>
+            </div>
+          </div>
         </div>
+
 
         <div class="mb-3">
           <label for="email" class="form-label small fw-bold text-secondary">Email</label>
@@ -56,8 +68,8 @@
             <input type="email" id="email" class="form-control border-start-0 ps-0 shadow-none"
               placeholder="mario.rossi@esempio.it" [(ngModel)]="userData.email" name="email" required
               [pattern]="emailPattern" autocomplete="email">
-            <small class="form-text text-muted">Inserisci un indirizzo email valido.</small>
           </div>
+          <small class="form-text text-muted">Inserisci un indirizzo email valido.</small>
         </div>
 
         <div class="mb-4">

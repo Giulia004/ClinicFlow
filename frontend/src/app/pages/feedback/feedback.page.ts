@@ -2,7 +2,7 @@ import { Component, computed, OnInit, signal, inject } from '@angular/core';
 import { Feedback, FeedbackService } from '../../services/feedback.service';
 import { AuthService } from '../../services/auth.service';
 import { addIcons } from 'ionicons';
-import { calendarOutline, chatbubbleEllipsesOutline, chatbubbleOutline, personOutline, star, starOutline, trashOutline } from 'ionicons/icons';
+import { calendarOutline, chatbubbleEllipsesOutline, chatbubbleOutline, chatbubblesOutline, personOutline, star, starOutline, trashOutline } from 'ionicons/icons';
 import { CommonModule } from '@angular/common';
 import { IonButton, IonCard, IonCardContent, IonContent, IonHeader, IonIcon, IonSpinner, IonTitle, IonToolbar } from '@ionic/angular';
 
@@ -11,7 +11,7 @@ import { IonButton, IonCard, IonCardContent, IonContent, IonHeader, IonIcon, Ion
   templateUrl: './feedback.page.html',
   standalone: true,
   styleUrls: ['./feedback.page.css'],
-  imports: [CommonModule, IonIcon, IonContent, IonSpinner, IonButton,IonCard,IonCardContent],
+  imports: [CommonModule, IonIcon, IonContent, IonSpinner, IonButton, IonCard, IonCardContent],
 })
 export class FeedbackPage implements OnInit {
   private feedbackService = inject(FeedbackService);
@@ -25,7 +25,7 @@ export class FeedbackPage implements OnInit {
 
   constructor() {
     addIcons({
-      star, starOutline, chatbubbleOutline, calendarOutline, trashOutline,personOutline,chatbubbleEllipsesOutline
+      star, starOutline, chatbubbleOutline, calendarOutline, trashOutline, personOutline, chatbubbleEllipsesOutline, chatbubblesOutline
     });
   }
 

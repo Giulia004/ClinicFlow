@@ -1,6 +1,6 @@
 import { Component, OnInit, signal, inject } from '@angular/core';
 import { addIcons } from 'ionicons';
-import { alertCircleOutline, businessOutline, createOutline, fitnessOutline, headsetOutline, mailOutline, medkitOutline, peopleOutline, personAddOutline, personOutline, shieldCheckmarkOutline, shieldOutline, trashOutline } from 'ionicons/icons';
+import { alertCircleOutline, businessOutline, checkmarkCircleOutline, createOutline, fitnessOutline, headsetOutline, mailOutline, medkitOutline, peopleOutline, personAddOutline, personOutline, shieldCheckmarkOutline, shieldOutline, trashOutline } from 'ionicons/icons';
 import { User, UserService } from '../../services/user.service';
 import { AuthService } from '../../services/auth.service';
 import { IonButton, IonCard, IonCardContent, IonContent, IonIcon, IonSpinner, ModalController } from '@ionic/angular';
@@ -28,7 +28,7 @@ export class UsersPage implements OnInit {
 
   constructor() {
     addIcons({
-      shieldCheckmarkOutline,businessOutline,personAddOutline,alertCircleOutline,medkitOutline,fitnessOutline,headsetOutline,shieldOutline,mailOutline,createOutline,trashOutline,peopleOutline,personOutline
+      shieldCheckmarkOutline,businessOutline,personAddOutline,alertCircleOutline,medkitOutline,fitnessOutline,headsetOutline,shieldOutline,mailOutline,createOutline,trashOutline,peopleOutline,personOutline,checkmarkCircleOutline
     });
   }
 
@@ -46,7 +46,7 @@ export class UsersPage implements OnInit {
       }, error: (err) => {
         console.log(err);
         this.isLoading.set(false);
-        this.errorMessage.set("Impossibile caricare gli utenti");
+        this.errorMessage.set("Impossibile caricare la lista degli utenti");
       }
     });
   }

@@ -1,6 +1,6 @@
 import { Component, signal, inject } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { addIcons } from 'ionicons';
 import { alertCircleOutline, lockClosedOutline, logInOutline, mailOutline } from 'ionicons/icons';
 import { CommonModule } from '@angular/common';
@@ -11,7 +11,7 @@ import { FormsModule } from '@angular/forms';
   selector: 'app-login.page',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.css'],
-  imports: [CommonModule, IonContent, IonIcon, FormsModule, IonButton, IonSpinner],
+  imports: [CommonModule, RouterLink, IonContent, IonIcon, FormsModule, IonButton, IonSpinner],
 })
 export class LoginPage {
   private authService = inject(AuthService);
@@ -37,13 +37,15 @@ export class LoginPage {
       return;
     }
 
+    this.credentials.email = this.credentials.email.trim();
+
     this.isLoading.set(true);
     this.errorMessage.set(null);
 
     this.authService.login(this.credentials).subscribe({
       next: () => {
-        this.isLoading.set(false);
         this.router.navigate(['/dashboard'], { replaceUrl: true });
+        this.isLoading.set(false);
       },
       error: (err) => {
         const msg = err.error?.message || "Credenziali non valide";
@@ -52,6 +54,4 @@ export class LoginPage {
       }
     });
   }
-
-
 }
